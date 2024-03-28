@@ -1,0 +1,23 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Typecho - 标签 - 大大的小蜗牛</title><link>https://www.eallion.com/tags/typecho/</link><description>Typecho - 标签 - 大大的小蜗牛</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><copyright>This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.</copyright><lastBuildDate>Wed, 13 May 2020 03:32:44 +0800</lastBuildDate><atom:link href="https://www.eallion.com/tags/typecho/" rel="self" type="application/rss+xml"/><item><title>Typecho 迁移到 Hugo</title><link>https://www.eallion.com/typecho-to-hugo/</link><pubDate>Wed, 13 May 2020 03:32:44 +0800</pubDate><author><name>大大的小蜗牛</name><uri>https://eallion.com/</uri><email>eallions@gmail.com</email></author><guid>https://www.eallion.com/typecho-to-hugo/</guid><description>这篇文章介绍了作者将Typecho博客迁移到Hugo的过程。其中包括导出Typecho文章、配置Hugo、导入评论等步骤。文章主要关注于URL的迁移和将评论导入Disqus的过程。作者使用了一个修改过的PHP脚本来导出文章，并在Markdown博文的Front matter中添加了slug值以便后续设置。作者选择了Disqus作为博客评论解决方案，并使用了DisqusJS API。最终，作者通过WordPress中转的方式将评论导入到Disqus。</description></item><item><title>typecho1.2 (18.10.23) 新窗口打开链接</title><link>https://www.eallion.com/typecho-12-blank/</link><pubDate>Mon, 03 Jun 2019 12:00:00 +0000</pubDate><author><name>大大的小蜗牛</name><uri>https://eallion.com/</uri><email>eallions@gmail.com</email></author><guid>https://www.eallion.com/typecho-12-blank/</guid><description>这篇文章介绍了一个关于typecho博客平台的修改方法。作者想要实现新窗口打开链接的功能，他在代码中添加了一行代码(target=“_blank” rel=“nofollow”)来实现这个效果。推荐方法二是修改var/HyperDown.php文件，在代码的第507行添加相应的代码。然后在主题的functions.php文件和post.php文件中进行相应的改动。作者表示此方法适用于typecho1.2版本。</description></item><item><title>iOS 离线发表博客的 APP MWeb</title><link>https://www.eallion.com/typecho-mweb/</link><pubDate>Mon, 10 Apr 2017 08:36:00 +0000</pubDate><author><name>大大的小蜗牛</name><uri>https://eallion.com/</uri><email>eallions@gmail.com</email></author><guid>https://www.eallion.com/typecho-mweb/</guid><description>这篇文章介绍了一款名为MWeb的iOS离线发表博客的应用。作者表示手机逐渐成为他记录灵感的工具，但以前使用手机浏览器发表博客的体验非常糟糕。最近，作者找到了一款支持markdown的iOS工具MWeb，并介绍了该应用的使用方法，包括设置发布服务和填写博客信息等。作者还提到了MWeb的一些进阶用法。</description></item><item><title>Nginx typecho Access denied</title><link>https://www.eallion.com/nginx-typecho-access-denied/</link><pubDate>Sun, 19 Mar 2017 01:08:00 +0000</pubDate><author><name>大大的小蜗牛</name><uri>https://eallion.com/</uri><email>eallions@gmail.com</email></author><guid>https://www.eallion.com/nginx-typecho-access-denied/</guid><description>文章讲述了在重新配置服务器时遇到的问题，即无法打开 typecho 的二级页面，显示 Access denied。官方给出了解决办法：修改 php.ini 文件中的 cgi.fix_pathinfo 为 1，并重启 php 和 nginx。</description></item><item><title>博客趋于稳定</title><link>https://www.eallion.com/type-final-echo/</link><pubDate>Fri, 14 Jan 2011 11:11:26 +0000</pubDate><author><name>大大的小蜗牛</name><uri>https://eallion.com/</uri><email>eallions@gmail.com</email></author><guid>https://www.eallion.com/type-final-echo/</guid><description>这篇文章介绍了博客主人对个人博客进行了修复和优化，添加了一些插件和功能。博客使用了Typecho平台，并且包括了嵌套评论、自动备份、评论过滤、评论回复邮件提醒等插件。此外，博客也使用了各种相册实现方式，并且主人还修改了原模板的许多部分。最后，文章还提到了作者朋友的个人导航页面和微博链接。</description></item><item><title>博客从 WordPress 换成 typecho</title><link>https://www.eallion.com/typecho/</link><pubDate>Sat, 08 Jan 2011 04:45:29 +0000</pubDate><author><name>大大的小蜗牛</name><uri>https://eallion.com/</uri><email>eallions@gmail.com</email></author><guid>https://www.eallion.com/typecho/</guid><description><![CDATA[<p>我计划把博客从 WordPress 换成 typecho<br>
+没办法我就是爱折腾<br>
+而且我坦白的告诉你们<br>
+WordPress 没有你们想像的那么好<br>
+我当初打算弄个独立博客玩玩的时候选中了 WordPress<br>
+确实 WordPress 比其他的程序要好<br>
+还要好得多<br>
+但是个人感觉 2.9.2 是 WordPress 的极致了<br>
+像一个分水岭<br>
+2.9.2 是个巅峰<br>
+是的，现在 WordPress 的功能越来越强大<br>
+只是已经强大到让我越来越厌倦<br>
+越来越慢的载入速度<br>
+越来越高的负载要求<br>
+乱七八糟的新功能<br>
+很多东西可能我一辈子也用不上<br>
+做为一个个人独立博客站点<br>
+这些东西通通与我无关无关无关<br>
+就跟中国飞速发展的 GDP 一样<br>
+跟我没有关系<br>
+我只是想写几个文字<br>
+只是偶尔发几张图片<br>
+就只是这样而已</p>]]></description></item></channel></rss>

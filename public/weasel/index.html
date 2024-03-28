@@ -1,0 +1,845 @@
+<!doctype html><html lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=onion-location content="http://eallionskii7e32j3ncxnccyqq6uf7rbxwmst4x6mxeswx6fvrdtsmad.onion"><meta name=giscus:backlink content="https://www.eallion.com/weasel/"><title>Windows 安装 Rime 小狼毫五笔拼音输入法-大大的小蜗牛</title><meta name=Description content><meta property="og:title" content="Windows 安装 Rime 小狼毫五笔拼音输入法">
+<meta property="og:description" content="这篇文章介绍了作者在Windows系统中安装和配置Rime小狼毫五笔拼音输入法的过程。由于微软五笔输入法的一些限制不符合作者的需求，他决定重新安装Rime小狼毫。文章还解释了Rime、Plum和Weasel之间的关系，以及它们各自的功能和作用。作者将详细记录了安装过程，并分享了一些个人的自定义设置和使用体验。"><meta property="og:type" content="article"><meta property="og:url" content="https://www.eallion.com/weasel/"><meta property="og:image" content="https://www.eallion.com/assets/images/og/weasel.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2023-04-23T22:50:42+08:00"><meta property="article:modified_time" content="2023-04-23T22:50:42+08:00"><meta property="og:site_name" content="大大的小蜗牛"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://www.eallion.com/assets/images/og/weasel.png"><meta name=twitter:title content="Windows 安装 Rime 小狼毫五笔拼音输入法"><meta name=twitter:description content="这篇文章介绍了作者在Windows系统中安装和配置Rime小狼毫五笔拼音输入法的过程。由于微软五笔输入法的一些限制不符合作者的需求，他决定重新安装Rime小狼毫。文章还解释了Rime、Plum和Weasel之间的关系，以及它们各自的功能和作用。作者将详细记录了安装过程，并分享了一些个人的自定义设置和使用体验。"><meta name=twitter:site content="@eallion"><meta name=application-name content="大大的小蜗牛"><meta name=apple-mobile-web-app-title content="大大的小蜗牛"><meta name=theme-color content="#f8f8f8"><meta name=msapplication-TileColor content="#da532c"><meta name=twitter:creator content="@eallion"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://www.eallion.com/weasel/><link rel=prev href=https://www.eallion.com/umami/><link rel=next href=https://www.eallion.com/wodeai/><link rel=stylesheet href=/css/main.min.css><link rel=stylesheet href=/lib/normalize/normalize.min.055364f5be272caa092b0e6654c165828707f8ab971e2656383a6d6392bc345e.css integrity="sha256-BVNk9b4nLKoJKw5mVMFlgocH+KuXHiZWODptY5K8NF4="><link rel=stylesheet href=/css/color.b0a0f8c429ce52dfa2805b5f9e99ccdae1e8fbfd9adf4f3ddb409d8201fc0c5a.css integrity="sha256-sKD4xCnOUt+igFtfnpnM2uHo+/2a308920CdggH8DFo="><link rel=stylesheet href=/css/style.min.css><link rel=preload as=style onload='this.onload=null,this.rel="stylesheet"' href=/lib/fontawesome-free/all.min.43202d5486e011f9684a17bd6846b5c16a2619002bfc783f7e32e20dfb6bf857.css integrity="sha256-QyAtVIbgEfloShe9aEa1wWomGQAr/Hg/fjLiDftr+Fc="><noscript><link rel=stylesheet href=/lib/fontawesome-free/all.min.43202d5486e011f9684a17bd6846b5c16a2619002bfc783f7e32e20dfb6bf857.css integrity="sha256-QyAtVIbgEfloShe9aEa1wWomGQAr/Hg/fjLiDftr+Fc="></noscript><link rel=preload as=style onload='this.onload=null,this.rel="stylesheet"' href=/lib/animate/animate.min.5fbaeb9f8e25d7e0143bae61d4b1802c16ce7390b96ceb2d498b0d96ff4c853f.css integrity="sha256-X7rrn44l1+AUO65h1LGALBbOc5C5bOstSYsNlv9MhT8="><noscript><link rel=stylesheet href=/lib/animate/animate.min.5fbaeb9f8e25d7e0143bae61d4b1802c16ce7390b96ceb2d498b0d96ff4c853f.css integrity="sha256-X7rrn44l1+AUO65h1LGALBbOc5C5bOstSYsNlv9MhT8="></noscript><meta name=google-site-verification content="9Mvl_9FEM5JphVmp-u9ljtlChFohWuBBFjlSS89QKVU"><meta name=msvalidate.01 content="68A03C00DAFAD54E3739A8D372D9371B"><meta name=yandex-verification content="ff49a8cfbbaad423"><meta name=p:domain_verify content="b9e3534b99f9bd82f3b8688a1fa122a8"><meta name=baidu-site-verification content="ZWIiTFJWJkGQ11ZJ"><meta name=sogou_site_verification content="SZM7r2UEOz"><meta name=360-site-verification content="05afe845fd64ce6966deadce74479b5b"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Windows 安装 Rime 小狼毫五笔拼音输入法","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eallion.com/weasel/"},"image":["https://www.eallion.com/images/Apple-Devices-Preview.png"],"genre":"posts","keywords":["rime","中州韻","weasel","小狼毫","五笔"],"wordcount":13781,"url":"https://www.eallion.com/weasel/","datePublished":"2023-04-23T22:50:42+08:00","dateModified":"2023-04-23T22:50:42+08:00","license":"This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.","publisher":{"@type":"Organization","name":"Charles Chin","logo":"https://www.eallion.com/eallion.webp"},"author":[{"@type":"Person","name":"大大的小蜗牛","url":"https://eallion.com/"}],"description":""}</script><script src=/lib/instant.page/instantpage.min.js defer type=module></script><link href=https://e5n.cc/@eallion rel=me></head><body header-desktop=normal header-mobile=auto><script type=text/javascript>function setTheme(e){document.body.setAttribute("theme",e),document.documentElement.style.setProperty("color-scheme",e==="light"?"light":"dark"),e==="light"?document.documentElement.classList.remove("tw-dark"):document.documentElement.classList.add("tw-dark"),window.theme=e,window.isDark=window.theme!=="light"}function saveTheme(e){window.localStorage&&localStorage.setItem("theme",e)}function getMeta(e){const t=document.getElementsByTagName("meta");for(let n=0;n<t.length;n++)if(t[n].getAttribute("name")===e)return t[n];return""}if(window.localStorage&&localStorage.getItem("theme")){let e=localStorage.getItem("theme");e==="light"||e==="dark"||e==="black"?setTheme(e):setTheme(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}else"auto"==="light"||"auto"==="dark"||"auto"==="black"?(setTheme("auto"),saveTheme("auto")):(saveTheme("auto"),setTheme(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"));let metaColors={light:"#f8f8f8",dark:"#252627",black:"#000000"};getMeta("theme-color").content=metaColors[document.body.getAttribute("theme")],window.switchThemeEventSet=new Set</script><div id=back-to-top></div><div id=mask></div><div class=wrapper><header class="desktop print:!tw-hidden" id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title=大大的小蜗牛>大大的小蜗牛</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/ title=首页><i class='fas fa-home'></i> 首页 </a><a class=menu-item href=/posts/ title=所有文章><i class='fas fa-blog'></i> 博客 </a><a class=menu-item href=/mastodon/ title="Mastodon Toots 嘀咕"><i class='fab fa-mastodon'></i> 嘀咕 </a><a class=menu-item href=/media/ title="NeoDB 书影音记录"><i class='fas fa-film'></i> 书影音 </a><a class=menu-item href=/steam/ title="Steam 游戏清单"><i class='fab fa-steam'></i> 游戏库 </a><a class=menu-item href=/links/ title=友情链接><i class='fas fa-users'></i> 友情链接 </a><a class=menu-item href=/stats/ title=统计><i class='fas fa-chart-bar'></i> 统计 </a><a class=menu-item href=/about/ title=关于我关于本站><i class='fas fa-info'></i> 关于 </a><span class="menu-item delimiter"></span><a href=javascript:void(0); class="menu-item language" title=选择语言>简体中文<i class="fas fa-chevron-right fa-fw"></i>
+<select class=language-select title=选择语言 id=language-select-desktop onchange="location=this.value"><option value=/weasel/ selected>简体中文</option></select>
+</a><span class="menu-item search" id=search-desktop><input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i>
+</a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i>
+</a><span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i>
+</span></span><a href=javascript:void(0); class="menu-item theme-select" title=切换主题><i class="fas fa-adjust fa-fw"></i>
+<select class=color-theme-select id=theme-select-desktop title=切换主题><option value=light>浅色</option><option value=dark>深色</option><option value=black>黑色</option><option value=auto>跟随系统</option></select></a></div></div></div></header><header class="mobile print:!tw-hidden" id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title=大大的小蜗牛>大大的小蜗牛</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i>
+</a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i>
+</a><span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/ title=首页><i class='fas fa-home'></i>首页</a><a class=menu-item href=/posts/ title=所有文章><i class='fas fa-blog'></i>博客</a><a class=menu-item href=/mastodon/ title="Mastodon Toots 嘀咕"><i class='fab fa-mastodon'></i>嘀咕</a><a class=menu-item href=/media/ title="NeoDB 书影音记录"><i class='fas fa-film'></i>书影音</a><a class=menu-item href=/steam/ title="Steam 游戏清单"><i class='fab fa-steam'></i>游戏库</a><a class=menu-item href=/links/ title=友情链接><i class='fas fa-users'></i>友情链接</a><a class=menu-item href=/stats/ title=统计><i class='fas fa-chart-bar'></i>统计</a><a class=menu-item href=/about/ title=关于我关于本站><i class='fas fa-info'></i>关于</a><a href=javascript:void(0); class="menu-item theme-select" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i>
+<select class=color-theme-select id=theme-select-mobile title=切换主题><option value=light>浅色</option><option value=dark>深色</option><option value=black>黑色</option><option value=auto>跟随系统</option></select>
+</a><a href=javascript:void(0); class=menu-item title=选择语言>简体中文<i class="fas fa-chevron-right fa-fw"></i>
+<select class=language-select title=选择语言 onchange="location=this.value"><option value=/weasel/ selected>简体中文</option></select></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class="toc print:!tw-hidden" id=toc-auto><h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto><nav id=TableOfContents><ul><li><ul><li><a href=#前言>前言</a></li><li><a href=#安装>安装</a></li><li><a href=#配置五笔拼音>配置五笔拼音</a></li><li><a href=#自定义短语>自定义短语</a><ul><li><a href=#步骤1-用户文件夹>步骤1. 用户文件夹</a></li><li><a href=#步骤2-新建-custom_phrasetxt>步骤2. 新建 <code>Custom_phrase.txt</code></a></li><li><a href=#步骤3-新建-wubi_pinyincustomyaml>步骤3. 新建 <code>wubi_pinyin.custom.yaml</code></a></li><li><a href=#步骤4-添加代码>步骤4. 添加代码</a></li><li><a href=#附部分自用设置>附：部分自用设置</a></li></ul></li><li><a href=#自定义符号表>自定义符号表</a></li><li><a href=#用户文件夹截图>用户文件夹（截图）</a></li></ul></li></ul></nav></div></div><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC","true")</script><article class="page single print:!tw-w-full print:!tw-max-w-none print:!tw-m-0 print:!tw-p-0"><h1 class="single-title animate__animated animate__flipInX">Windows 安装 Rime 小狼毫五笔拼音输入法</h1><div class=post-meta><div class=post-meta-line><span class=post-author><span class=author><span class=screen-reader-text></span><a href=https://www.eallion.com/authors/eallion><img src=https://www.eallion.com/eallion.webp alt='大大的小蜗牛 avatar' class="tw-inline-block tw-max-h-4 tw-rounded-full tw-translate-y-[-2px] tw-mr-1">大大的小蜗牛</a></span></span>&nbsp;<span class=post-category>收录于 </span>&nbsp;<span class=post-category>类别 <a href=/categories/%E4%BB%A3%E7%A0%81/><i class="far fa-folder fa-fw"></i>代码</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2023-04-23>2023-04-23</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime=2023-04-23>2023-04-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 13781 字&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 28 分钟&nbsp;</div></div><div class="details toc print:!tw-block" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><ul><li><a href=#前言>前言</a></li><li><a href=#安装>安装</a></li><li><a href=#配置五笔拼音>配置五笔拼音</a></li><li><a href=#自定义短语>自定义短语</a><ul><li><a href=#步骤1-用户文件夹>步骤1. 用户文件夹</a></li><li><a href=#步骤2-新建-custom_phrasetxt>步骤2. 新建 <code>Custom_phrase.txt</code></a></li><li><a href=#步骤3-新建-wubi_pinyincustomyaml>步骤3. 新建 <code>wubi_pinyin.custom.yaml</code></a></li><li><a href=#步骤4-添加代码>步骤4. 添加代码</a></li><li><a href=#附部分自用设置>附：部分自用设置</a></li></ul></li><li><a href=#自定义符号表>自定义符号表</a></li><li><a href=#用户文件夹截图>用户文件夹（截图）</a></li></ul></li></ul></nav></div></div><div class=post-ai><div class=ai-header><div class=ai-title><svg role="img" width="1em" height="1em" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="ai-title-icon"><title>OpenAI ChatGPT3.5</title><path d="M22.2819 9.8211a5.9847 5.9847.0 00-.5157-4.9108 6.0462 6.0462.0 00-6.5098-2.9A6.0651 6.0651.0 004.9807 4.1818a5.9847 5.9847.0 00-3.9977 2.9 6.0462 6.0462.0 00.7427 7.0966 5.98 5.98.0 00.511 4.9107 6.051 6.051.0 006.5146 2.9001A5.9847 5.9847.0 0013.2599 24a6.0557 6.0557.0 005.7718-4.2058 5.9894 5.9894.0 003.9977-2.9001 6.0557 6.0557.0 00-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755.0 01-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948.0 00.3927-.6813v-6.7369l2.02 1.1686a.071.071.0 01.038.052v5.5826a4.504 4.504.0 01-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708.0 01-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712.0 00.7806.0l5.8428-3.3685v2.3324a.0804.0804.0 01-.0332.0615L9.74 19.9502a4.4992 4.4992.0 01-6.1408-1.6464zM2.3408 7.8956a4.485 4.485.0 012.3655-1.9728V11.6a.7664.7664.0 00.3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757.0 01-.071.0l-4.8303-2.7865A4.504 4.504.0 012.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757.0 01.071.0l4.8303 2.7913a4.4944 4.4944.0 01-.6765 8.1042v-5.6772a.79.79.0 00-.407-.667zm2.0107-3.0231-.142-.0852-4.7735-2.7818a.7759.7759.0 00-.7854.0L9.409 9.2297V6.8974a.0662.0662.0 01.0284-.0615l4.8303-2.7866a4.4992 4.4992.0 016.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804.0 01-.038-.0567V6.0742a4.4992 4.4992.0 017.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948.0 00-.3927.6813zm1.0976-2.3654 2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997z"/></svg><div class=ai-title-text><a href=https://www.eallion.com/ai-summary/ target=_blank rel="noopener noreferrer" alt="AI 智能摘要" title="AI 智能摘要">AI 摘要</a></div></div><div class=ai-title-tooltip><i class="far fa-question-circle"></i>
+<span class=ai-title-tooltip-text>Pre-generated by ChatGPT 3.5</span></div></div><div id=ai-explanation class=ai-explanation>这篇文章介绍了作者在Windows系统中安装和配置Rime小狼毫五笔拼音输入法的过程。由于微软五笔输入法的一些限制不符合作者的需求，他决定重新安装Rime小狼毫。文章还解释了Rime、Plum和Weasel之间的关系，以及它们各自的功能和作用。作者将详细记录了安装过程，并分享了一些个人的自定义设置和使用体验。</div></div><div class=content id=content><ul><li><a href=#%e5%89%8d%e8%a8%80 rel>前言</a></li><li><a href=#%e5%ae%89%e8%a3%85 rel>安装</a></li><li><a href=#%e9%85%8d%e7%bd%ae%e4%ba%94%e7%ac%94%e6%8b%bc%e9%9f%b3 rel>配置五笔拼音</a></li><li><a href=#%e8%87%aa%e5%ae%9a%e4%b9%89%e7%9f%ad%e8%af%ad rel>自定义短语</a><ul><li><a href=#%e6%ad%a5%e9%aa%a41-%e7%94%a8%e6%88%b7%e6%96%87%e4%bb%b6%e5%a4%b9 rel>步骤1. 用户文件夹</a></li><li><a href=#%e6%ad%a5%e9%aa%a42-%e6%96%b0%e5%bb%ba-custom_phrasetxt rel>步骤2. 新建 <code>Custom_phrase.txt</code></a></li><li><a href=#%e6%ad%a5%e9%aa%a43-%e6%96%b0%e5%bb%ba-wubi_pinyincustomyaml rel>步骤3. 新建 <code>wubi_pinyin.custom.yaml</code></a></li><li><a href=#%e6%ad%a5%e9%aa%a44-%e6%b7%bb%e5%8a%a0%e4%bb%a3%e7%a0%81 rel>步骤4. 添加代码</a></li><li><a href=#%e9%99%84%e9%83%a8%e5%88%86%e8%87%aa%e7%94%a8%e8%ae%be%e7%bd%ae rel>附：部分自用设置</a></li></ul></li><li><a href=#%e8%87%aa%e5%ae%9a%e4%b9%89%e7%ac%a6%e5%8f%b7%e8%a1%a8 rel>自定义符号表</a></li><li><a href=#%e7%94%a8%e6%88%b7%e6%96%87%e4%bb%b6%e5%a4%b9%e6%88%aa%e5%9b%be rel>用户文件夹（截图）</a></li></ul><h3 id=前言 class=headerLink><a href=#%e5%89%8d%e8%a8%80 class=header-mark></a>前言</h3><p>三年多没有用过 Windows 上的小狼毫输入法了，现在重装 Win10 。记录一下安装过程。</p><p>这两年一直在用微软自带的五笔输入法，但是微软五笔不能把数字后面的全角点 “<code>。</code>” 自动转变为 “<code>.</code>”。输入小数点就会变成 <code>3。14159</code> 。<br>用于包裹代码的 “<code>‵‵‵</code>” 键也会自动转换成 “<code>•••</code>”。<br>我现在的工作流需要输入大量数字。微软五笔暂时已不适应我的工作流了。所以重新安装 Rime 小狼毫使用。</p><p>初识 Rime 中州韵输入法引擎，可能觉得这个输入法太复杂了，很容易被劝退。<br>但是熟悉了这款输入法之后，就再也不想用其他输入法了。</p><p>我试图让 ChatGPT 解释一下 Rime、Plum、Weasel 之间的关系，ChatGPT 是这样说的：</p><blockquote><p>（ChatGPT）：我可以为您解释这三个词汇的含义和它们之间的关系：</p><ul><li><p>Rime（中州韵）：是一个可定制、跨平台的输入法引擎，由中文输入法发起人佛振和以其为核心成员的团队开发。它可以让用户自定义词库、按键设置等，非常便于个性化定制。</p></li><li><p>Weasel（小狼毫）：是一个基于 rime 引擎的简单的输入法，适合那些不需要很多自定义功能的用户。它支持拼音、五笔和注音等输入法方式，可在 Windows、macOS 和 Linux 等多个操作系统下使用。</p></li><li><p>Plum（东风破）：是一个 rime 配置管理器，可以帮助用户方便地管理 rime 输入法的配置信息。它提供了可视化的界面，用户可以通过它快速切换、备份和还原自己的配置文件，也可以方便地分享自己的配置方案。</p></li></ul><p>因此，可以说 Weasel 是一个基于 Rime 引擎的输入法，而 Plum 则是一个辅助 Rime 用户的工具。它们的关系是 Weasel 依赖于 Rime 引擎，而 Plum 可以帮助 Rime 用户更方便地管理和分享自己的配置信息。</p></blockquote><p>Weasel 中文名叫“小狼毫”，是 Windows 上的输入法名称。对应的其他平台也有名称：</p><ul><li>Windows：Weasel 小狼毫</li><li>MacOS：Squirrel 鼠须管</li><li>Linux：ibus-rime， fcitx-rime， fcitx5-rime</li><li>Android：Trime 同文</li></ul><h3 id=安装 class=headerLink><a href=#%e5%ae%89%e8%a3%85 class=header-mark></a>安装</h3><p>以前记录过：《<a href=https://eallion.com/rime-wubi/ target=_blank rel="noopener noreferrer">Rime 小狼毫 五笔输入法自定义短语</a>》，现在记录下如何完整安装小狼毫。</p><p>Weasel 没有提供 Scoop 安装脚本，需要下载安装包安装：<a href=https://rime.im/download/ target=_blank rel="noopener noreferrer">https://rime.im/download/</a></p><p>安装过程基本上可以一路下一步完成即可。如果不是很熟悉这个输入法，用户文件夹保持默认即可。</p><p><figure><a class=lightgallery href=/assets/images/posts/2023/04/weasel_install.png title=/assets/images/posts/2023/04/weasel_install.png data-thumbnail=/assets/images/posts/2023/04/weasel_install.png><img loading=lazy src=/assets/images/posts/2023/04/weasel_install.png srcset="/assets/images/posts/2023/04/weasel_install.png, /assets/images/posts/2023/04/weasel_install.png 1.5x, /assets/images/posts/2023/04/weasel_install.png 2x" alt=/assets/images/posts/2023/04/weasel_install.png></a></figure></p><h3 id=配置五笔拼音 class=headerLink><a href=#%e9%85%8d%e7%bd%ae%e4%ba%94%e7%ac%94%e6%8b%bc%e9%9f%b3 class=header-mark></a>配置五笔拼音</h3><p>默认安装后，如果是打拼音的话已经可以用了。但如果用五笔输入法，需要配置一下。</p><ol><li>在开始菜单中点击 <code>【小狼毫】输入法设定</code>，任务栏输入法图标上点右键也可以。</li></ol><p><figure><a class=lightgallery href=/assets/images/posts/2023/04/weasel_setting.png title=/assets/images/posts/2023/04/weasel_setting.png data-thumbnail=/assets/images/posts/2023/04/weasel_setting.png><img loading=lazy src=/assets/images/posts/2023/04/weasel_setting.png srcset="/assets/images/posts/2023/04/weasel_setting.png, /assets/images/posts/2023/04/weasel_setting.png 1.5x, /assets/images/posts/2023/04/weasel_setting.png 2x" alt=/assets/images/posts/2023/04/weasel_setting.png></a></figure></p><ol start=2><li>在弹出的 <code>【小狼毫】方案选单设定</code> 里点击 <code>获取更多输入方案</code></li></ol><p><figure><a class=lightgallery href=/assets/images/posts/2023/04/weasel_more.png title=/assets/images/posts/2023/04/weasel_more.png data-thumbnail=/assets/images/posts/2023/04/weasel_more.png><img loading=lazy src=/assets/images/posts/2023/04/weasel_more.png srcset="/assets/images/posts/2023/04/weasel_more.png, /assets/images/posts/2023/04/weasel_more.png 1.5x, /assets/images/posts/2023/04/weasel_more.png 2x" alt=/assets/images/posts/2023/04/weasel_more.png></a></figure></p><ol start=3><li>在弹出的 CMD 窗口中安装 <code>袖珍简化字拼音</code></li></ol><p><code>五笔拼音</code> 混合输入依赖于<code>袖珍简单拼音</code>。<br>使用默认 <code>用户文件夹</code> 的情况下可以使用这种方法安装。<br>可以在 CDM 中粘贴 GitHub 仓库地址，也可以把下载好的 <code>.zip</code> 压缩包拖进这个窗口。</p><blockquote><p><a href=https://github.com/rime/rime-pinyin-simp target=_blank rel="noopener noreferrer">https://github.com/rime/rime-pinyin-simp</a></p></blockquote><p><figure><a class=lightgallery href=/assets/images/posts/2023/04/install_simp.png title=/assets/images/posts/2023/04/install_simp.png data-thumbnail=/assets/images/posts/2023/04/install_simp.png><img loading=lazy src=/assets/images/posts/2023/04/install_simp.png srcset="/assets/images/posts/2023/04/install_simp.png, /assets/images/posts/2023/04/install_simp.png 1.5x, /assets/images/posts/2023/04/install_simp.png 2x" alt=/assets/images/posts/2023/04/install_simp.png></a></figure></p><ol start=4><li>在弹出的 CMD 窗口中安装 <code>五笔字型</code></li></ol><blockquote><p><a href=https://github.com/rime/rime-wubi target=_blank rel="noopener noreferrer">https://github.com/rime/rime-wubi</a></p></blockquote><p><figure><a class=lightgallery href=/assets/images/posts/2023/04/install_wubi.png title=/assets/images/posts/2023/04/install_wubi.png data-thumbnail=/assets/images/posts/2023/04/install_wubi.png><img loading=lazy src=/assets/images/posts/2023/04/install_wubi.png srcset="/assets/images/posts/2023/04/install_wubi.png, /assets/images/posts/2023/04/install_wubi.png 1.5x, /assets/images/posts/2023/04/install_wubi.png 2x" alt=/assets/images/posts/2023/04/install_wubi.png></a></figure></p><h3 id=自定义短语 class=headerLink><a href=#%e8%87%aa%e5%ae%9a%e4%b9%89%e7%9f%ad%e8%af%ad class=header-mark></a>自定义短语</h3><p>比如「天猫」这个词，广泛流行起来是 2012 年之后了。<br>一些专有名词、姓名、品牌、网络用语这些词在五笔词库里是没有的，那就需要通过自定义短语添加。<br>Rime 输入法引擎的一大特点就是支持高度自定义。</p><p>我分享的 dotfiles 配置文件仓库中有备份，可以直接复制使用：<a href=https://github.com/eallion/dotfiles/tree/windows/Users/eallion/AppData/Roaming/Rime target=_blank rel="noopener noreferrer"><i class="fab fa-github-alt fa-fw"></i>eallion/dotfiles</a><br>这里照抄一下以前的博客：《<a href=https://eallion.com/rime-wubi/ target=_blank rel="noopener noreferrer">Rime 小狼毫 五笔输入法自定义短语</a>》</p><h4 id=步骤1-用户文件夹 class=headerLink><a href=#%e6%ad%a5%e9%aa%a41-%e7%94%a8%e6%88%b7%e6%96%87%e4%bb%b6%e5%a4%b9 class=header-mark></a>步骤1. 用户文件夹</h4><p>在文件资源管理器中打开 <code>% AppData%\Rime</code> 进入「用户文件夹」，或者通过右键点击任务栏图标进入「用户文件夹」。</p><h4 id=步骤2-新建-custom_phrasetxt class=headerLink><a href=#%e6%ad%a5%e9%aa%a42-%e6%96%b0%e5%bb%ba-custom_phrasetxt class=header-mark></a>步骤2. 新建 <code>Custom_phrase.txt</code></h4><p>在用户目录中新建 <code>Custom_phrase.txt</code> ，输入以下内容：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=c># Rime table</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c># coding: utf-8</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#@/db_name custom_phrase.txt</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#@/db_type tabledb</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c># 用於【五笔拼音】系列輸入方案</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#【小狼毫】0.9.21 以上</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c># 請將該文件以 UTF-8 編碼保存爲</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c># Rime 用戶文件夾 /custom_phrase.txt</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c># 碼表各字段以製表符（Tab）分隔</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c># 順序爲：文字、編碼、權重（決定重碼的次序、可選）</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c># 雖然文本碼表編輯較爲方便，但不適合導入大量條目</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c># no comment</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=l>大大的小蜗牛    ddrr    1</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>说明：</p><ul><li>格式为：<code>自定义短语</code> <code>短语编码</code> <code>排序</code>，如：<code>大大的小蜗牛 ddrr 1</code></li><li>格式中的 <code>Tab</code> 不能用空格代替</li><li><code># no comment</code> 之后的内容中 <code>#</code> 注释会失效</li><li>不宜添加过多的自定义短语，若有大量自定义短语请用用户词典</li><li>同样的编码，权重越大，排名越靠前</li></ul><p><figure><a class=lightgallery href=/assets/images/posts/2023/04/rime_bianma.png title=/assets/images/posts/2023/04/rime_bianma.png data-thumbnail=/assets/images/posts/2023/04/rime_bianma.png><img loading=lazy src=/assets/images/posts/2023/04/rime_bianma.png srcset="/assets/images/posts/2023/04/rime_bianma.png, /assets/images/posts/2023/04/rime_bianma.png 1.5x, /assets/images/posts/2023/04/rime_bianma.png 2x" alt=/assets/images/posts/2023/04/rime_bianma.png></a></figure></p><h4 id=步骤3-新建-wubi_pinyincustomyaml class=headerLink><a href=#%e6%ad%a5%e9%aa%a43-%e6%96%b0%e5%bb%ba-wubi_pinyincustomyaml class=header-mark></a>步骤3. 新建 <code>wubi_pinyin.custom.yaml</code></h4><p>在「用户文件夹」中新建一个文件：<code>wubi_pinyin.custom.yaml</code>，一般新建一个跟正在使用的输入方案词典同名的 <code>custom</code> 文件。</p><h4 id=步骤4-添加代码 class=headerLink><a href=#%e6%ad%a5%e9%aa%a44-%e6%b7%bb%e5%8a%a0%e4%bb%a3%e7%a0%81 class=header-mark></a>步骤4. 添加代码</h4><p>在 <code>wubi_pinyin.custom.yaml</code> 里添加修改如下代码：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>patch</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>engine/translators</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>punct_translator</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>reverse_lookup_translator</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>script_translator</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>table_translator@custom_phrase</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>table_translator</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>custom_phrase</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>dictionary</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>user_dict</span><span class=p>:</span><span class=w> </span><span class=l>custom_phrase</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>db_class</span><span class=p>:</span><span class=w> </span><span class=l>stabledb</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>enable_completion</span><span class=p>:</span><span class=w> </span><span class=kc>false</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>enable_sentence</span><span class=p>:</span><span class=w> </span><span class=kc>false</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>initial_quality</span><span class=p>:</span><span class=w> </span><span class=m>1</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>说明：不能出现多个 <code>patch</code>，一个文件中只能出现一次 <code>patch</code>，多余的需要注释掉。</p><h4 id=附部分自用设置 class=headerLink><a href=#%e9%99%84%e9%83%a8%e5%88%86%e8%87%aa%e7%94%a8%e8%ae%be%e7%bd%ae class=header-mark></a>附：部分自用设置</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=c># https://github.com/rime/home/wiki/CustomizationGuide # Rime 定制指南</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c># https://github.com/LEOYoon-Tsaw/Rime_collections/blob/master/Rime_description.md # Schema.yaml 详解</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>patch</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>punctuator/full_shape</span><span class=p>:</span><span class=w> </span><span class=c># 自定义全角标点符号（覆盖默认设置）</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=s2>&#34;/&#34;</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=s2>&#34;/&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=s2>&#34;%&#34;</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=s2>&#34;%&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=s2>&#34;*&#34;</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=s2>&#34;*&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=s2>&#34;|&#34;</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=s2>&#34;|&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>&#34;&lt;&#34;: </span><span class=p>[</span><span class=s2>&#34;《&#34;</span><span class=p>,</span><span class=w> </span><span class=s2>&#34;&lt;&#34;</span><span class=p>,</span><span class=w> </span><span class=s2>&#34;〈&#34;</span><span class=p>,</span><span class=w> </span><span class=s2>&#34;«&#34;</span><span class=p>,</span><span class=w> </span><span class=s2>&#34;‹&#34;</span><span class=p>]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>&#34;&gt;&#34;: </span><span class=p>[</span><span class=s2>&#34;》&#34;</span><span class=p>,</span><span class=w> </span><span class=s2>&#34;&gt;&#34;</span><span class=p>,</span><span class=w> </span><span class=s2>&#34;〉&#34;</span><span class=p>,</span><span class=w> </span><span class=s2>&#34;»&#34;</span><span class=p>,</span><span class=w> </span><span class=s2>&#34;›&#34;</span><span class=p>]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>punctuator/half_shape</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=s2>&#34;/&#34;</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=s2>&#34;/&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=s2>&#34;%&#34;</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=s2>&#34;%&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=s2>&#34;*&#34;</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=s2>&#34;*&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=s2>&#34;|&#34;</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=s2>&#34;|&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>&#34;&lt;&#34;: </span><span class=p>[</span><span class=s2>&#34;《&#34;</span><span class=p>,</span><span class=w> </span><span class=s2>&#34;&lt;&#34;</span><span class=p>,</span><span class=w> </span><span class=s2>&#34;〈&#34;</span><span class=p>,</span><span class=w> </span><span class=s2>&#34;«&#34;</span><span class=p>,</span><span class=w> </span><span class=s2>&#34;‹&#34;</span><span class=p>]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>&#34;&gt;&#34;: </span><span class=p>[</span><span class=s2>&#34;》&#34;</span><span class=p>,</span><span class=w> </span><span class=s2>&#34;&gt;&#34;</span><span class=p>,</span><span class=w> </span><span class=s2>&#34;〉&#34;</span><span class=p>,</span><span class=w> </span><span class=s2>&#34;»&#34;</span><span class=p>,</span><span class=w> </span><span class=s2>&#34;›&#34;</span><span class=p>]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>recognizer/patterns/reverse_lookup</span><span class=p>:</span><span class=w> </span><span class=c># 关闭 ` 键的反查功能</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=s1>&#39;punctuator/full_shape/`&#39;</span><span class=p>:</span><span class=s2>&#34;`&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=s1>&#39;punctuator/half_shape/`&#39;</span><span class=p>:</span><span class=s2>&#34;`&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>translator/enable_user_dict</span><span class=p>:</span><span class=w> </span><span class=kc>false</span><span class=w> </span><span class=c># 用户词典</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>translator/enable_completion</span><span class=p>:</span><span class=w> </span><span class=kc>false</span><span class=w> </span><span class=c># 逐码提示</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>translator/enable_sentence</span><span class=p>:</span><span class=w> </span><span class=kc>false</span><span class=w> </span><span class=c># 是否开启自动造句</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=c># menu/alternative_select_labels: [ ①, ②, ③, ④, ⑤, ⑥, ⑦, ⑧, ⑨ ]  # 修改候选標籤</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=c># menu/alternative_select_labels: [ ❶,❷,❷,❸,❹,❺,❻,❼,❽,❾,❿ ]  # 修改候选標籤</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>menu/page_size</span><span class=p>:</span><span class=w> </span><span class=m>5</span><span class=w> </span><span class=c># 每页候选词数量</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>style/horizontal</span><span class=p>:</span><span class=w> </span><span class=kc>false</span><span class=w>      </span><span class=c># false 为候选横排显示</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>style/display_tray_icon</span><span class=p>:</span><span class=w> </span><span class=kc>false</span><span class=w>  </span><span class=c># 是否显示托盘图标</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=c># style/font_face: &#34;Noto Sans SC&#34;  # 字体名称，从记事本等处的系统字体对话框里能看到</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=c># style/font_point: 14     # 字號，只认数字的，不认「五號」、「小五」这样的</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>speller/auto_select</span><span class=p>:</span><span class=w> </span><span class=kc>false</span><span class=w> </span><span class=c># 取消四码自动上屏</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>app_options/code.exe</span><span class=p>:</span><span class=w>  </span><span class=c># VSCode 里默认用英文输入程序名字全用小写字母</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>ascii_mode</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>&#34;switches/@0/reset&#34;: </span><span class=m>1</span><span class=w> </span><span class=c># 1 默认英文状态，0 默认中文状态</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=s2>&#34;key_binder/bindings&#34;</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- {<span class=w> </span><span class=nt>when: has_menu, accept: semicolon, send</span><span class=p>:</span><span class=w> </span><span class=m>2</span><span class=w> </span>}<span class=w> </span><span class=c># 分号选择第 2 候选词</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- {<span class=w> </span><span class=nt>when: has_menu, accept: apostrophe, send</span><span class=p>:</span><span class=w> </span><span class=m>3</span><span class=w> </span>}<span class=w> </span><span class=c># 单引号选择第 2 候选词</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>engine/filters</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>simplifier</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>uniquifier</span><span class=w> </span><span class=c># 过滤重复候选项，依赖 simplifier</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=c># 自定义短语 Custom_phrase.txt # Tab 不能用空格代替</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>engine/translators</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>punct_translator</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>reverse_lookup_translator</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>script_translator</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>table_translator@custom_phrase</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>table_translator</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>custom_phrase</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>dictionary</span><span class=p>:</span><span class=w> </span><span class=l>wubi86</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>user_dict</span><span class=p>:</span><span class=w> </span><span class=l>custom_phrase</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>db_class</span><span class=p>:</span><span class=w> </span><span class=l>stabledb</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>enable_completion</span><span class=p>:</span><span class=w> </span><span class=kc>false</span><span class=w> </span><span class=c># 提前显示尚未输入完整码的字</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>enable_sentence</span><span class=p>:</span><span class=w> </span><span class=kc>false</span><span class=w> </span><span class=c># 是否开启自动造句</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>initial_quality</span><span class=p>:</span><span class=w> </span><span class=m>1000</span><span class=w> </span><span class=c># 优先级，如果想要自定义的词排在前面，这个值尽量设大一点</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=自定义符号表 class=headerLink><a href=#%e8%87%aa%e5%ae%9a%e4%b9%89%e7%ac%a6%e5%8f%b7%e8%a1%a8 class=header-mark></a>自定义符号表</h3><p>在 <code>用户文件夹</code> 中新建 <code>mysymbols.yaml</code> 文件，复制以下内容（自用）：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span><span class=lnt>136
+</span><span class=lnt>137
+</span><span class=lnt>138
+</span><span class=lnt>139
+</span><span class=lnt>140
+</span><span class=lnt>141
+</span><span class=lnt>142
+</span><span class=lnt>143
+</span><span class=lnt>144
+</span><span class=lnt>145
+</span><span class=lnt>146
+</span><span class=lnt>147
+</span><span class=lnt>148
+</span><span class=lnt>149
+</span><span class=lnt>150
+</span><span class=lnt>151
+</span><span class=lnt>152
+</span><span class=lnt>153
+</span><span class=lnt>154
+</span><span class=lnt>155
+</span><span class=lnt>156
+</span><span class=lnt>157
+</span><span class=lnt>158
+</span><span class=lnt>159
+</span><span class=lnt>160
+</span><span class=lnt>161
+</span><span class=lnt>162
+</span><span class=lnt>163
+</span><span class=lnt>164
+</span><span class=lnt>165
+</span><span class=lnt>166
+</span><span class=lnt>167
+</span><span class=lnt>168
+</span><span class=lnt>169
+</span><span class=lnt>170
+</span><span class=lnt>171
+</span><span class=lnt>172
+</span><span class=lnt>173
+</span><span class=lnt>174
+</span><span class=lnt>175
+</span><span class=lnt>176
+</span><span class=lnt>177
+</span><span class=lnt>178
+</span><span class=lnt>179
+</span><span class=lnt>180
+</span><span class=lnt>181
+</span><span class=lnt>182
+</span><span class=lnt>183
+</span><span class=lnt>184
+</span><span class=lnt>185
+</span><span class=lnt>186
+</span><span class=lnt>187
+</span><span class=lnt>188
+</span><span class=lnt>189
+</span><span class=lnt>190
+</span><span class=lnt>191
+</span><span class=lnt>192
+</span><span class=lnt>193
+</span><span class=lnt>194
+</span><span class=lnt>195
+</span><span class=lnt>196
+</span><span class=lnt>197
+</span><span class=lnt>198
+</span><span class=lnt>199
+</span><span class=lnt>200
+</span><span class=lnt>201
+</span><span class=lnt>202
+</span><span class=lnt>203
+</span><span class=lnt>204
+</span><span class=lnt>205
+</span><span class=lnt>206
+</span><span class=lnt>207
+</span><span class=lnt>208
+</span><span class=lnt>209
+</span><span class=lnt>210
+</span><span class=lnt>211
+</span><span class=lnt>212
+</span><span class=lnt>213
+</span><span class=lnt>214
+</span><span class=lnt>215
+</span><span class=lnt>216
+</span><span class=lnt>217
+</span><span class=lnt>218
+</span><span class=lnt>219
+</span><span class=lnt>220
+</span><span class=lnt>221
+</span><span class=lnt>222
+</span><span class=lnt>223
+</span><span class=lnt>224
+</span><span class=lnt>225
+</span><span class=lnt>226
+</span><span class=lnt>227
+</span><span class=lnt>228
+</span><span class=lnt>229
+</span><span class=lnt>230
+</span><span class=lnt>231
+</span><span class=lnt>232
+</span><span class=lnt>233
+</span><span class=lnt>234
+</span><span class=lnt>235
+</span><span class=lnt>236
+</span><span class=lnt>237
+</span><span class=lnt>238
+</span><span class=lnt>239
+</span><span class=lnt>240
+</span><span class=lnt>241
+</span><span class=lnt>242
+</span><span class=lnt>243
+</span><span class=lnt>244
+</span><span class=lnt>245
+</span><span class=lnt>246
+</span><span class=lnt>247
+</span><span class=lnt>248
+</span><span class=lnt>249
+</span><span class=lnt>250
+</span><span class=lnt>251
+</span><span class=lnt>252
+</span><span class=lnt>253
+</span><span class=lnt>254
+</span><span class=lnt>255
+</span><span class=lnt>256
+</span><span class=lnt>257
+</span><span class=lnt>258
+</span><span class=lnt>259
+</span><span class=lnt>260
+</span><span class=lnt>261
+</span><span class=lnt>262
+</span><span class=lnt>263
+</span><span class=lnt>264
+</span><span class=lnt>265
+</span><span class=lnt>266
+</span><span class=lnt>267
+</span><span class=lnt>268
+</span><span class=lnt>269
+</span><span class=lnt>270
+</span><span class=lnt>271
+</span><span class=lnt>272
+</span><span class=lnt>273
+</span><span class=lnt>274
+</span><span class=lnt>275
+</span><span class=lnt>276
+</span><span class=lnt>277
+</span><span class=lnt>278
+</span><span class=lnt>279
+</span><span class=lnt>280
+</span><span class=lnt>281
+</span><span class=lnt>282
+</span><span class=lnt>283
+</span><span class=lnt>284
+</span><span class=lnt>285
+</span><span class=lnt>286
+</span><span class=lnt>287
+</span><span class=lnt>288
+</span><span class=lnt>289
+</span><span class=lnt>290
+</span><span class=lnt>291
+</span><span class=lnt>292
+</span><span class=lnt>293
+</span><span class=lnt>294
+</span><span class=lnt>295
+</span><span class=lnt>296
+</span><span class=lnt>297
+</span><span class=lnt>298
+</span><span class=lnt>299
+</span><span class=lnt>300
+</span><span class=lnt>301
+</span><span class=lnt>302
+</span><span class=lnt>303
+</span><span class=lnt>304
+</span><span class=lnt>305
+</span><span class=lnt>306
+</span><span class=lnt>307
+</span><span class=lnt>308
+</span><span class=lnt>309
+</span><span class=lnt>310
+</span><span class=lnt>311
+</span><span class=lnt>312
+</span><span class=lnt>313
+</span><span class=lnt>314
+</span><span class=lnt>315
+</span><span class=lnt>316
+</span><span class=lnt>317
+</span><span class=lnt>318
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=c># Rime&#39;s punctuation and symbols</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c># encoding: utf-8</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c># Usage: patch your Rime schema to enable /X symbols</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>config_version</span><span class=p>:</span><span class=w> </span><span class=s1>&#39;1.3&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>patch</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>punctuator/import_preset</span><span class=p>:</span><span class=w> </span><span class=l>symbols</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>recognizer/patterns/punct</span><span class=p>:</span><span class=w> </span><span class=s1>&#39;^/([0-9]0?|[A-Za-z]+)$&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>punctuator</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>full_shape</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39; &#39; </span><span class=p>:</span><span class=w> </span>{<span class=w> </span><span class=nt>commit</span><span class=p>:</span><span class=w> </span><span class=s1>&#39;　&#39;</span><span class=w> </span>}<span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;,&#39; </span><span class=p>:</span><span class=w> </span>{<span class=w> </span><span class=nt>commit</span><span class=p>:</span><span class=w> </span><span class=l>， }</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;.&#39; </span><span class=p>:</span><span class=w> </span>{<span class=w> </span><span class=nt>commit</span><span class=p>:</span><span class=w> </span><span class=l>。 }</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;&lt;&#39; </span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>《, 〈, «, ‹ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;&gt;&#39; </span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>》, 〉, », › ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/&#39; </span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>／, ÷ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;?&#39; </span><span class=p>:</span><span class=w> </span>{<span class=w> </span><span class=nt>commit</span><span class=p>:</span><span class=w> </span><span class=l>？ }</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;;&#39; </span><span class=p>:</span><span class=w> </span>{<span class=w> </span><span class=nt>commit</span><span class=p>:</span><span class=w> </span><span class=l>； }</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;:&#39; </span><span class=p>:</span><span class=w> </span>{<span class=w> </span><span class=nt>commit</span><span class=p>:</span><span class=w> </span><span class=l>： }</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;&#39;&#39;&#39; </span><span class=p>:</span><span class=w> </span>{<span class=w> </span><span class=nt>pair</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=s1>&#39;‘&#39;</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;’&#39;</span><span class=w> </span><span class=p>]</span><span class=w> </span>}<span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=s1>&#39;&#34;&#39;</span><span class=w> </span><span class=p>:</span><span class=w> </span>{<span class=w> </span><span class=nt>pair</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=s1>&#39;“&#39;</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;”&#39;</span><span class=w> </span><span class=p>]</span><span class=w> </span>}<span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;\&#39; </span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>、, ＼ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;|&#39; </span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>·, ｜, &#39;§&#39;, &#39;¦&#39; ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;`&#39; </span><span class=p>:</span><span class=w> </span><span class=l>｀</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;~&#39; </span><span class=p>:</span><span class=w> </span><span class=l>～</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;!&#39; </span><span class=p>:</span><span class=w> </span>{<span class=w> </span><span class=nt>commit</span><span class=p>:</span><span class=w> </span><span class=l>！ }</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;@&#39; </span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>＠, ☯ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;#&#39; </span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>＃, ⌘ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;%&#39; </span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>％, &#39;°&#39;, &#39;℃&#39; ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;$&#39; </span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>￥, &#39;$&#39;, &#39;€&#39;, &#39;£&#39;, &#39;¥&#39;, &#39;¢&#39;, &#39;¤&#39;, ₩ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;^&#39; </span><span class=p>:</span><span class=w> </span>{<span class=w> </span><span class=nt>commit</span><span class=p>:</span><span class=w> </span><span class=l>…… }</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;&amp;&#39; </span><span class=p>:</span><span class=w> </span><span class=l>＆</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;*&#39; </span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>＊, ·, ・, ×, ※, ❂ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;(&#39; </span><span class=p>:</span><span class=w> </span><span class=l>（</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;)&#39; </span><span class=p>:</span><span class=w> </span><span class=l>）</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;-&#39; </span><span class=p>:</span><span class=w> </span><span class=l>－</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;_&#39; </span><span class=p>:</span><span class=w> </span><span class=l>——</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;+&#39; </span><span class=p>:</span><span class=w> </span><span class=l>＋</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;=&#39; </span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>＝, 々, 〃 ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;[&#39; </span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>「, 【, 〔, ［ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;]&#39; </span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>」, 】, 〕, ］ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=s1>&#39;{&#39;</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>『, 〖, ｛ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;}&#39; </span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>』, 〗, ｝ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>half_shape</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;,&#39; </span><span class=p>:</span><span class=w> </span>{<span class=w> </span><span class=nt>commit</span><span class=p>:</span><span class=w> </span><span class=l>， }</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;.&#39; </span><span class=p>:</span><span class=w> </span>{<span class=w> </span><span class=nt>commit</span><span class=p>:</span><span class=w> </span><span class=l>。 }</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;&lt;&#39; </span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>《, 〈, «, ‹ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;&gt;&#39; </span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>》, 〉, », › ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/&#39; </span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=s1>&#39;/&#39;</span><span class=p>,</span><span class=w> </span><span class=l>、, ､, ／, ÷ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;?&#39; </span><span class=p>:</span><span class=w> </span>{<span class=w> </span><span class=nt>commit</span><span class=p>:</span><span class=w> </span><span class=l>？ }</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;;&#39; </span><span class=p>:</span><span class=w> </span>{<span class=w> </span><span class=nt>commit</span><span class=p>:</span><span class=w> </span><span class=l>； }</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;:&#39; </span><span class=p>:</span><span class=w> </span>{<span class=w> </span><span class=nt>commit</span><span class=p>:</span><span class=w> </span><span class=l>： }</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;&#39;&#39;&#39; </span><span class=p>:</span><span class=w> </span>{<span class=w> </span><span class=nt>pair</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=s1>&#39;‘&#39;</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;’&#39;</span><span class=w> </span><span class=p>]</span><span class=w> </span>}<span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=s1>&#39;&#34;&#39;</span><span class=w> </span><span class=p>:</span><span class=w> </span>{<span class=w> </span><span class=nt>pair</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=s1>&#39;“&#39;</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;”&#39;</span><span class=w> </span><span class=p>]</span><span class=w> </span>}<span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;\&#39; </span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>、, &#39;\&#39;, ＼ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;|&#39; </span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>·, ・, &#39;|&#39;, ｜, &#39;§&#39;, &#39;¦&#39;, &#39;‖&#39; ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;`&#39; </span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=s1>&#39;`&#39;</span><span class=p>,</span><span class=w> </span><span class=l>‵, ‶, ‷, ′, ″, ‴, ⁗ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;~&#39; </span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=s1>&#39;~&#39;</span><span class=p>,</span><span class=w> </span><span class=l>～, ˜, ≈, ≋, ≃, ≅, ≇, ∽, ⋍, ≌, ﹏, ﹋, ﹌ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;!&#39; </span><span class=p>:</span><span class=w> </span>{<span class=w> </span><span class=nt>commit</span><span class=p>:</span><span class=w> </span><span class=l>！ }</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;@&#39; </span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=s1>&#39;@&#39;</span><span class=p>,</span><span class=w> </span><span class=l>©, ®, ℗ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;#&#39; </span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=s1>&#39;#&#39;</span><span class=p>,</span><span class=w> </span><span class=l>№ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;%&#39; </span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=s1>&#39;%&#39;</span><span class=p>,</span><span class=w> </span><span class=l>％, &#39;°&#39;, &#39;℃&#39;, ‰, ‱, ℉ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;$&#39; </span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>￥, &#39;$&#39;, &#39;€&#39;, &#39;£&#39;, &#39;¥&#39;, &#39;¢&#39;, &#39;¤&#39;, ₩ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;^&#39; </span><span class=p>:</span><span class=w> </span>{<span class=w> </span><span class=nt>commit</span><span class=p>:</span><span class=w> </span><span class=l>…… }</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;&amp;&#39; </span><span class=p>:</span><span class=w> </span><span class=s1>&#39;&amp;&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;*&#39; </span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=s1>&#39;*&#39;</span><span class=p>,</span><span class=w> </span><span class=l>＊, ·, ・, ×, ※, ❂, ⁂, ☮, ☯, ☣ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;(&#39; </span><span class=p>:</span><span class=w> </span><span class=l>（</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;)&#39; </span><span class=p>:</span><span class=w> </span><span class=l>）</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;-&#39; </span><span class=p>:</span><span class=w> </span><span class=s1>&#39;-&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;_&#39; </span><span class=p>:</span><span class=w> </span><span class=l>——</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;+&#39; </span><span class=p>:</span><span class=w> </span><span class=s1>&#39;+&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;=&#39; </span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=s1>&#39;=&#39;</span><span class=p>,</span><span class=w> </span><span class=l>々, 〃 ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;[&#39; </span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>「, 【, 〔, ［ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;]&#39; </span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>」, 】, 〕, ］ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=s1>&#39;{&#39;</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>『, 〖, ｛ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;}&#39; </span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>』, 〗, ｝ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>symbols</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#符號、電腦</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/fh&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>©, ®, ℗, ℠, ™, ℡, ℻, ☇, ☈, ☉, ☊, ☋, ☌, ☍, ☎, ☏, ☐, ☑, ☒, ☓, ☕, ☖, ☗, ⛉, ⛊, ☘, ☙, ☚, ☛, ☜, ☝, ☞, ☟, ☠, ☡, ☢, ☣, ☤, ☥, ☦, ☧, ☨, ☩, ☪, ☫, ☬, ☭, ☮, ☯, ☸, ♨, ♰, ♱, ♲, ♳, ♴, ♵, ♶, ♷, ♸, ♹, ♺, ♻, ♼, ♽, ♾, ♿, ⚆, ⚇, ⚈, ⚉, ⚐, ⚑, ⚒, ⚓, ⚔, ⚕, ⚖, ⚗, ⚘, ⚙, ⚚, ⚛, ⚜, ⚝, ⚞, ⚟, ⚠, ⚡, ⚰, ⚱, ⚲, ⚳, ⚴, ⚵, ⚶, ⚷, ⚸, ⚹, ⚺, ⚻, ⚼, ⚽, ⚾, ⚿, ⛀, ⛁, ⛂, ⛃, ⛋, ⛌, ⛍, ⛎, ⛏, ⛐, ⛑, ⛒, ⛓, ⛔, ⛕, ⛖, ⛗, ⛘, ⛙, ⛚, ⛛, ⛜, ⛝, ⛞, ⛟, ⛠, ⛡, ⛢, ⛣, ⛨, ⛩, ⛪, ⛫, ⛬, ⛭, ⛮, ⛯, ⛰, ⛱, ⛲, ⛳, ⛴, ⛵, ⛶, ⛷, ⛸, ⛹, ⛺, ⛻, ⛼, ⛽, ⛾, ⛿ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/dn&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>, ❖, ⌘, ⌃, ⌥, ⎇, ⇧, ⇪, ␣, ⇥, ⇤, ↩, ⌅, ⌤, ⌫, ⌦, ⌧, ⎋, ⌨, ◁, ⌀, ⌖, ⌗, ⏏, ↖, ↘, ⇞, ⇟, ⌚, ⏰, ⏱, ⏲, ⏳, ⌛, ⌜, ⌝⌞⌟, ⍑, ⏩, ⏪, ⏫, ⏬, ⏭, ⏮, ⏯ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#象棋、麻將、色子、撲克</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/xq&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>♔, ♕, ♖, ♗, ♘, ♙, ♚, ♛, ♜, ♝, ♞, ♟ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/mj&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>🀀, 🀁, 🀂, 🀃, 🀄, 🀅, 🀆, 🀇, 🀈, 🀉, 🀊, 🀋, 🀌, 🀍, 🀎, 🀏, 🀐, 🀑, 🀒, 🀓, 🀔, 🀕, 🀖, 🀗, 🀘, 🀙, 🀚, 🀛, 🀜, 🀝, 🀞, 🀟, 🀠, 🀡, 🀢, 🀣, 🀤, 🀥, 🀦, 🀧, 🀨, 🀩, 🀪, 🀫 ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/sz&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>⚀, ⚁, ⚂, ⚃, ⚄, ⚅ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/pk&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>♠, ♥, ♣, ♦, ♤, ♡, ♧, ♢ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#表情</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/bq&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>☻, ☺, ☹ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#天氣</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/tq&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>☀, ☁, ⛅, ⛈, ⛆, ☂, ☔, ☃, ⛄, ⛇ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#音樂</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/yy&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>𝄞, ♩, ♪, ♫, ♬, ♭, ♮, ♯ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#兩性</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/lx&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>♂, ♀, ⚢, ⚣, ⚤, ⚥, ⚦, ⚧, ⚨, ⚩, ⚪, ⚫, ⚬, ⚭, ⚮, ⚯ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#八卦、八卦名、六十四卦、六十四卦名、太玄經</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/bg&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>☰, ☱, ☲, ☳, ☴, ☵, ☶, ☷ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/bgm&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>乾, 兌, 離, 震, 巽, 坎, 艮, 坤 ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/lssg&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>䷀, ䷁, ䷂, ䷃, ䷄, ䷅, ䷆, ䷇, ䷈, ䷉, ䷊, ䷋, ䷌, ䷍, ䷎, ䷏, ䷐, ䷑, ䷒, ䷓, ䷔, ䷕, ䷖, ䷗, ䷘, ䷙, ䷚, ䷛, ䷜, ䷝, ䷞, ䷟, ䷠, ䷡, ䷢, ䷣, ䷤, ䷥, ䷦, ䷧, ䷨, ䷩, ䷪, ䷫, ䷬, ䷭, ䷮, ䷯, ䷰, ䷱, ䷲, ䷳, ䷴, ䷵, ䷶, ䷷, ䷸, ䷹, ䷺, ䷻, ䷼, ䷽, ䷾, ䷿ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/lssgm&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>乾, 坤, 屯, 蒙, 需, 訟, 師, 比, 小畜, 履, 泰, 否, 同人, 大有, 謙, 豫, 隨, 蠱, 臨, 觀, 噬嗑, 賁, 剝, 復, 无妄, 大畜, 頤, 大過, 坎, 離, 咸, 恆, 遯, 大壯, 晉, 明夷, 家人, 睽, 蹇, 解, 損, 益, 夬, 姤, 萃, 升, 困, 井, 革, 鼎, 震, 艮, 漸, 歸妹, 豐, 旅, 巽, 兌, 渙, 節, 中孚, 小過, 既濟, 未濟 ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/txj&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>⚊, ⚋, ⚌, ⚍, ⚎, ⚏, 𝌀, 𝌁, 𝌂, 𝌃, 𝌄, 𝌅, 𝌆, 𝌇, 𝌈, 𝌉, 𝌊, 𝌋, 𝌌, 𝌍, 𝌎, 𝌏, 𝌐, 𝌑, 𝌒, 𝌓, 𝌔, 𝌕, 𝌖, 𝌗, 𝌘, 𝌙, 𝌚, 𝌛, 𝌜, 𝌝, 𝌞, 𝌟, 𝌠, 𝌡, 𝌢, 𝌣, 𝌤, 𝌥, 𝌦, 𝌧, 𝌨, 𝌩, 𝌪, 𝌫, 𝌬, 𝌭, 𝌮, 𝌯, 𝌰, 𝌱, 𝌲, 𝌳, 𝌴, 𝌵, 𝌶, 𝌷, 𝌸, 𝌹, 𝌺, 𝌻, 𝌼, 𝌽, 𝌾, 𝌿, 𝍀, 𝍁, 𝍂, 𝍃, 𝍄, 𝍅, 𝍆, 𝍇, 𝍈, 𝍉, 𝍊, 𝍋, 𝍌, 𝍍, 𝍎, 𝍏, 𝍐, 𝍑, 𝍒, 𝍓, 𝍔, 𝍕, 𝍖 ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#天體、星座、星座名、十二宮</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/tt&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>☄, ☼, ☽, ☾, ☿, ♀, ♁, ♂, ♃, ♄, ♅, ♆, ♇ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/xz&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>♈, ♉, ♊, ♋, ♌, ♍, ♎, ♏, ♐, ♑, ♒, ♓ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/xzm&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>白羊座, 金牛座, 雙子座, 巨蟹座, 獅子座, 室女座, 天秤座, 天蠍座, 人馬座, 摩羯座, 寶瓶座, 雙魚座 ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/seg&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>白羊宮, 金牛宮, 雙子宮, 巨蟹宮, 獅子宮, 室女宮, 天秤宮, 天蠍宮, 人馬宮, 摩羯宮, 寶瓶宮, 雙魚宮 ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#星號</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/xh&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>★, ☆, ⛤, ⛥, ⛦, ⛧, ✡, ❋, ❊, ❉, ❈, ❇, ❆, ❅, ❄, ❃, ❂, ❁, ❀, ✿, ✾, ✽, ✼, ✻, ✺, ✹, ✸, ✷, ✶, ✵, ✴, ✳, ✲, ✱, ✰, ✯, ✮, ✭, ✬, ✫, ✪, ✩, ✧, ✦, ✥, ✤, ✣, ✢ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#方塊</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/fk&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>▀, ▁, ▂, ▃, ▄, ▅, ▆, ▇, █, ▉, ▊, ▋, ▌, ▍, ▎, ▏, ▐, ░, ▒, ▓, ▔, ▕, ▖, ▗, ▘, ▙, ▚, ▛, ▜, ▝, ▞, ▟ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#幾何</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/jh&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>■, □, ▢, ▣, ▤, ▥, ▦, ▧, ▨, ▩, ▪, ▫, ▬, ▭, ▮, ▯, ▰, ▱, ▲, △, ▴, ▵, ▶, ▷, ▸, ▹, ►, ▻, ▼, ▽, ▾, ▿, ◀, ◁, ◂, ◃, ◄, ◅, ◆, ◇, ◈, ◉, ◊, ○, ◌, ◍, ◎, ●, ◐, ◑, ◒, ◓, ◔, ◕, ◖, ◗, ◘, ◙, ◚, ◛, ◜, ◝, ◞, ◟, ◠, ◡, ◢, ◣, ◤, ◥, ◦, ◧, ◨, ◩, ◪, ◫, ◬, ◭, ◮, ◯, ◰, ◱, ◲, ◳, ◴, ◵, ◶, ◷, ◸, ◹, ◺, ◻, ◼, ◽, ◾, ◿ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#箭頭</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/jt&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>↑, ↓, ←, →, ↕, ↔, ↖, ↗, ↙, ↘, ↚, ↛, ↮, ↜, ↝, ↞, ↟, ↠, ↡, ↢, ↣, ↤, ↥, ↦, ↧, ↨, ↩, ↪, ↫, ↬, ↭, ↯, ↰, ↱, ↲, ↳, ↴, ↵, ↶, ↷, ↸, ↹, ↺, ↻, ↼, ↽, ↾, ↿, ⇀, ⇁, ⇂, ⇃, ⇄, ⇅, ⇆, ⇇, ⇈, ⇉, ⇊, ⇋, ⇌, ⇐, ⇍, ⇑, ⇒, ⇏, ⇓, ⇔, ⇎, ⇕, ⇖, ⇗, ⇘, ⇙, ⇚, ⇛, ⇜, ⇝, ⇞, ⇟, ⇠, ⇡, ⇢, ⇣, ⇤, ⇥, ⇦, ⇧, ⇨, ⇩, ⇪, ⇫, ⇬, ⇭, ⇮, ⇯, ⇰, ⇱, ⇲, ⇳, ⇴, ⇵, ⇶, ⇷, ⇸, ⇹, ⇺, ⇻, ⇼, ⇽, ➔, ➘, ➙, ➚, ➛, ➜, ➝, ➞, ➟, ➠, ➡, ➢, ➣, ➤, ➥, ➦, ➧, ➨, ➩, ➪, ➫, ➬, ➭, ➮, ➱, ➲, ➳, ➴, ➵, ➶, ➷, ➸, ➹, ➺, ➻, ➼, ➽, ➾ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#數學</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/sx&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>±, ÷, ×, ∈, ∏, ∑, －, ＋, ＜, ≮, ＝, ≠, ＞, ≯, ∕, √, ∝, ∞, ∟, ∠, ∥, ∧, ∨, ∩, ∪, ∫, ∮, ∴, ∵, ∷, ∽, ≈, ≌, ≒, ≡, ≤, ≥, ≦, ≧, ⊕, ⊙, ⊥, ⊿, ㏑, ㏒ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#數字+圈/弧/點</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/szq&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>⓪, ①, ②, ③, ④, ⑤, ⑥, ⑦, ⑧, ⑨, ⑩, ⑪, ⑫, ⑬, ⑭, ⑮, ⑯, ⑰, ⑱, ⑲, ⑳, ㉑, ㉒, ㉓, ㉔, ㉕, ㉖, ㉗, ㉘, ㉙, ㉚, ㉛, ㉜, ㉝, ㉞, ㉟, ㊱, ㊲, ㊳, ㊴, ㊵, ㊶, ㊷, ㊸, ㊹, ㊺, ㊻, ㊼, ㊽, ㊾, ㊿, ⓿, ❶, ❷, ❸, ❹, ❺, ❻, ❼, ❽, ❾, ❿, ⓫, ⓬, ⓭, ⓮, ⓯, ⓰, ⓱, ⓲, ⓳, ⓴ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/szh&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>⑴, ⑵, ⑶, ⑷, ⑸, ⑹, ⑺, ⑻, ⑼, ⑽, ⑾, ⑿, ⒀, ⒁, ⒂, ⒃, ⒄, ⒅, ⒆, ⒇ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/szd&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>⒈, ⒉, ⒊, ⒋, ⒌, ⒍, ⒎, ⒏, ⒐, ⒑, ⒒, ⒓, ⒔, ⒕, ⒖, ⒗, ⒘, ⒙, ⒚, ⒛ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#字母+圈/弧</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/zmq&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>ⓐ, Ⓐ, ⓑ, Ⓑ, ⓒ, Ⓒ, ⓓ, Ⓓ, ⓔ, Ⓔ, ⓕ, Ⓕ, ⓖ, Ⓖ, ⓗ, Ⓗ, ⓘ, Ⓘ, ⓙ, Ⓙ, ⓚ, Ⓚ, ⓛ, Ⓛ, ⓜ, Ⓜ, ⓝ, Ⓝ, ⓞ, Ⓞ, ⓟ, Ⓟ, ⓠ, Ⓠ, ⓡ, Ⓡ, ⓢ, Ⓢ, ⓣ, Ⓣ, ⓤ, Ⓤ, ⓥ, Ⓥ, ⓦ, Ⓦ, ⓧ, Ⓧ, ⓨ, Ⓨ, ⓩ, Ⓩ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/zmh&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>⒜, ⒝, ⒞, ⒟, ⒠, ⒡, ⒢, ⒣, ⒤, ⒥, ⒦, ⒧, ⒨, ⒩, ⒪, ⒫, ⒬, ⒭, ⒮, ⒯, ⒰, ⒱, ⒲, ⒳, ⒴, ⒵ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#數字、分數</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/0&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>〇, 零, ₀, ⁰, ⓪, ⓿ , ０]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/1&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>一, 壹, ₁, ¹, Ⅰ, ⅰ, ①, ➀, ❶, ➊, ⓵, ⑴, ⒈, １, ㊀, ㈠, 弌, 壱, 幺, ㆒ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/2&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>二, 貳, ₂, ², Ⅱ, ⅱ, ②, ➁, ❷, ➋, ⓶, ⑵, ⒉, ２, ㊁, ㈡, 弍, 弐, 貮, 㒃, 㒳, 兩, 倆, ㆓]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/3&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>三, 叄, ₃, ³, Ⅲ, ⅲ, ③, ➂, ❸, ➌, ⓷, ⑶, ⒊, ３, ㊂, ㈢, 參, 参, 叁, 弎, 仨, ㆔]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/4&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>四, 肆, ₄, ⁴, Ⅳ, ⅳ, ④, ➃, ❹, ➍, ⓸, ⑷, ⒋, ４, ㊃, ㈣, 亖]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/5&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>五, 伍, ₅, ⁵, Ⅴ, ⅴ, ⑤, ➄, ❺, ➎, ⓹, ⑸, ⒌, ５, ㊄, ㈤, 㐅, 㠪, 𠄡 ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/6&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>六, 陸, ₆, ⁶, Ⅵ, ⅵ, ⑥, ➅, ❻, ➏, ⓺, ⑹, ⒍, ６, ㊅, ㈥, ↅ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/7&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>七, 柒, ₇, ⁷, Ⅶ, ⅶ, ⑦, ➆, ❼, ➐, ⓻, ⑺, ⒎, ７, ㊆, ㈦, 漆]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/8&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>八, 捌, ₈, ⁸, Ⅷ, ⅷ, ⑧, ➇, ❽, ➑, ⓼, ⑻, ⒏, ８, ㊇, ㈧ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/9&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>九, 玖, ₉, ⁹, Ⅸ, ⅸ, ⑨, ➈, ❾, ➒, ⓽, ⑼, ⒐, ９, ㊈, ㈨ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/10&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>十, 拾, ₁₀, ¹⁰, Ⅹ, ⅹ, ⑩, ➉, ❿, ➓, ⓾, ⑽, ⒑, １０, ㊉, ㈩, 什 ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/fs&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>⅟, ½, ↉, ⅓, ⅔, ¼, ⅕, ⅖, ⅗, ⅘, ⅙, ⅚, ⅐, ⅛, ⅜, ⅝, ⅞, ⅑, ⅒ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#蘇州碼</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/szm&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>〡, 〢, 〣, 〤, 〥, 〦, 〧, 〨, 〩, 〸, 〹, 〺 ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#羅馬數字</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/lm&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>ⅰ, ⅱ, ⅲ, ⅳ, ⅴ, ⅵ, ⅶ, ⅷ, ⅸ, ⅹ, ⅺ, ⅻ, ⅼ, ⅽ, ⅾ, ⅿ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/lmd&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>Ⅰ, Ⅱ, Ⅲ, Ⅳ, Ⅴ, Ⅵ, Ⅶ, Ⅷ, Ⅸ, Ⅹ, Ⅺ, Ⅻ, Ⅼ, Ⅽ, Ⅾ, Ⅿ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#拉丁</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/a&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ā, á, ǎ, à, ȁ, â, ă, ȃ, ȧ, ä, å, ã, ₐ, ᵃ, ª, ⱥ, ꬰ, ả, ą, ạ, ḁ, ẚ, ấ, ầ, ẫ, ẩ, ắ, ằ, ẵ, ẳ, ǡ, ǟ, ǻ, ậ, ặ, ᶏ, ɐ, ᵄ, ɑ, ᵅ, ᶐ, ɒ, ᶛ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/A&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ā, Á, Ǎ, À, Ȁ, Â, Ă, Ȃ, Ȧ, Ä, Å, Ã, ᴀ, ᴬ, Ⱥ, Ả, Ą, Ạ, Ḁ, Ấ, Ầ, Ẫ, Ẩ, Ắ, Ằ, Ẵ, Ẳ, Ǡ, Ǟ, Ǻ, Ậ, Ặ, Ɐ, Ɑ, Ɒ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/b&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ḃ, ḅ, ᵇ, ƀ, ƃ, ḇ, ɓ, ᵬ, ᶀ, ꞗ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/B&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ḃ, Ḅ, ʙ, ᴃ, ᴮ, ᴯ, Ƀ, Ƃ, Ḇ, Ɓ, Ꞗ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/c&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ç, ć, č, ĉ, ċ, ᶜ, ȼ, ꞓ, ƈ, ḉ, ꞔ, ɕ, ᶝ, ꜿ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/C&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ç, Ć, Č, Ĉ, Ċ, ᴄ, Ȼ, Ꞓ, Ƈ, Ḉ, Ꜿ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/d&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ď, ḋ, ᵈ, đ, ƌ, ᵭ, ḑ, ḓ, ḏ, ḍ, ɖ, ɗ, ᶑ, ᶁ, ð, ᶞ, ꝱ, ʤ, ʣ, ʥ, ȡ, ƍ, ǳ, ǆ, ẟ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/D&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ď, Ḋ, ᴅ, ᴆ, ᴰ, Đ, Ƌ, Ḑ, Ḓ, Ḏ, Ḍ, Ɖ, Ɗ, Ð, Ǳ, ǲ, Ǆ, ǅ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/e&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ē, é, ě, è, ȅ, ê, ĕ, ȇ, ė, ë, ẽ, ₑ, ᵉ, ɇ, ꬳ, ẻ, ȩ, ę, ḙ, ẹ, ḛ, ḗ, ḕ, ế, ề, ễ, ể, ḝ, ệ, ᶒ, ꬴ, ɘ, ə, ɚ, ᶕ, ɛ, ᵋ, ᶓ, ɜ, ᵌ, ᴈ, ᶟ, ɝ, ᶔ, ɞ, ʚ, ǝ, ₔ, ᵊ, ȝ, ⱸ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/E&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ē, É, Ě, È, Ȅ, Ê, Ĕ, Ȇ, Ė, Ë, Ẽ, ᴇ, ᴱ, Ɇ, Ẻ, Ȩ, Ę, Ḙ, Ẹ, Ḛ, Ḗ, Ḕ, Ế, Ề, Ễ, Ể, Ḝ, Ệ, Ə, Ɛ, Ɜ, Ǝ, ⱻ, ᴲ, Ȝ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/f&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ḟ, ᶠ, ƒ, ᵮ, ᶂ, ꞙ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/F&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ḟ, ꜰ, Ƒ, Ꞙ, ꟻ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/g&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ḡ, ǵ, ǧ, ĝ, ğ, ġ, ᵍ, ǥ, ꞡ, ģ, ɠ, ᵷ, ᶃ, ɡ, ꬶ, ᶢ, ɣ, ˠ, ɤ, ᵹ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/G&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ḡ, Ǵ, Ǧ, Ĝ, Ğ, Ġ, ʛ, ᴳ, Ǥ, Ꞡ, Ģ, Ɠ, Ɡ, Ɣ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/h&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ĥ, ȟ, ḣ, ḧ, ͪ, ħ, ɦ, ʱ, ꜧ, ꭜ, ɧ, ḩ, ẖ, ḫ, ḥ, ⱨ, ꞕ, ɥ, ᶣ, ʮ, ʯ, ⱶ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/H&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ĥ, Ȟ, Ḣ, Ḧ, ʜ, ᴴ, Ħ, Ɦ, Ꜧ, Ḩ, Ḫ, Ḥ, Ⱨ, Ɥ, Ⱶ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/i&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ī, í, ǐ, ì, ȉ, î, ĭ, ȋ, ï, ĩ, ᵢ, ı, ɨ, ᶤ, ỉ, į, ị, ḭ, ᴉ, ᵎ, ḯ, ᶖ, ɩ, ᶥ, ᵼ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/I&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ī, Í, Ǐ, Ì, Ȉ, Î, Ĭ, Ȋ, Ï, Ĩ, ɪ, ᴵ, ᶦ, Ɨ, ᵻ, ᶧ, Ỉ, Į, Ị, Ḭ, Ḯ, ꟾ, Ɩ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/j&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ĵ, ǰ, ⱼ, ʲ, ɉ, ȷ, ɟ, ᶡ, ʄ, ʝ, ᶨ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/J&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ĵ, ᴊ, ᴶ, Ɉ, Ʝ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/k&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ḱ, ǩ, ₖ, ᵏ, ꝁ, ꝃ, ꞣ, ꝅ, ķ, ḵ, ḳ, ƙ, ᶄ, ⱪ, ʞ, ĸ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/K&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ḱ, Ǩ, ᴋ, ᴷ, Ꝁ, Ꝃ, Ꞣ, Ꝅ, Ķ, Ḵ, Ḳ, Ƙ, Ⱪ, Ʞ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/l&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ĺ, ˡ, ł, ꝉ, ƚ, ⱡ, ɫ, ꭞ, ꬸ, ɬ, ľ, ļ, ḻ, ḽ, ḷ, ŀ, ꝲ, ƛ, ᶅ, ᶪ, ɭ, ᶩ, ḹ, ꬷ, ꭝ, ꬹ, ȴ, ꝇ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/L&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ĺ, ʟ, ᶫ, Ƚ, Ꝉ, Ł, ᴌ, Ⱡ, Ɫ, Ɬ, Ľ, Ļ, Ḻ, Ḽ, Ḷ, Ŀ, Ꝇ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/m&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ḿ, ṁ, ᵐ, ₘ, ṃ, ᵯ, ɱ, ᶬ, ꬺ, ᶆ, ꝳ, ɯ, ᵚ, ɰ, ᶭ, ᴟ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/M&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ḿ, Ṁ, ᴍ, ᴹ, Ṃ, Ɱ, Ɯ, ꟽ, ꟿ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/n&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ń, ň, ǹ, ṅ, ñ, ₙ, ⁿ, ɲ, ᶮ, ɳ, ᶯ, ȵ, ƞ, ŋ, ᵑ, ꬻ, ꬼ, ꝴ, ŉ, ꞥ, ņ, ṉ, ṋ, ṇ, ᵰ, ꞑ, ᶇ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/N&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ń, Ň, Ǹ, Ṅ, Ñ, ɴ, ᴺ, ᴻ, ᶰ, Ɲ, Ƞ, Ŋ, Ņ, Ṉ, Ṋ, Ṇ, Ꞑ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/o&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ō, ó, ő, ǒ, ò, ô, ŏ, ȯ, ö, õ, ₒ, ᵒ, º, ɔ, ᵓ, ᶗ, ꬿ, ø, ǫ, ọ, ơ, ɵ, ᶱ, ᴑ, ᴒ, ᴓ, ꝋ, ꝍ, ṓ, ṑ, ố, ồ, ỗ, ổ, ȱ, ȫ, ȭ, ṍ, ṏ, ộ, ǭ, ǿ, ớ, ờ, ỡ, ở, ợ, ɷ, ⱺ, ᴖ, ᵔ, ᴗ, ᵕ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/O&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ō, Ó, Ő, Ǒ, Ò, Ô, Ŏ, Ȯ, Ö, Õ, ᴏ, ᴼ, Ɔ, ᴐ, Ø, Ǫ, Ọ, Ơ, Ɵ, Ꝋ, Ꝍ, Ṓ, Ṑ, Ố, Ồ, Ỗ, Ổ, Ȱ, Ȫ, Ȭ, Ṍ, Ṏ, Ộ, Ǭ, Ǿ, Ớ, Ờ, Ỡ, Ở, Ợ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/p&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ṕ, ṗ, ᵖ, ᵽ, ꝑ, ᵱ, ƥ, ᶈ, ꝓ, ꝕ, ɸ, ᶲ, ⱷ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/P&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ṕ, Ṗ, ᴘ, ᴾ, Ᵽ, Ꝑ, Ƥ, Ꝓ, Ꝕ, ꟼ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/q&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ɋ, ꝗ, ꝙ, ʠ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/Q&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ɋ, Ꝗ, Ꝙ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/r&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ŕ, ř, ȑ, ȓ, ṙ, ᵣ, ɍ, ꞧ, ᵲ, ŗ, ṟ, ṛ, ṝ, ᵳ, ɽ, ᶉ, ꭇ, ꭈ, ꭊ, ꭉ, ꝵ, ꭋ, ꭌ, ɹ, ʴ, ɺ, ɻ, ʵ, ⱹ, ɼ, ʳ, ɾ, ɿ, ꝛ, ꝝ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/R&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ŕ, Ř, Ȑ, Ȓ, Ṙ, ʀ, ᴙ, ᴿ, Ʀ, ꭆ, Ɍ, Ꞧ, Ŗ, Ṟ, Ṛ, Ṝ, Ɽ, ꝶ, ʶ, ʁ, Ꝛ, Ꝝ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/s&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ś, ŝ, š, ṡ, ˢ, ʂ, ᶳ, ᵴ, ꞩ, ᶊ, ş, ṣ, ș, ȿ, ṥ, ṧ, ṩ, ʃ, ᶴ, ʆ, ᶘ, ʅ, ƪ, ß, ſ, ẛ, ẜ, ẝ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/S&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ś, Ŝ, Š, Ṡ, ꜱ, Ꞩ, Ş, Ṣ, Ș, Ṥ, Ṧ, Ṩ, Ʃ, ẞ, ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/t&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ť, ṫ, ẗ, ᵗ, ₜ, ʈ, þ, ꝥ, ꝧ, ŧ, ⱦ, ţ, ṯ, ṱ, ṭ, ț, ƭ, ᵵ, ƫ, ᶵ, ʇ, ȶ, ꝷ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/T&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ť, Ṫ, ᴛ, ᵀ, Ʈ, Þ, Ꝥ, Ꝧ, Ŧ, Ⱦ, Ţ, Ṯ, Ṱ, Ṭ, Ț, Ƭ, Ʇ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/u&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ū, ú, ű, ǔ, ù, ȕ, û, ŭ, ȗ, ü, ǖ, ǘ, ǚ, ǜ, ů, ũ, ᵤ, ᵘ, ʉ, ᶶ, ủ, ų, ṷ, ụ, ṳ, ṵ, ư, ʊ, ᶷ, ᵿ, ᶙ, ṻ, ṹ, ứ, ừ, ữ, ử, ự, ꭒ, ꭟ, ꝸ, ꭎ, ꭏ, ᴝ, ᵙ, ᴞ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/U&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ū, Ú, Ű, Ǔ, Ù, Ȕ, Û, Ŭ, Ȗ, Ü, Ǖ, Ǘ, Ǚ, Ǜ, Ů, Ũ, ᴜ, ᵁ, ᶸ, Ʉ, Ủ, Ų, Ṷ, Ụ, Ṳ, Ṵ, Ư, Ʊ, Ṻ, Ṹ, Ứ, Ừ, Ữ, Ử, Ự ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/v&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ü, ǖ, ǘ, ǚ, ǜ, ṽ, ᵛ, ᵥ, ṿ, ꝟ, ʋ, ᶹ, ᶌ, ⱴ, ⱱ, ỽ, ʌ, ᶺ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/V&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ü, Ǖ, Ǘ, Ǚ, Ǜ, Ṽ, ᴠ, ⱽ, Ṿ, Ꝟ, Ʋ, Ỽ, Ʌ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/w&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ẃ, ẁ, ŵ, ẇ, ẅ, ẘ, ʷ, ẉ, ƿ, ʍ, ⱳ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/W&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ẃ, Ẁ, Ŵ, Ẇ, Ẅ, W̊, ᴡ, ᵂ, Ẉ, Ƿ, Ⱳ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/x&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ẋ, ẍ, ᶍ, ˣ, ₓ, ꭖ, ꭗ, ꭘ, ꭙ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/X&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ẋ, Ẍ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/y&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ȳ, ý, ỳ, ŷ, ẏ, ÿ, ẙ, ỹ, ʸ, ɏ, ỷ, ỵ, ƴ, ʎ, ỿ, ꭚ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/Y&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ȳ, Ý, Ỳ, Ŷ, Ẏ, Ÿ, Ỹ, ʏ, Ɏ, Ỷ, Ỵ, Ƴ, Ỿ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/z&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ź, ž, ẑ, ż, ᶻ, ʐ, ᶼ, ʑ, ᶽ, ƶ, ẕ, ẓ, ᵶ, ȥ, ⱬ, ᶎ, ʒ, ᶾ, ǯ, ʓ, ƹ, ƺ, ᶚ, θ, ᶿ, ɀ, ꝣ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/Z&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ź, Ž, Ẑ, Ż, ᴢ, Ƶ, Ẕ, Ẓ, Ȥ, Ⱬ     Ʒ, ᴣ, Ǯ, Ƹ, Ɀ, Ꝣ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/aa&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ꜳ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/AA&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ꜳ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/ae&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>æ, ǣ, ǽ, ᵆ, ᴂ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/AE&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Æ, Ǣ, Ǽ, ᴭ, ᴁ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/ao&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ꜵ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/AO&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ꜵ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/au&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ꜷ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/AU&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ꜷ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/av&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ꜹ, ꜻ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/AV&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ꜹ, Ꜻ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/ay&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ꜽ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/AY&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ꜽ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/db&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ȸ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/ff&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ﬀ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/ffi&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ﬃ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/ffl&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ﬄ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/fi&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ﬁ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/fl&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ﬂ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/fn&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ʩ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/hv&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ƕ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/HV&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ƕ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/ij&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ĳ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/IJ&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ĳ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/lj&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ǉ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/ll&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ỻ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/LL&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ỻ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/ls&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ʪ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/lz&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ʫ, ɮ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/nj&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ǌ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/Nj&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ǋ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/NJ&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ǌ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/oe&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>œ, ᴔ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/OE&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Œ, ɶ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/oi&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ƣ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/OI&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ƣ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/oo&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ꝏ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/OO&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ꝏ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/ou&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ȣ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/OU&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ȣ, ᴽ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/qp&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ȹ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/Rx&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>℞]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/tc&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ʨ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/th&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ᵺ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/ts&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ʦ, ʧ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/tz&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ꜩ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/TZ&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ꜩ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/ue&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ᵫ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/vy&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ꝡ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/VY&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>Ꝡ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/ww&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>ʬ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#上標、下標</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/sb&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>⁰, ¹, ², ³, ⁴, ⁵, ⁶, ⁷, ⁸, ⁹, ˜, ⁺, ⁻, ⁼, ⁽, ⁾, ᴬ, ᵃ, ᵄ, ᵅ, ᶛ, ᴭ, ᵆ, ᴮ, ᴯ, ᵇ, ᵝ, ᶜ, ᵓ, ᶝ, ᴰ, ᵈ, ᶞ, ᵟ, ᴱ, ᵉ, ᴲ, ᵊ, ᵋ, ᶟ, ᵌ, ᶠ, ᶡ, ᶲ, ᵠ, ᴳ, ᵍ, ᶢ, ˠ, ᵞ, ᴴ, ʰ, ᶣ, ʱ, ᴵ, ⁱ, ᶤ, ᵎ, ᶥ, ᴶ, ʲ, ᶨ, ᴷ, ᵏ, ᴸ, ᶫ, ˡ, ᶩ, ᶪ, ᴹ, ᵐ, ᶬ, ᵚ, ᶭ, ᴺ, ᴻ, ⁿ, ᵑ, ᶮ, ᶯ, ᴼ, ᵒ, ᶱ, ᴽ, ᴾ, ᵖ, ᴿ, ʳ, ʶ, ʴ, ʵ, ˢ, ᶴ, ᶳ, ᵀ, ᵗ, ᶵ, ᶿ, ᵁ, ᵘ, ᶶ, ᶷ, ᵙ, ⱽ, ᵛ, ᶺ, ᶹ, ᵂ, ʷ, ˣ, ᵡ, ʸ, ᶻ, ᶾ, ᶽ, ᶼ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/xb&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>₀, ₁, ₂, ₃, ₄, ₅, ₆, ₇, ₈, ₉, ₊, ₋, ₌, ₍, ₎, ‸, ᴀ, ₐ, ᴁ, ʙ, ᴃ, ᵦ, ᴄ, ᴐ, ᴒ, ᴅ, ᴆ, ᴇ, ₑ, ₔ, ᵩ, ɢ, ʛ, ᴦ, ᵧ, ʜ, ₕ, ɪ, ᵻ, ᵢ, ᴊ, ⱼ, ᴋ, ₖ, ʟ, ₗ, ᴌ, ᴧ, ᴍ, ₘ, ꟺ, ɴ, ᴎ, ₙ, ᴏ, ₒ, ɶ, ʘ, ᴓ, ᴑ, ᴘ, ₚ, ᴨ, ᴪ, ʀ, ᵣ, ᴙ, ʁ, ᴚ, ᵨ, ₛ, ᴛ, ₜ, ᴜ, ᵤ, ᵾ, ᴠ, ᵥ, ᴡ, ₓ, ᵪ, ʏ, ᴢ, ᴣ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#希臘</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/xl&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>α, β, γ, δ, ε, ζ, η, θ, ι, κ, λ, μ, ν, ξ, ο, π, ρ, σ, ς, τ, υ, φ, χ, ψ, ω ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/xld&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>Α, Β, Γ, Δ, Ε, Ζ, Η, Θ, Ι, Κ, Λ, Μ, Ν, Ξ, Ο, Π, Ρ, Σ, Τ, Υ, Φ, Χ, Ψ, Ω ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#俄語</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/ey&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>а, б, в, г, д, е, ё, ж, з, и, й, к, л, м, н, о, п, р, с, т, у, ф, х, ц, ч, ш, щ, ъ, ы, ь, э, ю, я ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/eyd&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>А, Б, В, Г, Д, Е, Ё, Ж, З, И, Й, К, Л, М, Н, О, П, Р, С, Т, У, Ф, Х, Ц, Ч, Ш, Щ, Ъ, Ы, Ь, Э, Ю, Я ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#月份、日期、曜日等</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/yf&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>㋀, ㋁, ㋂, ㋃, ㋄, ㋅, ㋆, ㋇, ㋈, ㋉, ㋊, ㋋ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/rq&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>㏠, ㏡, ㏢, ㏣, ㏤, ㏥, ㏦, ㏧, ㏨, ㏩, ㏪, ㏫, ㏬, ㏭, ㏮, ㏯, ㏰, ㏱, ㏲, ㏳, ㏴, ㏵, ㏶, ㏷, ㏸, ㏹, ㏺, ㏻, ㏼, ㏽, ㏾ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/yr&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>月, 火, 水, 木, 金, 土, 日, ㊊, ㊋, ㊌, ㊍, ㊎, ㊏, ㊐, ㊗, ㊡, ㈪, ㈫, ㈬, ㈭, ㈮, ㈯, ㈰, ㈷, ㉁, ㉀ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#時間</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/sj&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>㍘, ㍙, ㍚, ㍛, ㍜, ㍝, ㍞, ㍟, ㍠, ㍡, ㍢, ㍣, ㍤, ㍥, ㍦, ㍧, ㍨, ㍩, ㍪, ㍫, ㍬, ㍭, ㍮, ㍯, ㍰ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#天干、地支、干支</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/tg&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>甲, 乙, 丙, 丁, 戊, 己, 庚, 辛, 壬, 癸 ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/dz&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>子, 丑, 寅, 卯, 辰, 巳, 午, 未, 申, 酉, 戌, 亥 ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/gz&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>甲子, 乙丑, 丙寅, 丁卯, 戊辰, 己巳, 庚午, 辛未, 壬申, 癸酉, 甲戌, 乙亥, 丙子, 丁丑, 戊寅, 己卯, 庚辰, 辛巳, 壬午, 癸未, 甲申, 乙酉, 丙戌, 丁亥, 戊子, 己丑, 庚寅, 辛卯, 壬辰, 癸巳, 甲午, 乙未, 丙申, 丁酉, 戊戌, 己亥, 庚子, 辛丑, 壬寅, 癸卯, 甲辰, 乙巳, 丙午, 丁未, 戊申, 己酉, 庚戌, 辛亥, 壬子, 癸丑, 甲寅, 乙卯, 丙辰, 丁巳, 戊午, 己未, 庚申, 辛酉, 壬戌, 癸亥 ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#節氣</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/jq&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>立春, 雨水, 驚蟄, 春分, 清明, 穀雨, 立夏, 小滿, 芒種, 夏至, 小暑, 大暑, 立秋, 處暑, 白露, 秋分, 寒露, 霜降, 立冬, 小雪, 大雪, 冬至, 小寒, 大寒 ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#單位</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/dw&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>Å, ℃, ％, ‰, ‱, °, ℉, ㏃, ㏆, ㎈, ㏄, ㏅, ㎝, ㎠, ㎤, ㏈, ㎗, ㎙, ㎓, ㎬, ㏉, ㏊, ㏋, ㎐, ㏌, ㎄, ㎅, ㎉, ㎏, ㎑, ㏍, ㎘, ㎞, ㏎, ㎢, ㎦, ㎪, ㏏, ㎸, ㎾, ㏀, ㏐, ㏓, ㎧, ㎨, ㎡, ㎥, ㎃, ㏔, ㎆, ㎎, ㎒, ㏕, ㎖, ㎜, ㎟, ㎣, ㏖, ㎫, ㎳, ㎷, ㎹, ㎽, ㎿, ㏁, ㎁, ㎋, ㎚, ㎱, ㎵, ㎻, ㏘, ㎩, ㎀, ㎊, ㏗, ㏙, ㏚, ㎰, ㎴, ㎺, ㎭, ㎮, ㎯, ㏛, ㏜, ㎔, ㏝, ㎂, ㎌, ㎍, ㎕, ㎛, ㎲, ㎶, ㎼ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#貨幣</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/hb&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>￥, ¥, ¤, ￠, ＄, $, ￡, £, ৳, ฿, ₠, ₡, ₢, ₣, ₤, ₥, ₦, ₧, ₩, ₪, ₫, €, ₭, ₮, ₯, ₰, ₱, ₲, ₳, ₴, ₵, ₶, ₷, ₸, ₹, ₺, ₨, ﷼ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#結構、偏旁、康熙（部首）、筆畫、標點</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/jg&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>⿰, ⿱, ⿲, ⿳, ⿴, ⿵, ⿶, ⿷, ⿸, ⿹, ⿺, ⿻, 〾 ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/pp&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>乛, 冫, 丷, 龹, ⺌, 龸, 亻, 亼, 亽, 仒, 冖, 冂, 冃, 冄, 宀, 罒, 㓁, 罓, 冈, 凵, 厶, 刂, 勹, 匚, 匸, 卩, 阝, 厂, 丆, 广, 壬, 訁, 讠, 釒, 钅, 飠, 饣, 龺, 攵, 夂, 夊, 尢, 尣, 兂, 旡, 巜, 巛, 彐, 彑, 彡, 彳, 龰, 辶, 廴, 㞢, 忄, 㣺, 扌, 爫, 龵, 廾, 歺, 癶, 氵, 氺, 火, 灬, 爿, 丬, 疒, 牜, ⺶, 犭, 豕, 豸, 虍, 艹, 卝, 龷, 丗, 龶, 芈, 丵, 菐, 黹, 礻, 衤, 糸, 糹, 纟, 龻, 镸, 髟, 襾, 覀, 吅, 㗊, 㠭, 㸚, 叕]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/kx&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>一, 丨, 丶, 丿, 乙, 亅, 二, 亠, 人, 儿, 入, 八, 冂, 冖, 冫, 几, 凵, 刀, 力, 勹, 匕, 匚, 匸, 十, 卜, 卩, 厂, 厶, 又, 口, 囗, 土, 士, 夂, 夊, 夕, 大, 女, 子, 宀, 寸, 小, 尢, 尸, 屮, 山, 巛, 工, 己, 巾, 干, 幺, 广, 廴, 廾, 弋, 弓, 彐, 彡, 彳, 心, 戈, 戶, 手, 支, 攴, 文, 斗, 斤, 方, 无, 日, 曰, 月, 木, 欠, 止, 歹, 殳, 毋, 比, 毛, 氏, 气, 水, 火, 爪, 父, 爻, 爿, 片, 牙, 牛, 犬, 玄, 玉, 瓜, 瓦, 甘, 生, 用, 田, 疋, 疒, 癶, 白, 皮, 皿, 目, 矛, 矢, 石, 示, 禸, 禾, 穴, 立, 竹, 米, 糸, 缶, 网, 羊, 羽, 老, 而, 耒, 耳, 聿, 肉, 臣, 自, 至, 臼, 舌, 舛, 舟, 艮, 色, 艸, 虍, 虫, 血, 行, 衣, 襾, 見, 角, 言, 谷, 豆, 豕, 豸, 貝, 赤, 走, 足, 身, 車, 辛, 辰, 辵, 邑, 酉, 釆, 里, 金, 長, 門, 阜, 隶, 隹, 雨, 靑, 非, 面, 革, 韋, 韭, 音, 頁, 風, 飛, 食, 首, 香, 馬, 骨, 高, 髟, 鬥, 鬯, 鬲, 鬼, 魚, 鳥, 鹵, 鹿, 麥, 麻, 黃, 黍, 黑, 黹, 黽, 鼎, 鼓, 鼠, 鼻, 齊, 齒, 龍, 龜, 龠 ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/bh&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>㇀, ㇁, ㇂, ㇃, ㇄, ㇅, ㇆, ㇇, ㇈, ㇉, ㇊, ㇋, ㇌, ㇍, ㇎, ㇏, ㇐, ㇑, ㇒, ㇓, ㇔, ㇕, ㇖, ㇗, ㇘, ㇙, ㇚, ㇛, ㇜, ㇝, ㇞, ㇟, ㇠, ㇡, ㇢, ㇣ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/bd&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>、, 。, 「, 」, 『, 』, 【, 】, 〈, 〉, 《, 》, ₋, ⁻, ―, ˗, ˉ, ＿, ﹍, ﹎, ．, ¡, ‼, ⁉, ¿, ؟, ⁈, ⁇, ､, ｡, 〃, 〄, 々, 〆, 〇, 〒, 〓, 〔, 〕, 〖, 〗, 〘, 〙, 〚, 〛, 〜, 〝, 〞, 〟, 〠, 〰, 〱, 〲, 〳, 〴, 〵, 〶, 〷, 〻, 〼, 〽 ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/bdz&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>﹅, ﹆, ﹁, ﹂, ﹃, ﹄, ︙, ︱, ︻, ︼, ︗, ︘, ︵, ︶, ︷, ︸, ︹, ︺, ︿, ﹀, ︽, ︾, ︰, ︲, ︳, ︴, ﹉, ﹊, ﹋, ﹌, ﹍, ﹎, ﹏, ﹇, ﹈, ︐, ︑, ︒, ︔, ︕, ︖ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#拼音、註音、聲調</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/py&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>ā, á, ǎ, à, ō, ó, ǒ, ò, ê, ê̄, ế, ê̌, ề, ē, é, ě, è, ī, í, ǐ, ì, ū, ú, ǔ, ù, ü, ǖ, ǘ, ǚ, ǜ, ḿ, m̀, ń, ň, ǹ, ẑ, ĉ, ŝ, ŋ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/pyd&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>Ā, Á, Ǎ, À, Ō, Ó, Ǒ, Ò, Ê, Ê̄, Ế, Ê̌, Ề, Ē, É, Ě, È, Ī, Í, Ǐ, Ì, Ū, Ú, Ǔ, Ù, Ü, Ǖ, Ǘ, Ǚ, Ǜ, Ḿ, M̀, Ń, Ň, Ǹ, Ẑ, Ĉ, Ŝ, Ŋ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/zy&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>ㄅ, ㄆ, ㄇ, ㄈ, ㄉ, ㄊ, ㄋ, ㄌ, ㄍ, ㄎ, ㄏ, ㄐ, ㄑ, ㄒ, ㄓ, ㄔ, ㄕ, ㄖ, ㄗ, ㄘ, ㄙ, ㄧ, ㄨ, ㄩ, ㄚ, ㄛ, ㄜ, ㄝ, ㄞ, ㄟ, ㄠ, ㄡ, ㄢ, ㄣ, ㄤ, ㄥ, ㄦ, ㄪ, ㄫ, ㄬ, ㄭ, ㆠ, ㆡ, ㆢ, ㆣ, ㆤ, ㆥ, ㆦ, ㆧ, ㆨ, ㆩ, ㆪ, ㆫ, ㆬ, ㆭ, ㆮ, ㆯ, ㆰ, ㆱ, ㆲ, ㆳ, ㆴ, ㆵ, ㆶ, ㆷ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/sd&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>ˉ, ˊ, ˇ, ˋ, ˆ, ˙, ˜, ˥, ˦, ˧, ˨, ˩, ꜀, ꜁, ꜂, ꜃, ꜄, ꜅, ꜆, ꜇ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#漢字+圈/弧</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/hzq&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>㊀, ㊁, ㊂, ㊃, ㊄, ㊅, ㊆, ㊇, ㊈, ㊉, ㊊, ㊋, ㊌, ㊍, ㊎, ㊏, ㊐, ㊑, ㊒, ㊓, ㊔, ㊕, ㊖, ㊗, ㊘, ㊙, ㊚, ㊛, ㊜, ㊝, ㊞, ㊟, ㊠, ㊡, ㊢, ㊣, ㊤, ㊥, ㊦, ㊧, ㊨, ㊩, ㊪, ㊫, ㊬, ㊭, ㊮, ㊯, ㊰, ㉄, ㉅, ㉆, ㉇ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/hzh&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>㈠, ㈡, ㈢, ㈣, ㈤, ㈥, ㈦, ㈧, ㈨, ㈩, ㈪, ㈫, ㈬, ㈭, ㈮, ㈯, ㈰, ㈱, ㈲, ㈳, ㈴, ㈵, ㈶, ㈷, ㈸, ㈹, ㈺, ㈻, ㈼, ㈽, ㈾, ㈿, ㉀, ㉁, ㉂, ㉃ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#いろは順</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/iro&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>い, ろ, は, に, ほ, へ, と, ち, り, ぬ, る, を, わ, か, よ, た, れ, そ, つ, ね, な, ら, む, う, ゐ, の, お, く, や, ま, け, ふ, こ, え, て, あ, さ, き, ゆ, め, み, し, ゑ, ひ, も, せ, す ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#假名</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/jm&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>あ, ぁ, い, ぃ, う, ぅ, え, ぇ, お, ぉ, か, ゕ, が, き, ぎ, く, ぐ, け, ゖ, げ, こ, ご, さ, ざ, し, じ, す, ず, せ, ぜ, そ, ぞ, た, だ, ち, ぢ, つ, っ, づ, て, で, と, ど, な, に, ぬ, ね, の, は, ば, ぱ, ひ, び, ぴ, ふ, ぶ, ぷ, へ, べ, ぺ, ほ, ぼ, ぽ, ま, み, む, め, も, や, ゃ, ゆ, ゅ, よ, ょ, ら, り, る, れ, ろ, わ, ゎ, ゐ, ゔ, ゑ, を, ん, ・, ー, ゝ, ゞ, ゟ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/pjm&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>ア, ァ, イ, ィ, ウ, ゥ, エ, ェ, オ, ォ, カ, ヵ, ガ, キ, ギ, ク, グ, ケ, ヶ, ゲ, コ, ゴ, サ, ザ, シ, ジ, ス, ズ, セ, ゼ, ソ, ゾ, タ, ダ, チ, ヂ, ツ, ッ, ヅ, テ, デ, ト, ド, ナ, ニ, ヌ, ネ, ノ, ハ, バ, パ, ヒ, ビ, ピ, フ, ブ, プ, ヘ, ベ, ペ, ホ, ボ, ポ, マ, ミ, ム, メ, モ, ヤ, ャ, ユ, ュ, ヨ, ョ, ラ, リ, ル, レ, ロ, ワ, ヮ, ヰ, ヸ, ヴ, ヱ, ヹ, ヲ, ヺ, ン, ・, ー, ヽ, ヾ, ヿ, ㇰ, ㇱ, ㇲ, ㇳ, ㇴ, ㇵ, ㇶ, ㇷ, ㇸ, ㇹ, ㇺ, ㇻ, ㇼ, ㇽ, ㇾ, ㇿ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/jmk&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>か, ゕ, き, く, け, ゖ, こ, カ, ヵ, キ, ク, ケ, ヶ, コ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/jmg&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>が, ぎ, ぐ, げ, ご, ガ, ギ, グ, ゲ, ゴ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/jms&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>さ, し, す, せ, そ, サ, シ, ス, セ, ソ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/jmz&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>ざ, じ, ず, ぜ, ぞ, ザ, ジ, ズ, ゼ, ゾ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/jmt&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>た, ち, つ, っ, て, と, タ, チ, ツ, ッ, テ, ト ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/jmd&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>だ, ぢ, づ, で, ど, ダ, ヂ, ヅ, デ, ド ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/jmn&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>な, に, ぬ, ね, の, ん, ナ, ニ, ヌ, ネ, ノ, ン ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/jmh&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>は, ひ, ふ, へ, ほ, ハ, ヒ, フ, ヘ, ホ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/jmb&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>ば, び, ぶ, べ, ぼ, バ, ビ, ブ, ベ, ボ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/jmp&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>ぱ, ぴ, ぷ, ぺ, ぽ, パ, ピ, プ, ペ, ポ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/jmm&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>ま, み, む, め, も, マ, ミ, ム, メ, モ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/jmy&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>や, ゃ, ゆ, ゅ, よ, ょ, ヤ, ャ, ユ, ュ, ヨ, ョ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/jmr&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>ら, り, る, れ, ろ, ラ, リ, ル, レ, ロ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/jmw&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>わ, ゐ, ゑ, を, ワ, ヰ, ヱ, ヲ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/jma&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>あ, か, が, さ, ざ, た, だ, な, は, ば, ぱ, ま, や, ら, わ, ア, カ, ガ, サ, ザ, タ, ダ, ナ, ハ, バ, パ, マ, ヤ, ラ, ワ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/jmi&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>い, き, ぎ, し, じ, ち, ぢ, に, ひ, び, ぴ, み, り, ゐ, イ, キ, ギ, シ, ジ, チ, ヂ, ニ, ヒ, ビ, ピ, ミ, リ, ヰ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/jmu&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>う, く, ぐ, す, ず, つ, づ, ぬ, ふ, ぶ, ぷ, む, る, ウ, ク, グ, ス, ズ, ツ, ヅ, ヌ, フ, ブ, プ, ム, ル ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/jme&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>え, け, げ, せ, ぜ, て, で, ね, へ, べ, ぺ, め, れ, ゑ, エ, ケ, ゲ, セ, ゼ, テ, デ, ネ, ヘ, ベ, ペ, メ, レ, ヱ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/jmo&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>お, こ, ご, そ, ぞ, と, ど, の, ほ, ぼ, ぽ, も, ろ, を, オ, コ, ゴ, ソ, ゾ, ト, ド, ノ, ホ, ボ, ポ, モ, ロ, ヲ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#假名+圈</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/jmq&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>㋐, ㋑, ㋒, ㋓, ㋔, ㋕, ㋖, ㋗, ㋘, ㋙, ㋚, ㋛, ㋜, ㋝, ㋞, ㋟, ㋠, ㋡, ㋢, ㋣, ㋤, ㋥, ㋦, ㋧, ㋨, ㋩, ㋪, ㋫, ㋬, ㋭, ㋮, ㋯, ㋰, ㋱, ㋲, ㋳, ㋴, ㋵, ㋶, ㋷, ㋸, ㋹, ㋺, ㋻, ㋼, ㋽, ㋾ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#假名+半角</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/jmbj&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>ｱ, ｧ, ｲ, ｨ, ｳ, ｩ, ｴ, ｪ, ｵ, ｫ, ｶ, ｷ, ｸ, ｹ, ｺ, ｻ, ｼ, ｽ, ｾ, ｿ, ﾀ, ﾁ, ﾂ, ｯ, ﾃ, ﾄ, ﾅ, ﾆ, ﾇ, ﾈ, ﾉ, ﾊ, ﾋ, ﾌ, ﾍ, ﾎ, ﾏ, ﾐ, ﾑ, ﾒ, ﾓ, ﾔ, ｬ, ﾕ, ｭ, ﾖ, ｮ, ﾗ, ﾘ, ﾙ, ﾚ, ﾛ, ﾜ, ｦ, ﾝ, ･, ｰ, ﾞ, ﾟ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#韓文</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/hw&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>ㄱ, ㄴ, ㄷ, ㄹ, ㅁ, ㅂ, ㅅ, ㅇ, ㅈ, ㅊ, ㅋ, ㅌ, ㅍ, ㅎ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#韓文+圈/弧</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/hwq&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>㉠, ㉡, ㉢, ㉣, ㉤, ㉥, ㉦, ㉧, ㉨, ㉩, ㉪, ㉫, ㉬, ㉭, ㉮, ㉯, ㉰, ㉱, ㉲, ㉳, ㉴, ㉵, ㉶, ㉷, ㉸, ㉹, ㉺, ㉻, ㉼, ㉽, ㉾, ㉿ ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>&#39;/hwh&#39;</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>㈀, ㈁, ㈂, ㈃, ㈄, ㈅, ㈆, ㈇, ㈈, ㈉, ㈊, ㈋, ㈌, ㈍, ㈎, ㈏, ㈐, ㈑, ㈒, ㈓, ㈔, ㈕, ㈖, ㈗, ㈘, ㈙, ㈚, ㈛, ㈜, ㈝, ㈞ ]</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=用户文件夹截图 class=headerLink><a href=#%e7%94%a8%e6%88%b7%e6%96%87%e4%bb%b6%e5%a4%b9%e6%88%aa%e5%9b%be class=header-mark></a>用户文件夹（截图）</h3><p>配置完之后，<code>用户文件夹</code> 截图如下：</p><p><figure><a class=lightgallery href=/assets/images/posts/2023/04/rime_user.png title=/assets/images/posts/2023/04/rime_user.png data-thumbnail=/assets/images/posts/2023/04/rime_user.png><img loading=lazy src=/assets/images/posts/2023/04/rime_user.png srcset="/assets/images/posts/2023/04/rime_user.png, /assets/images/posts/2023/04/rime_user.png 1.5x, /assets/images/posts/2023/04/rime_user.png 2x" alt=/assets/images/posts/2023/04/rime_user.png></a></figure></p></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2023-04-23</span></div><div class=post-info-license></div></div><div class="post-info-line print:!tw-hidden"><div class=post-info-md><span><a class=link-to-mardown href=/weasel/index.md target=_blank rel="noopener noreferrer">阅读原始文档</a>
+</span><span>|&nbsp;<a class=link-to-report href="https://github.com/eallion/eallion.com/issues/new?title=[bug]%20Windows+%E5%AE%89%E8%A3%85+Rime+%E5%B0%8F%E7%8B%BC%E6%AF%AB%E4%BA%94%E7%AC%94%E6%8B%BC%E9%9F%B3%E8%BE%93%E5%85%A5%E6%B3%95&body=|Field|Value|%0A|-|-|%0A|Title|Windows+%E5%AE%89%E8%A3%85+Rime+%E5%B0%8F%E7%8B%BC%E6%AF%AB%E4%BA%94%E7%AC%94%E6%8B%BC%E9%9F%B3%E8%BE%93%E5%85%A5%E6%B3%95|%0A|Url|https://www.eallion.com/weasel/|%0A|Filename|https://github.com/eallion/eallion.com/blob/main/posts/code/2023-04-23-Windows-安装-Rime-Weasel-小狼毫输入法.md|" target=_blank rel="noopener noreferrer">报告问题</a></span></div><div class=post-info-share></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/rime/>Rime</a>,&nbsp;<a href=/tags/%E4%B8%AD%E5%B7%9E%E9%9F%BB/>中州韻</a>,&nbsp;<a href=/tags/weasel/>Weasel</a>,&nbsp;<a href=/tags/%E5%B0%8F%E7%8B%BC%E6%AF%AB/>小狼毫</a>,&nbsp;<a href=/tags/%E4%BA%94%E7%AC%94/>五笔</a></section><section class=print:!tw-hidden><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class="post-nav print:tw-hidden"><a href=/umami/ class=prev rel=prev title="Umami Docker 部署及优化"><i class="fas fa-angle-left fa-fw"></i>Umami Docker 部署及优化</a>
+<a href=/wodeai/ class=next rel=next title=孙燕姿关于AI孙燕姿的回复>孙燕姿关于AI孙燕姿的回复<i class="fas fa-angle-right fa-fw"></i></a></div></div><div id=comments class=print:!tw-hidden><div id=giscus></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://giscus.app/>giscus</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>由 <a href=https://gohugo.io/ target=_blank rel="noopener noreferrer" title="Hugo 0.124.1">Hugo</a> 强力驱动&nbsp;|&nbsp;托管在 <a title="腾讯云边缘安全加速平台 EdgeOne" href=https://e5n.cc/s/teo target=_blank rel="noopener noreffer">EdgeOne</a> 上&nbsp;|&nbsp;主题 - <a href=https://github.com/HEIGE-PCloud/DoIt target=_blank rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a></div><div class=footer-line><i class="far fa-copyright fa-fw"></i>2006 - 2024&nbsp;|&nbsp;<span class=license><a title='eallion.com 版权信息' href=https://www.eallion.com/copyright/ target=_blank rel='noopener noreferrer'>eallion.com</a> All Rights Reserved.</span><span class=icp-splitter>&nbsp;|&nbsp;</span><br class=icp-br><span class=icp><a title="ICP 备案号" href=https://beian.miit.gov.cn/ target=_blank rel="noopener noreferrer">浙ICP备16031768号-2</a></span></div><div class=footer-line></div><div class=footer-line></div></div><script>"serviceWorker"in navigator&&(navigator.serviceWorker.register("/sw.min.js",{scope:"/"}).then(function(){}),navigator.serviceWorker.ready.then(function(){}))</script></footer></div><div id=fixed-buttons class=print:!tw-hidden><a href=#back-to-top id=back-to-top-button class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><div class=assets><link rel=stylesheet href=/lib/lightgallery/lightgallery.min.b38ee65d6456beb2d034bf554505f4ca47e421548b7cd26e8a7805fd2673b6c3.css integrity="sha256-s47mXWRWvrLQNL9VRQX0ykfkIVSLfNJuingF/SZztsM="><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:1e3},comment:{giscus:{darkTheme:"dark_dimmed",dataCategory:"Giscus",dataCategoryId:"DIC_kwDOD6gExM4CS9eF",dataEmitMetadata:"0",dataInputPosition:"bottom",dataLang:"zh-CN",dataLoading:"lazy",dataMapping:"pathname",dataReactionsEnabled:"1",dataRepo:"eallion/eallion.com",dataRepoId:"MDEwOlJlcG9zaXRvcnkyNjI2Njk1MDg=",dataStrict:"1",lightTheme:"light"}},lightGallery:{actualSize:!1,exThumbImage:"data-thumbnail",hideBarsDelay:2e3,selector:".lightgallery",speed:400,thumbContHeight:80,thumbWidth:80,thumbnail:!0},search:{algoliaAppID:"UIYUIFMJAW",algoliaIndex:"eallion",algoliaSearchKey:"6d69a1276d37f570210831b222bcb123",highlightTag:"em",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"algolia"},table:{sort:!0}}</script><script src=/lib/object-fit-images/ofi.min.8c2fded8e3119fcb15699d6752e3834a4b20ba353ca20f0842419c466f2dc97b.js integrity="sha256-jC/e2OMRn8sVaZ1nUuODSksgujU8og8IQkGcRm8tyXs="></script><script src=/lib/tablesort/tablesort.min.92de6dec051677787aed63503575b2f9be73f21f2745574e59647bc139a92d40.js integrity="sha256-kt5t7AUWd3h67WNQNXWy+b5z8h8nRVdOWWR7wTmpLUA="></script><script src=/lib/lightgallery/lightgallery.min.e1c797df44ba6ba4cbc5c52eabbf2300e8a4865abe4ed52f91830bf1fd2bb76e.js integrity="sha256-4ceX30S6a6TLxcUuq78jAOikhlq+TtUvkYML8f0rt24="></script><script src=/lib/lightgallery/lg-thumbnail.min.c7fedc31b278580c1ee0065d9186510ff245bb983987b9f05315cb2488045c4f.js integrity="sha256-x/7cMbJ4WAwe4AZdkYZRD/JFu5g5h7nwUxXLJIgEXE8="></script><script src=/lib/lightgallery/lg-zoom.min.0470e1215c4c9a64efce50c5969b898d6553eba697bd31a5e1663ad8ab48374c.js integrity="sha256-BHDhIVxMmmTvzlDFlpuJjWVT66aXvTGl4WY62KtIN0w="></script><script src=/lib/clipboard/clipboard.min.e17a1d816e13c0826e0ed7febfabc3277f45571234bde0bf9120829a7169edc9.js integrity="sha256-4XodgW4TwIJuDtf+v6vDJ39FVxI0veC/kSCCmnFp7ck="></script><script src=/js/theme.min.js defer></script><script src=/js/giscus.min.js defer></script></div></body></html>

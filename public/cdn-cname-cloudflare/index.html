@@ -1,0 +1,740 @@
+<!doctype html><html lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=onion-location content="http://eallionskii7e32j3ncxnccyqq6uf7rbxwmst4x6mxeswx6fvrdtsmad.onion"><meta name=giscus:backlink content="https://www.eallion.com/cdn-cname-cloudflare/"><title>图床 CDN CNAME 接入 Cloudflare SaaS 实现分流-大大的小蜗牛</title><meta name=Description content><meta property="og:title" content="图床 CDN CNAME 接入 Cloudflare SaaS 实现分流">
+<meta property="og:description" content="本文介绍了如何实现图床 CDN 域名国内境外分流。作者首先提出了实现分流的目的,即削减成本、提高性能。然后说明了实现思路,即国内域名 CNAME 指向 Cloudflare 作为回源,再通过Cloudflare Worker 访问 R2 或 B2 存储。作者列出了各服务的免费限额,以小网站为例说明国内外分流的具体配置步骤,包括 R2 绑定域名、Cloudflare for SaaS 接入、添加 CNAME 记录、创建 Worker 等。文末总结了实现分流的关键步骤。"><meta property="og:type" content="article"><meta property="og:url" content="https://www.eallion.com/cdn-cname-cloudflare/"><meta property="og:image" content="https://www.eallion.com/assets/images/og/cdn-cname-cloudflare.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2023-07-29T14:35:49+08:00"><meta property="article:modified_time" content="2024-03-26T17:59:51+08:00"><meta property="og:site_name" content="大大的小蜗牛"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://www.eallion.com/assets/images/og/cdn-cname-cloudflare.png"><meta name=twitter:title content="图床 CDN CNAME 接入 Cloudflare SaaS 实现分流"><meta name=twitter:description content="本文介绍了如何实现图床 CDN 域名国内境外分流。作者首先提出了实现分流的目的,即削减成本、提高性能。然后说明了实现思路,即国内域名 CNAME 指向 Cloudflare 作为回源,再通过Cloudflare Worker 访问 R2 或 B2 存储。作者列出了各服务的免费限额,以小网站为例说明国内外分流的具体配置步骤,包括 R2 绑定域名、Cloudflare for SaaS 接入、添加 CNAME 记录、创建 Worker 等。文末总结了实现分流的关键步骤。"><meta name=twitter:site content="@eallion"><meta name=application-name content="大大的小蜗牛"><meta name=apple-mobile-web-app-title content="大大的小蜗牛"><meta name=theme-color content="#f8f8f8"><meta name=msapplication-TileColor content="#da532c"><meta name=twitter:creator content="@eallion"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://www.eallion.com/cdn-cname-cloudflare/><link rel=prev href=https://www.eallion.com/s3-sync/><link rel=next href=https://www.eallion.com/self-hosted-github-flavored-reactions/><link rel=stylesheet href=/css/main.min.css><link rel=stylesheet href=/lib/normalize/normalize.min.055364f5be272caa092b0e6654c165828707f8ab971e2656383a6d6392bc345e.css integrity="sha256-BVNk9b4nLKoJKw5mVMFlgocH+KuXHiZWODptY5K8NF4="><link rel=stylesheet href=/css/color.b0a0f8c429ce52dfa2805b5f9e99ccdae1e8fbfd9adf4f3ddb409d8201fc0c5a.css integrity="sha256-sKD4xCnOUt+igFtfnpnM2uHo+/2a308920CdggH8DFo="><link rel=stylesheet href=/css/style.min.css><link rel=preload as=style onload='this.onload=null,this.rel="stylesheet"' href=/lib/fontawesome-free/all.min.43202d5486e011f9684a17bd6846b5c16a2619002bfc783f7e32e20dfb6bf857.css integrity="sha256-QyAtVIbgEfloShe9aEa1wWomGQAr/Hg/fjLiDftr+Fc="><noscript><link rel=stylesheet href=/lib/fontawesome-free/all.min.43202d5486e011f9684a17bd6846b5c16a2619002bfc783f7e32e20dfb6bf857.css integrity="sha256-QyAtVIbgEfloShe9aEa1wWomGQAr/Hg/fjLiDftr+Fc="></noscript><link rel=preload as=style onload='this.onload=null,this.rel="stylesheet"' href=/lib/animate/animate.min.5fbaeb9f8e25d7e0143bae61d4b1802c16ce7390b96ceb2d498b0d96ff4c853f.css integrity="sha256-X7rrn44l1+AUO65h1LGALBbOc5C5bOstSYsNlv9MhT8="><noscript><link rel=stylesheet href=/lib/animate/animate.min.5fbaeb9f8e25d7e0143bae61d4b1802c16ce7390b96ceb2d498b0d96ff4c853f.css integrity="sha256-X7rrn44l1+AUO65h1LGALBbOc5C5bOstSYsNlv9MhT8="></noscript><meta name=google-site-verification content="9Mvl_9FEM5JphVmp-u9ljtlChFohWuBBFjlSS89QKVU"><meta name=msvalidate.01 content="68A03C00DAFAD54E3739A8D372D9371B"><meta name=yandex-verification content="ff49a8cfbbaad423"><meta name=p:domain_verify content="b9e3534b99f9bd82f3b8688a1fa122a8"><meta name=baidu-site-verification content="ZWIiTFJWJkGQ11ZJ"><meta name=sogou_site_verification content="SZM7r2UEOz"><meta name=360-site-verification content="05afe845fd64ce6966deadce74479b5b"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"图床 CDN CNAME 接入 Cloudflare SaaS 实现分流","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eallion.com/cdn-cname-cloudflare/"},"image":["https://www.eallion.com/images/Apple-Devices-Preview.png"],"genre":"posts","keywords":["hugo","blog","cname","cloudflare"],"wordcount":3982,"url":"https://www.eallion.com/cdn-cname-cloudflare/","datePublished":"2023-07-29T14:35:49+08:00","dateModified":"2024-03-26T17:59:51+08:00","license":"This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.","publisher":{"@type":"Organization","name":"Charles Chin","logo":"https://www.eallion.com/eallion.webp"},"author":[{"@type":"Person","name":"大大的小蜗牛","url":"https://eallion.com/"}],"description":""}</script><script src=/lib/instant.page/instantpage.min.js defer type=module></script><link href=https://e5n.cc/@eallion rel=me></head><body header-desktop=normal header-mobile=auto><script type=text/javascript>function setTheme(e){document.body.setAttribute("theme",e),document.documentElement.style.setProperty("color-scheme",e==="light"?"light":"dark"),e==="light"?document.documentElement.classList.remove("tw-dark"):document.documentElement.classList.add("tw-dark"),window.theme=e,window.isDark=window.theme!=="light"}function saveTheme(e){window.localStorage&&localStorage.setItem("theme",e)}function getMeta(e){const t=document.getElementsByTagName("meta");for(let n=0;n<t.length;n++)if(t[n].getAttribute("name")===e)return t[n];return""}if(window.localStorage&&localStorage.getItem("theme")){let e=localStorage.getItem("theme");e==="light"||e==="dark"||e==="black"?setTheme(e):setTheme(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}else"auto"==="light"||"auto"==="dark"||"auto"==="black"?(setTheme("auto"),saveTheme("auto")):(saveTheme("auto"),setTheme(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"));let metaColors={light:"#f8f8f8",dark:"#252627",black:"#000000"};getMeta("theme-color").content=metaColors[document.body.getAttribute("theme")],window.switchThemeEventSet=new Set</script><div id=back-to-top></div><div id=mask></div><div class=wrapper><header class="desktop print:!tw-hidden" id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title=大大的小蜗牛>大大的小蜗牛</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/ title=首页><i class='fas fa-home'></i> 首页 </a><a class=menu-item href=/posts/ title=所有文章><i class='fas fa-blog'></i> 博客 </a><a class=menu-item href=/mastodon/ title="Mastodon Toots 嘀咕"><i class='fab fa-mastodon'></i> 嘀咕 </a><a class=menu-item href=/media/ title="NeoDB 书影音记录"><i class='fas fa-film'></i> 书影音 </a><a class=menu-item href=/steam/ title="Steam 游戏清单"><i class='fab fa-steam'></i> 游戏库 </a><a class=menu-item href=/links/ title=友情链接><i class='fas fa-users'></i> 友情链接 </a><a class=menu-item href=/stats/ title=统计><i class='fas fa-chart-bar'></i> 统计 </a><a class=menu-item href=/about/ title=关于我关于本站><i class='fas fa-info'></i> 关于 </a><span class="menu-item delimiter"></span><a href=javascript:void(0); class="menu-item language" title=选择语言>简体中文<i class="fas fa-chevron-right fa-fw"></i>
+<select class=language-select title=选择语言 id=language-select-desktop onchange="location=this.value"><option value=/cdn-cname-cloudflare/ selected>简体中文</option></select>
+</a><span class="menu-item search" id=search-desktop><input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i>
+</a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i>
+</a><span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i>
+</span></span><a href=javascript:void(0); class="menu-item theme-select" title=切换主题><i class="fas fa-adjust fa-fw"></i>
+<select class=color-theme-select id=theme-select-desktop title=切换主题><option value=light>浅色</option><option value=dark>深色</option><option value=black>黑色</option><option value=auto>跟随系统</option></select></a></div></div></div></header><header class="mobile print:!tw-hidden" id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title=大大的小蜗牛>大大的小蜗牛</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i>
+</a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i>
+</a><span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/ title=首页><i class='fas fa-home'></i>首页</a><a class=menu-item href=/posts/ title=所有文章><i class='fas fa-blog'></i>博客</a><a class=menu-item href=/mastodon/ title="Mastodon Toots 嘀咕"><i class='fab fa-mastodon'></i>嘀咕</a><a class=menu-item href=/media/ title="NeoDB 书影音记录"><i class='fas fa-film'></i>书影音</a><a class=menu-item href=/steam/ title="Steam 游戏清单"><i class='fab fa-steam'></i>游戏库</a><a class=menu-item href=/links/ title=友情链接><i class='fas fa-users'></i>友情链接</a><a class=menu-item href=/stats/ title=统计><i class='fas fa-chart-bar'></i>统计</a><a class=menu-item href=/about/ title=关于我关于本站><i class='fas fa-info'></i>关于</a><a href=javascript:void(0); class="menu-item theme-select" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i>
+<select class=color-theme-select id=theme-select-mobile title=切换主题><option value=light>浅色</option><option value=dark>深色</option><option value=black>黑色</option><option value=auto>跟随系统</option></select>
+</a><a href=javascript:void(0); class=menu-item title=选择语言>简体中文<i class="fas fa-chevron-right fa-fw"></i>
+<select class=language-select title=选择语言 onchange="location=this.value"><option value=/cdn-cname-cloudflare/ selected>简体中文</option></select></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class="toc print:!tw-hidden" id=toc-auto><h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto><nav id=TableOfContents><ul><li><ul><li><a href=#tldr>TL;DR</a></li><li><a href=#前言>前言</a></li><li><a href=#创建-r2-并绑定自定义域名>创建 R2 并绑定自定义域名</a></li><li><a href=#订阅-cloudflare-for-saas>订阅 CloudFlare for SaaS</a></li><li><a href=#添加自定义域名>添加自定义域名</a></li><li><a href=#解析-cname>解析 CNAME</a></li><li><a href=#新建-worker-代理-r2>新建 Worker 代理 R2</a></li><li><a href=#workers-路由>Workers 路由</a></li><li><a href=#worker-代理-backblaze-b2>Worker 代理 Backblaze B2</a><ul><li><ul><li><a href=#1新建-cloudflare-workerworkerjs>1、新建 Cloudflare Worker，<code>worker.js</code></a></li><li><a href=#2设置-worker-环境变量>2、设置 Worker 环境变量</a></li><li><a href=#3手动添加-cname-解析到-b2>3、手动添加 CNAME 解析到 B2</a></li><li><a href=#4配置回退源>4、配置回退源</a></li><li><a href=#5配置自定义主机名>5、配置自定义主机名</a></li><li><a href=#6配置-worker-路由>6、配置 Worker 路由</a></li></ul></li></ul></li><li><a href=#尾声>尾声</a></li></ul></li></ul></nav></div></div><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC","true")</script><article class="page single print:!tw-w-full print:!tw-max-w-none print:!tw-m-0 print:!tw-p-0"><h1 class="single-title animate__animated animate__flipInX">图床 CDN CNAME 接入 Cloudflare SaaS 实现分流</h1><div class=post-meta><div class=post-meta-line><span class=post-author><span class=author><span class=screen-reader-text></span><a href=https://www.eallion.com/authors/eallion><img src=https://www.eallion.com/eallion.webp alt='大大的小蜗牛 avatar' class="tw-inline-block tw-max-h-4 tw-rounded-full tw-translate-y-[-2px] tw-mr-1">大大的小蜗牛</a></span></span>&nbsp;<span class=post-category>收录于 </span>&nbsp;<span class=post-category>类别 <a href=/categories/%E4%BB%A3%E7%A0%81/><i class="far fa-folder fa-fw"></i>代码</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2023-07-29>2023-07-29</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime=2024-03-26>2024-03-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3982 字&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;</div></div><div class="details toc print:!tw-block" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><ul><li><a href=#tldr>TL;DR</a></li><li><a href=#前言>前言</a></li><li><a href=#创建-r2-并绑定自定义域名>创建 R2 并绑定自定义域名</a></li><li><a href=#订阅-cloudflare-for-saas>订阅 CloudFlare for SaaS</a></li><li><a href=#添加自定义域名>添加自定义域名</a></li><li><a href=#解析-cname>解析 CNAME</a></li><li><a href=#新建-worker-代理-r2>新建 Worker 代理 R2</a></li><li><a href=#workers-路由>Workers 路由</a></li><li><a href=#worker-代理-backblaze-b2>Worker 代理 Backblaze B2</a><ul><li><ul><li><a href=#1新建-cloudflare-workerworkerjs>1、新建 Cloudflare Worker，<code>worker.js</code></a></li><li><a href=#2设置-worker-环境变量>2、设置 Worker 环境变量</a></li><li><a href=#3手动添加-cname-解析到-b2>3、手动添加 CNAME 解析到 B2</a></li><li><a href=#4配置回退源>4、配置回退源</a></li><li><a href=#5配置自定义主机名>5、配置自定义主机名</a></li><li><a href=#6配置-worker-路由>6、配置 Worker 路由</a></li></ul></li></ul></li><li><a href=#尾声>尾声</a></li></ul></li></ul></nav></div></div><div class=post-ai><div class=ai-header><div class=ai-title><svg role="img" width="1em" height="1em" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="ai-title-icon"><title>OpenAI ChatGPT3.5</title><path d="M22.2819 9.8211a5.9847 5.9847.0 00-.5157-4.9108 6.0462 6.0462.0 00-6.5098-2.9A6.0651 6.0651.0 004.9807 4.1818a5.9847 5.9847.0 00-3.9977 2.9 6.0462 6.0462.0 00.7427 7.0966 5.98 5.98.0 00.511 4.9107 6.051 6.051.0 006.5146 2.9001A5.9847 5.9847.0 0013.2599 24a6.0557 6.0557.0 005.7718-4.2058 5.9894 5.9894.0 003.9977-2.9001 6.0557 6.0557.0 00-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755.0 01-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948.0 00.3927-.6813v-6.7369l2.02 1.1686a.071.071.0 01.038.052v5.5826a4.504 4.504.0 01-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708.0 01-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712.0 00.7806.0l5.8428-3.3685v2.3324a.0804.0804.0 01-.0332.0615L9.74 19.9502a4.4992 4.4992.0 01-6.1408-1.6464zM2.3408 7.8956a4.485 4.485.0 012.3655-1.9728V11.6a.7664.7664.0 00.3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757.0 01-.071.0l-4.8303-2.7865A4.504 4.504.0 012.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757.0 01.071.0l4.8303 2.7913a4.4944 4.4944.0 01-.6765 8.1042v-5.6772a.79.79.0 00-.407-.667zm2.0107-3.0231-.142-.0852-4.7735-2.7818a.7759.7759.0 00-.7854.0L9.409 9.2297V6.8974a.0662.0662.0 01.0284-.0615l4.8303-2.7866a4.4992 4.4992.0 016.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804.0 01-.038-.0567V6.0742a4.4992 4.4992.0 017.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948.0 00-.3927.6813zm1.0976-2.3654 2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997z"/></svg><div class=ai-title-text><a href=https://www.eallion.com/ai-summary/ target=_blank rel="noopener noreferrer" alt="AI 智能摘要" title="AI 智能摘要">AI 摘要</a></div></div><div class=ai-title-tooltip><i class="far fa-question-circle"></i>
+<span class=ai-title-tooltip-text>Pre-generated by ChatGPT 3.5</span></div></div><div id=ai-explanation class=ai-explanation>本文介绍了如何实现图床 CDN 域名国内境外分流。作者首先提出了实现分流的目的,即削减成本、提高性能。然后说明了实现思路,即国内域名 CNAME 指向 Cloudflare 作为回源,再通过Cloudflare Worker 访问 R2 或 B2 存储。作者列出了各服务的免费限额,以小网站为例说明国内外分流的具体配置步骤,包括 R2 绑定域名、Cloudflare for SaaS 接入、添加 CNAME 记录、创建 Worker 等。文末总结了实现分流的关键步骤。</div></div><div class=content id=content><h3 id=tldr class=headerLink><a href=#tldr class=header-mark></a>TL;DR</h3><p>本文比较长，也比较罗嗦，需要实现如下功能请再往下读：</p><ul><li>域名 NS 不打算接入 Cloudflare</li><li>同一 CDN 域名，国内走国内流量，境外走 Cloudflare 流量</li><li>国内用阿里云、腾讯云等服务商的 CDN 和对象存储</li><li>境外用 Cloudflare 的 CDN</li><li>境外用 Cloudflare R2 或 Backblaze B2 作为存储桶</li></ul><p><figure><a class=lightgallery href=/assets/images/posts/2023/07/cdn_dns.png title=/assets/images/posts/2023/07/cdn_dns.png data-thumbnail=/assets/images/posts/2023/07/cdn_dns.png><img loading=lazy src=/assets/images/posts/2023/07/cdn_dns.png srcset="/assets/images/posts/2023/07/cdn_dns.png, /assets/images/posts/2023/07/cdn_dns.png 1.5x, /assets/images/posts/2023/07/cdn_dns.png 2x" alt=/assets/images/posts/2023/07/cdn_dns.png></a></figure></p><h3 id=前言 class=headerLink><a href=#%e5%89%8d%e8%a8%80 class=header-mark></a>前言</h3><p>国内、境外分流，不光能削减成本，还能提高网站性能，优化 TTFB。</p><p>不记得是什么时候开始有了一个这样的闪念，然后就去搜索了一下。<br>结果发现网上的教程都比较老旧。其中讲得比较多的是通过 CloudFlare for SaaS 接入 CNAME，但是都支持普通的域名，并不能接入 R2 或者 Worker。</p><p>从功能的优先级上来说，我最需要的是分区解析功能，这就导致不能把域名的 NS 转入 Cloudflare。<br>Cloudflare 的 DNS 确实非常优秀，但 Cloudflare 不能分区解析，它有 CNAME 拉平功能，不过它会把所有中国大陆地区的 IP 解析到联通。<br>相反国内的 DNS 服务商的分区解析就做得好，可能也是因为国内的域名更需要这种功能吧。<br>无法全心全意付出，又想去贴贴 Cloudflare，那就只能搞些奇技淫巧。</p><p>2022 年 3 月份，CloudFlare 宣布更改了 CloudFlare for SaaS 的收费策略，每个账户可以有 100 个域名免费额度，而且超额后每个域名按 0.1 USD/月 收取费用。我们就利用 CloudFlare for SaaS 把域名通过 CNAME 接入 Cloudflare，享受 Cloudflare 强大的边缘计算能力。</p><p>对于小网站，比如本博客，以上服务都是免费的，免费额度：</p><ul><li>DNSPod：用的专业版，但免费版本也有分区解析</li><li>腾讯云 COS：50G/月；200万请求</li><li>腾讯云 CDN：10G/月</li><li>Cloudflare CDN：正常使用无上限</li><li>Cloudflare R2: 10G/月； 100万/1000万请求</li><li>Backblaze B2: 10G/月； 与 Cloudflare 有 <a href=https://www.backblaze.com/cloud-storage/integrations target=_blank rel="noopener noreferrer">流量联盟</a></li></ul><p>关于腾讯云的配置略过，这里只讲 Cloudflare 的部分。<br>前提需要 Cloudflare 账号中已经有一个可用的域名。<br>这个域名用来提供 <code>回退源</code> （Fallback Origin），假设这个域名是 <code>example.com</code> 。</p><h3 id=创建-r2-并绑定自定义域名 class=headerLink><a href=#%e5%88%9b%e5%bb%ba-r2-%e5%b9%b6%e7%bb%91%e5%ae%9a%e8%87%aa%e5%ae%9a%e4%b9%89%e5%9f%9f%e5%90%8d class=header-mark></a>创建 R2 并绑定自定义域名</h3><ol><li>登录控制面板：<a href=https://dash.cloudflare.com/ target=_blank rel="noopener noreferrer">https://dash.cloudflare.com/</a> ，Cloudflare 已支持中文；</li><li>创建 R2 存储桶的方法这里略过，如创建：<code>r2-blog-test</code>；</li><li>在 <code>R2</code> <code>设置</code> <code>公开访问</code> <code>自定义域</code> <code>连接域</code> 为刚才创建的 R2 添加自定义域名：</li></ol><p><figure><a class=lightgallery href=/assets/images/posts/2023/07/r2_custom_hostname.png title=/assets/images/posts/2023/07/r2_custom_hostname.png data-thumbnail=/assets/images/posts/2023/07/r2_custom_hostname.png><img loading=lazy src=/assets/images/posts/2023/07/r2_custom_hostname.png srcset="/assets/images/posts/2023/07/r2_custom_hostname.png, /assets/images/posts/2023/07/r2_custom_hostname.png 1.5x, /assets/images/posts/2023/07/r2_custom_hostname.png 2x" alt=/assets/images/posts/2023/07/r2_custom_hostname.png></a></figure></p><p>然后该域名的 DNS 就会自动出现一条解析：</p><p><figure><a class=lightgallery href=/assets/images/posts/2023/07/custom_hostname_dns.png title=/assets/images/posts/2023/07/custom_hostname_dns.png data-thumbnail=/assets/images/posts/2023/07/custom_hostname_dns.png><img loading=lazy src=/assets/images/posts/2023/07/custom_hostname_dns.png srcset="/assets/images/posts/2023/07/custom_hostname_dns.png, /assets/images/posts/2023/07/custom_hostname_dns.png 1.5x, /assets/images/posts/2023/07/custom_hostname_dns.png 2x" alt=/assets/images/posts/2023/07/custom_hostname_dns.png></a></figure></p><h3 id=订阅-cloudflare-for-saas class=headerLink><a href=#%e8%ae%a2%e9%98%85-cloudflare-for-saas class=header-mark></a>订阅 CloudFlare for SaaS</h3><ol><li>在 <code>Zones</code> 中选择 <code>example.com</code> 这个域名；</li><li>在该域名的 <code>SSL/TLS</code> 中选择 <code>自定义主机名</code>；</li><li>选择 Enable 订阅。可以使用 Paypal 订阅。</li></ol><p><figure><a class=lightgallery href=/assets/images/posts/2023/07/enable_cloudflare_saas.png title=/assets/images/posts/2023/07/enable_cloudflare_saas.png data-thumbnail=/assets/images/posts/2023/07/enable_cloudflare_saas.png><img loading=lazy src=/assets/images/posts/2023/07/enable_cloudflare_saas.png srcset="/assets/images/posts/2023/07/enable_cloudflare_saas.png, /assets/images/posts/2023/07/enable_cloudflare_saas.png 1.5x, /assets/images/posts/2023/07/enable_cloudflare_saas.png 2x" alt=/assets/images/posts/2023/07/enable_cloudflare_saas.png></a></figure></p><h3 id=添加自定义域名 class=headerLink><a href=#%e6%b7%bb%e5%8a%a0%e8%87%aa%e5%ae%9a%e4%b9%89%e5%9f%9f%e5%90%8d class=header-mark></a>添加自定义域名</h3><p>订阅成功后，先添加 <code>回退源</code>：<code>images.example.com</code>，这个回源域名是绑定在 R2 上的自定义域名。</p><p><figure><a class=lightgallery href=/assets/images/posts/2023/07/cf_callback_hostname.png title=/assets/images/posts/2023/07/cf_callback_hostname.png data-thumbnail=/assets/images/posts/2023/07/cf_callback_hostname.png><img loading=lazy src=/assets/images/posts/2023/07/cf_callback_hostname.png srcset="/assets/images/posts/2023/07/cf_callback_hostname.png, /assets/images/posts/2023/07/cf_callback_hostname.png 1.5x, /assets/images/posts/2023/07/cf_callback_hostname.png 2x" alt=/assets/images/posts/2023/07/cf_callback_hostname.png></a></figure></p><p>然后点击 <code>添加自定义主机名</code> ，填入 CDN 域名，如 <code>images.eallion.com</code> ，验证方式推荐 TXT 验证。</p><p><figure><a class=lightgallery href=/assets/images/posts/2023/07/add_custom_hostname.png title=/assets/images/posts/2023/07/add_custom_hostname.png data-thumbnail=/assets/images/posts/2023/07/add_custom_hostname.png><img loading=lazy src=/assets/images/posts/2023/07/add_custom_hostname.png srcset="/assets/images/posts/2023/07/add_custom_hostname.png, /assets/images/posts/2023/07/add_custom_hostname.png 1.5x, /assets/images/posts/2023/07/add_custom_hostname.png 2x" alt=/assets/images/posts/2023/07/add_custom_hostname.png></a></figure></p><p>添加后，需要验证域名，去自己的域名解析控制台，如 DNSPod ，添加 2 条 TXT 记录。<br>等待 <code>证书状态</code> 和 <code>主机名状态</code> 都变成 <code>有效</code>。</p><p><figure><a class=lightgallery href=/assets/images/posts/2023/07/cf_dns_txt_records.png title=/assets/images/posts/2023/07/cf_dns_txt_records.png data-thumbnail=/assets/images/posts/2023/07/cf_dns_txt_records.png><img loading=lazy src=/assets/images/posts/2023/07/cf_dns_txt_records.png srcset="/assets/images/posts/2023/07/cf_dns_txt_records.png, /assets/images/posts/2023/07/cf_dns_txt_records.png 1.5x, /assets/images/posts/2023/07/cf_dns_txt_records.png 2x" alt=/assets/images/posts/2023/07/cf_dns_txt_records.png></a></figure></p><h3 id=解析-cname class=headerLink><a href=#%e8%a7%a3%e6%9e%90-cname class=header-mark></a>解析 CNAME</h3><p><code>回退源状态</code> <code>证书状态</code> 和 <code>主机名状态</code> 都变成 <code>有效</code> 后，就去自己的域名解析控制台添加 CNAME 解析。<br>把用于生产环境的 <code>images.eallion.com</code> CNAME 指向 <code>images.example.com</code>。</p><p><figure><a class=lightgallery href=/assets/images/posts/2023/07/dns_cname_records.png title=/assets/images/posts/2023/07/dns_cname_records.png data-thumbnail=/assets/images/posts/2023/07/dns_cname_records.png><img loading=lazy src=/assets/images/posts/2023/07/dns_cname_records.png srcset="/assets/images/posts/2023/07/dns_cname_records.png, /assets/images/posts/2023/07/dns_cname_records.png 1.5x, /assets/images/posts/2023/07/dns_cname_records.png 2x" alt=/assets/images/posts/2023/07/dns_cname_records.png></a></figure></p><p>一般的教程到这里就结束了。<br>但是这样是访问不了 R2 里面的资源的。<br>最重要的一步，用 Worker 代理 R2。</p><h3 id=新建-worker-代理-r2 class=headerLink><a href=#%e6%96%b0%e5%bb%ba-worker-%e4%bb%a3%e7%90%86-r2 class=header-mark></a>新建 Worker 代理 R2</h3><p>官方有文档介绍怎么通过 Worker 访问 R2：<br>Use R2 from Workers：<a href=https://developers.cloudflare.com/r2/api/workers/workers-api-usage/ target=_blank rel="noopener noreferrer">https://developers.cloudflare.com/r2/api/workers/workers-api-usage/</a></p><p>按照文档教程一步一步来就可以了。<br>如果比较懒，也不想鉴权。那用我的精简代码就可以了。<br>直接去掉了 <code>DELETE</code> 和 <code>PUT</code> 的代码，只保留了 <code>GET</code>。<br>不用 Wrangle CLI 脚本也可以在后台手动创建 Worker。</p><p>左侧切换到 <code>Worker 和 Pages</code> 分栏，<code>创建应用程序</code>，随便取个名字，随便选个模板部署就可以了，后面再改代码。</p><p>点击 <code>快速编辑</code> 把以下代码复制到 <code>worker.js</code> 中，保存并部署：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-js data-lang=js><span class=line><span class=cl><span class=c1>// src/worker.ts
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>var</span> <span class=nx>worker_default</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=kr>async</span> <span class=nx>fetch</span><span class=p>(</span><span class=nx>request</span><span class=p>,</span> <span class=nx>env</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=nx>request</span><span class=p>.</span><span class=nx>method</span> <span class=o>!==</span> <span class=s2>&#34;GET&#34;</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>return</span> <span class=k>new</span> <span class=nx>Response</span><span class=p>(</span><span class=s2>&#34;Only GET method allowed&#34;</span><span class=p>,</span> <span class=p>{</span> <span class=nx>status</span><span class=o>:</span> <span class=mi>405</span> <span class=p>});</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=nx>url</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>URL</span><span class=p>(</span><span class=nx>request</span><span class=p>.</span><span class=nx>url</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=nx>key</span> <span class=o>=</span> <span class=nx>url</span><span class=p>.</span><span class=nx>pathname</span><span class=p>.</span><span class=nx>slice</span><span class=p>(</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=nx>object</span> <span class=o>=</span> <span class=kr>await</span> <span class=nx>env</span><span class=p>.</span><span class=nx>MY_BUCKET</span><span class=p>.</span><span class=nx>get</span><span class=p>(</span><span class=nx>key</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=nx>object</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>return</span> <span class=k>new</span> <span class=nx>Response</span><span class=p>(</span><span class=s2>&#34;Object not found&#34;</span><span class=p>,</span> <span class=p>{</span> <span class=nx>status</span><span class=o>:</span> <span class=mi>404</span> <span class=p>});</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=nx>headers</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>Headers</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=nx>object</span><span class=p>.</span><span class=nx>writeHttpMetadata</span><span class=p>(</span><span class=nx>headers</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nx>headers</span><span class=p>.</span><span class=nx>set</span><span class=p>(</span><span class=s2>&#34;ETag&#34;</span><span class=p>,</span> <span class=nx>object</span><span class=p>.</span><span class=nx>httpEtag</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=k>new</span> <span class=nx>Response</span><span class=p>(</span><span class=nx>object</span><span class=p>.</span><span class=nx>body</span><span class=p>,</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=nx>headers</span>
+</span></span><span class=line><span class=cl>    <span class=p>});</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>};</span>
+</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nx>worker_default</span> <span class=nx>as</span> <span class=k>default</span>
+</span></span><span class=line><span class=cl><span class=p>};</span>
+</span></span><span class=line><span class=cl><span class=c1>//# sourceMappingURL=worker.js.map
+</span></span></span></code></pre></td></tr></table></div></div><p>部署成功后返回。<br>在当前 Worker 的设置中，<code>变量</code> <code>R2 存储桶绑定</code> 添加绑定：</p><ul><li><code>变量名称</code>：<code>MY_BUCKET</code></li><li><code>R2 存储桶</code>：选择对应的桶</li></ul><p><figure><a class=lightgallery href=/assets/images/posts/2023/07/r2_binding.png title=/assets/images/posts/2023/07/r2_binding.png data-thumbnail=/assets/images/posts/2023/07/r2_binding.png><img loading=lazy src=/assets/images/posts/2023/07/r2_binding.png srcset="/assets/images/posts/2023/07/r2_binding.png, /assets/images/posts/2023/07/r2_binding.png 1.5x, /assets/images/posts/2023/07/r2_binding.png 2x" alt=/assets/images/posts/2023/07/r2_binding.png></a></figure></p><h3 id=workers-路由 class=headerLink><a href=#workers-%e8%b7%af%e7%94%b1 class=header-mark></a>Workers 路由</h3><p>回到 Zones 中，选择域名，添加 Workers 路由：</p><ul><li><code>路由</code>：一定要填生产环境用的域名，不要填 Cloudflare 的源域名，如：<code>images.eallion.com/*</code>；</li><li><code>Worker</code>：选择上一步创建的 Worker；</li><li><code>环境</code>：Production。</li></ul><p><figure><a class=lightgallery href=/assets/images/posts/2023/07/r2_worker_router.png title=/assets/images/posts/2023/07/r2_worker_router.png data-thumbnail=/assets/images/posts/2023/07/r2_worker_router.png><img loading=lazy src=/assets/images/posts/2023/07/r2_worker_router.png srcset="/assets/images/posts/2023/07/r2_worker_router.png, /assets/images/posts/2023/07/r2_worker_router.png 1.5x, /assets/images/posts/2023/07/r2_worker_router.png 2x" alt=/assets/images/posts/2023/07/r2_worker_router.png></a></figure></p><p>至此，你应该就能以 CNAME 的方式访问 Cloudflare R2 里面的内容了。</p><ul><li><a href=https://images.eallion.com/eallion.jpg target=_blank rel="noopener noreferrer">https://images.eallion.com/eallion.jpg</a></li></ul><h3 id=worker-代理-backblaze-b2 class=headerLink><a href=#worker-%e4%bb%a3%e7%90%86-backblaze-b2 class=header-mark></a>Worker 代理 Backblaze B2</h3><p>其实有 R2 就够了，但是可能会因为各种各样的原因需要用到 B2。</p><p>其实是差不多的。</p><p>Backblaze 官方也有文档介绍如何通过 Cloudflare Worker 访问 B2。<br>Docs：<a href=https://www.backblaze.com/docs/cloud-storage-integrate-cloudflare-workers-with-backblaze-b2 target=_blank rel="noopener noreferrer">Integrate Cloudflare Workers with Backblaze B2</a></p><p>简要介绍一下怎么做吧：（还是建议看官方文档比较好。）</p><h5 id=1新建-cloudflare-workerworkerjs class=headerLink><a href=#1%e6%96%b0%e5%bb%ba-cloudflare-workerworkerjs class=header-mark></a>1、新建 Cloudflare Worker，<code>worker.js</code></h5><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span><span class=lnt>136
+</span><span class=lnt>137
+</span><span class=lnt>138
+</span><span class=lnt>139
+</span><span class=lnt>140
+</span><span class=lnt>141
+</span><span class=lnt>142
+</span><span class=lnt>143
+</span><span class=lnt>144
+</span><span class=lnt>145
+</span><span class=lnt>146
+</span><span class=lnt>147
+</span><span class=lnt>148
+</span><span class=lnt>149
+</span><span class=lnt>150
+</span><span class=lnt>151
+</span><span class=lnt>152
+</span><span class=lnt>153
+</span><span class=lnt>154
+</span><span class=lnt>155
+</span><span class=lnt>156
+</span><span class=lnt>157
+</span><span class=lnt>158
+</span><span class=lnt>159
+</span><span class=lnt>160
+</span><span class=lnt>161
+</span><span class=lnt>162
+</span><span class=lnt>163
+</span><span class=lnt>164
+</span><span class=lnt>165
+</span><span class=lnt>166
+</span><span class=lnt>167
+</span><span class=lnt>168
+</span><span class=lnt>169
+</span><span class=lnt>170
+</span><span class=lnt>171
+</span><span class=lnt>172
+</span><span class=lnt>173
+</span><span class=lnt>174
+</span><span class=lnt>175
+</span><span class=lnt>176
+</span><span class=lnt>177
+</span><span class=lnt>178
+</span><span class=lnt>179
+</span><span class=lnt>180
+</span><span class=lnt>181
+</span><span class=lnt>182
+</span><span class=lnt>183
+</span><span class=lnt>184
+</span><span class=lnt>185
+</span><span class=lnt>186
+</span><span class=lnt>187
+</span><span class=lnt>188
+</span><span class=lnt>189
+</span><span class=lnt>190
+</span><span class=lnt>191
+</span><span class=lnt>192
+</span><span class=lnt>193
+</span><span class=lnt>194
+</span><span class=lnt>195
+</span><span class=lnt>196
+</span><span class=lnt>197
+</span><span class=lnt>198
+</span><span class=lnt>199
+</span><span class=lnt>200
+</span><span class=lnt>201
+</span><span class=lnt>202
+</span><span class=lnt>203
+</span><span class=lnt>204
+</span><span class=lnt>205
+</span><span class=lnt>206
+</span><span class=lnt>207
+</span><span class=lnt>208
+</span><span class=lnt>209
+</span><span class=lnt>210
+</span><span class=lnt>211
+</span><span class=lnt>212
+</span><span class=lnt>213
+</span><span class=lnt>214
+</span><span class=lnt>215
+</span><span class=lnt>216
+</span><span class=lnt>217
+</span><span class=lnt>218
+</span><span class=lnt>219
+</span><span class=lnt>220
+</span><span class=lnt>221
+</span><span class=lnt>222
+</span><span class=lnt>223
+</span><span class=lnt>224
+</span><span class=lnt>225
+</span><span class=lnt>226
+</span><span class=lnt>227
+</span><span class=lnt>228
+</span><span class=lnt>229
+</span><span class=lnt>230
+</span><span class=lnt>231
+</span><span class=lnt>232
+</span><span class=lnt>233
+</span><span class=lnt>234
+</span><span class=lnt>235
+</span><span class=lnt>236
+</span><span class=lnt>237
+</span><span class=lnt>238
+</span><span class=lnt>239
+</span><span class=lnt>240
+</span><span class=lnt>241
+</span><span class=lnt>242
+</span><span class=lnt>243
+</span><span class=lnt>244
+</span><span class=lnt>245
+</span><span class=lnt>246
+</span><span class=lnt>247
+</span><span class=lnt>248
+</span><span class=lnt>249
+</span><span class=lnt>250
+</span><span class=lnt>251
+</span><span class=lnt>252
+</span><span class=lnt>253
+</span><span class=lnt>254
+</span><span class=lnt>255
+</span><span class=lnt>256
+</span><span class=lnt>257
+</span><span class=lnt>258
+</span><span class=lnt>259
+</span><span class=lnt>260
+</span><span class=lnt>261
+</span><span class=lnt>262
+</span><span class=lnt>263
+</span><span class=lnt>264
+</span><span class=lnt>265
+</span><span class=lnt>266
+</span><span class=lnt>267
+</span><span class=lnt>268
+</span><span class=lnt>269
+</span><span class=lnt>270
+</span><span class=lnt>271
+</span><span class=lnt>272
+</span><span class=lnt>273
+</span><span class=lnt>274
+</span><span class=lnt>275
+</span><span class=lnt>276
+</span><span class=lnt>277
+</span><span class=lnt>278
+</span><span class=lnt>279
+</span><span class=lnt>280
+</span><span class=lnt>281
+</span><span class=lnt>282
+</span><span class=lnt>283
+</span><span class=lnt>284
+</span><span class=lnt>285
+</span><span class=lnt>286
+</span><span class=lnt>287
+</span><span class=lnt>288
+</span><span class=lnt>289
+</span><span class=lnt>290
+</span><span class=lnt>291
+</span><span class=lnt>292
+</span><span class=lnt>293
+</span><span class=lnt>294
+</span><span class=lnt>295
+</span><span class=lnt>296
+</span><span class=lnt>297
+</span><span class=lnt>298
+</span><span class=lnt>299
+</span><span class=lnt>300
+</span><span class=lnt>301
+</span><span class=lnt>302
+</span><span class=lnt>303
+</span><span class=lnt>304
+</span><span class=lnt>305
+</span><span class=lnt>306
+</span><span class=lnt>307
+</span><span class=lnt>308
+</span><span class=lnt>309
+</span><span class=lnt>310
+</span><span class=lnt>311
+</span><span class=lnt>312
+</span><span class=lnt>313
+</span><span class=lnt>314
+</span><span class=lnt>315
+</span><span class=lnt>316
+</span><span class=lnt>317
+</span><span class=lnt>318
+</span><span class=lnt>319
+</span><span class=lnt>320
+</span><span class=lnt>321
+</span><span class=lnt>322
+</span><span class=lnt>323
+</span><span class=lnt>324
+</span><span class=lnt>325
+</span><span class=lnt>326
+</span><span class=lnt>327
+</span><span class=lnt>328
+</span><span class=lnt>329
+</span><span class=lnt>330
+</span><span class=lnt>331
+</span><span class=lnt>332
+</span><span class=lnt>333
+</span><span class=lnt>334
+</span><span class=lnt>335
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-js data-lang=js><span class=line><span class=cl><span class=p>(()</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=c1>// node_modules/aws4fetch/dist/aws4fetch.esm.mjs
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kd>var</span> <span class=nx>encoder</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>TextEncoder</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>  <span class=kd>var</span> <span class=nx>HOST_SERVICES</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>appstream2</span><span class=o>:</span> <span class=s2>&#34;appstream&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nx>cloudhsmv2</span><span class=o>:</span> <span class=s2>&#34;cloudhsm&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nx>email</span><span class=o>:</span> <span class=s2>&#34;ses&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nx>marketplace</span><span class=o>:</span> <span class=s2>&#34;aws-marketplace&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nx>mobile</span><span class=o>:</span> <span class=s2>&#34;AWSMobileHubService&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nx>pinpoint</span><span class=o>:</span> <span class=s2>&#34;mobiletargeting&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nx>queue</span><span class=o>:</span> <span class=s2>&#34;sqs&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;git-codecommit&#34;</span><span class=o>:</span> <span class=s2>&#34;codecommit&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;mturk-requester-sandbox&#34;</span><span class=o>:</span> <span class=s2>&#34;mturk-requester&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;personalize-runtime&#34;</span><span class=o>:</span> <span class=s2>&#34;personalize&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=p>};</span>
+</span></span><span class=line><span class=cl>  <span class=kd>var</span> <span class=nx>UNSIGNABLE_HEADERS</span> <span class=o>=</span> <span class=cm>/* @__PURE__ */</span> <span class=k>new</span> <span class=nx>Set</span><span class=p>([</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;authorization&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;content-type&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;content-length&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;user-agent&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;presigned-expires&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;expect&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;x-amzn-trace-id&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;range&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;connection&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=p>]);</span>
+</span></span><span class=line><span class=cl>  <span class=kd>var</span> <span class=nx>AwsClient</span> <span class=o>=</span> <span class=kr>class</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>constructor</span><span class=p>({</span> <span class=nx>accessKeyId</span><span class=p>,</span> <span class=nx>secretAccessKey</span><span class=p>,</span> <span class=nx>sessionToken</span><span class=p>,</span> <span class=nx>service</span><span class=p>,</span> <span class=nx>region</span><span class=p>,</span> <span class=nx>cache</span><span class=p>,</span> <span class=nx>retries</span><span class=p>,</span> <span class=nx>initRetryMs</span> <span class=p>})</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=p>(</span><span class=nx>accessKeyId</span> <span class=o>==</span> <span class=kc>null</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>throw</span> <span class=k>new</span> <span class=nx>TypeError</span><span class=p>(</span><span class=s2>&#34;accessKeyId is a required option&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=p>(</span><span class=nx>secretAccessKey</span> <span class=o>==</span> <span class=kc>null</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>throw</span> <span class=k>new</span> <span class=nx>TypeError</span><span class=p>(</span><span class=s2>&#34;secretAccessKey is a required option&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>accessKeyId</span> <span class=o>=</span> <span class=nx>accessKeyId</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>secretAccessKey</span> <span class=o>=</span> <span class=nx>secretAccessKey</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>sessionToken</span> <span class=o>=</span> <span class=nx>sessionToken</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>service</span> <span class=o>=</span> <span class=nx>service</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>region</span> <span class=o>=</span> <span class=nx>region</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>cache</span> <span class=o>=</span> <span class=nx>cache</span> <span class=o>||</span> <span class=cm>/* @__PURE__ */</span> <span class=k>new</span> <span class=nx>Map</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>retries</span> <span class=o>=</span> <span class=nx>retries</span> <span class=o>!=</span> <span class=kc>null</span> <span class=o>?</span> <span class=nx>retries</span> <span class=o>:</span> <span class=mi>10</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>initRetryMs</span> <span class=o>=</span> <span class=nx>initRetryMs</span> <span class=o>||</span> <span class=mi>50</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=kr>async</span> <span class=nx>sign</span><span class=p>(</span><span class=nx>input</span><span class=p>,</span> <span class=nx>init</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=p>(</span><span class=nx>input</span> <span class=k>instanceof</span> <span class=nx>Request</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kr>const</span> <span class=p>{</span> <span class=nx>method</span><span class=p>,</span> <span class=nx>url</span><span class=p>,</span> <span class=nx>headers</span><span class=p>,</span> <span class=nx>body</span> <span class=p>}</span> <span class=o>=</span> <span class=nx>input</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=nx>init</span> <span class=o>=</span> <span class=nb>Object</span><span class=p>.</span><span class=nx>assign</span><span class=p>({</span> <span class=nx>method</span><span class=p>,</span> <span class=nx>url</span><span class=p>,</span> <span class=nx>headers</span> <span class=p>},</span> <span class=nx>init</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=nx>init</span><span class=p>.</span><span class=nx>body</span> <span class=o>==</span> <span class=kc>null</span> <span class=o>&amp;&amp;</span> <span class=nx>headers</span><span class=p>.</span><span class=nx>has</span><span class=p>(</span><span class=s2>&#34;Content-Type&#34;</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>          <span class=nx>init</span><span class=p>.</span><span class=nx>body</span> <span class=o>=</span> <span class=nx>body</span> <span class=o>!=</span> <span class=kc>null</span> <span class=o>&amp;&amp;</span> <span class=nx>headers</span><span class=p>.</span><span class=nx>has</span><span class=p>(</span><span class=s2>&#34;X-Amz-Content-Sha256&#34;</span><span class=p>)</span> <span class=o>?</span> <span class=nx>body</span> <span class=o>:</span> <span class=kr>await</span> <span class=nx>input</span><span class=p>.</span><span class=nx>clone</span><span class=p>().</span><span class=nx>arrayBuffer</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=nx>input</span> <span class=o>=</span> <span class=nx>url</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>      <span class=kr>const</span> <span class=nx>signer</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>AwsV4Signer</span><span class=p>(</span><span class=nb>Object</span><span class=p>.</span><span class=nx>assign</span><span class=p>({</span> <span class=nx>url</span><span class=o>:</span> <span class=nx>input</span> <span class=p>},</span> <span class=nx>init</span><span class=p>,</span> <span class=k>this</span><span class=p>,</span> <span class=nx>init</span> <span class=o>&amp;&amp;</span> <span class=nx>init</span><span class=p>.</span><span class=nx>aws</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>      <span class=kr>const</span> <span class=nx>signed</span> <span class=o>=</span> <span class=nb>Object</span><span class=p>.</span><span class=nx>assign</span><span class=p>({},</span> <span class=nx>init</span><span class=p>,</span> <span class=kr>await</span> <span class=nx>signer</span><span class=p>.</span><span class=nx>sign</span><span class=p>());</span>
+</span></span><span class=line><span class=cl>      <span class=k>delete</span> <span class=nx>signed</span><span class=p>.</span><span class=nx>aws</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=k>try</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=k>new</span> <span class=nx>Request</span><span class=p>(</span><span class=nx>signed</span><span class=p>.</span><span class=nx>url</span><span class=p>.</span><span class=nx>toString</span><span class=p>(),</span> <span class=nx>signed</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span> <span class=k>catch</span> <span class=p>(</span><span class=nx>e</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=nx>e</span> <span class=k>instanceof</span> <span class=nx>TypeError</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>          <span class=k>return</span> <span class=k>new</span> <span class=nx>Request</span><span class=p>(</span><span class=nx>signed</span><span class=p>.</span><span class=nx>url</span><span class=p>.</span><span class=nx>toString</span><span class=p>(),</span> <span class=nb>Object</span><span class=p>.</span><span class=nx>assign</span><span class=p>({</span> <span class=nx>duplex</span><span class=o>:</span> <span class=s2>&#34;half&#34;</span> <span class=p>},</span> <span class=nx>signed</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=k>throw</span> <span class=nx>e</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=kr>async</span> <span class=nx>fetch</span><span class=p>(</span><span class=nx>input</span><span class=p>,</span> <span class=nx>init</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>for</span> <span class=p>(</span><span class=kd>let</span> <span class=nx>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=nx>i</span> <span class=o>&lt;=</span> <span class=k>this</span><span class=p>.</span><span class=nx>retries</span><span class=p>;</span> <span class=nx>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kr>const</span> <span class=nx>fetched</span> <span class=o>=</span> <span class=nx>fetch</span><span class=p>(</span><span class=kr>await</span> <span class=k>this</span><span class=p>.</span><span class=nx>sign</span><span class=p>(</span><span class=nx>input</span><span class=p>,</span> <span class=nx>init</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=nx>i</span> <span class=o>===</span> <span class=k>this</span><span class=p>.</span><span class=nx>retries</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>          <span class=k>return</span> <span class=nx>fetched</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=kr>const</span> <span class=nx>res</span> <span class=o>=</span> <span class=kr>await</span> <span class=nx>fetched</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=nx>res</span><span class=p>.</span><span class=nx>status</span> <span class=o>&lt;</span> <span class=mi>500</span> <span class=o>&amp;&amp;</span> <span class=nx>res</span><span class=p>.</span><span class=nx>status</span> <span class=o>!==</span> <span class=mi>429</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>          <span class=k>return</span> <span class=nx>res</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=kr>await</span> <span class=k>new</span> <span class=nb>Promise</span><span class=p>((</span><span class=nx>resolve</span><span class=p>)</span> <span class=p>=&gt;</span> <span class=nx>setTimeout</span><span class=p>(</span><span class=nx>resolve</span><span class=p>,</span> <span class=nb>Math</span><span class=p>.</span><span class=nx>random</span><span class=p>()</span> <span class=o>*</span> <span class=k>this</span><span class=p>.</span><span class=nx>initRetryMs</span> <span class=o>*</span> <span class=nb>Math</span><span class=p>.</span><span class=nx>pow</span><span class=p>(</span><span class=mi>2</span><span class=p>,</span> <span class=nx>i</span><span class=p>)));</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>      <span class=k>throw</span> <span class=k>new</span> <span class=nb>Error</span><span class=p>(</span><span class=s2>&#34;An unknown error occurred, ensure retries is not negative&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=p>};</span>
+</span></span><span class=line><span class=cl>  <span class=kd>var</span> <span class=nx>AwsV4Signer</span> <span class=o>=</span> <span class=kr>class</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>constructor</span><span class=p>({</span> <span class=nx>method</span><span class=p>,</span> <span class=nx>url</span><span class=p>,</span> <span class=nx>headers</span><span class=p>,</span> <span class=nx>body</span><span class=p>,</span> <span class=nx>accessKeyId</span><span class=p>,</span> <span class=nx>secretAccessKey</span><span class=p>,</span> <span class=nx>sessionToken</span><span class=p>,</span> <span class=nx>service</span><span class=p>,</span> <span class=nx>region</span><span class=p>,</span> <span class=nx>cache</span><span class=p>,</span> <span class=nx>datetime</span><span class=p>,</span> <span class=nx>signQuery</span><span class=p>,</span> <span class=nx>appendSessionToken</span><span class=p>,</span> <span class=nx>allHeaders</span><span class=p>,</span> <span class=nx>singleEncode</span> <span class=p>})</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=p>(</span><span class=nx>url</span> <span class=o>==</span> <span class=kc>null</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>throw</span> <span class=k>new</span> <span class=nx>TypeError</span><span class=p>(</span><span class=s2>&#34;url is a required option&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=p>(</span><span class=nx>accessKeyId</span> <span class=o>==</span> <span class=kc>null</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>throw</span> <span class=k>new</span> <span class=nx>TypeError</span><span class=p>(</span><span class=s2>&#34;accessKeyId is a required option&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=p>(</span><span class=nx>secretAccessKey</span> <span class=o>==</span> <span class=kc>null</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>throw</span> <span class=k>new</span> <span class=nx>TypeError</span><span class=p>(</span><span class=s2>&#34;secretAccessKey is a required option&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>method</span> <span class=o>=</span> <span class=nx>method</span> <span class=o>||</span> <span class=p>(</span><span class=nx>body</span> <span class=o>?</span> <span class=s2>&#34;POST&#34;</span> <span class=o>:</span> <span class=s2>&#34;GET&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>url</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>URL</span><span class=p>(</span><span class=nx>url</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>headers</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>Headers</span><span class=p>(</span><span class=nx>headers</span> <span class=o>||</span> <span class=p>{});</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>body</span> <span class=o>=</span> <span class=nx>body</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>accessKeyId</span> <span class=o>=</span> <span class=nx>accessKeyId</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>secretAccessKey</span> <span class=o>=</span> <span class=nx>secretAccessKey</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>sessionToken</span> <span class=o>=</span> <span class=nx>sessionToken</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=kd>let</span> <span class=nx>guessedService</span><span class=p>,</span> <span class=nx>guessedRegion</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=nx>service</span> <span class=o>||</span> <span class=o>!</span><span class=nx>region</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=p>[</span><span class=nx>guessedService</span><span class=p>,</span> <span class=nx>guessedRegion</span><span class=p>]</span> <span class=o>=</span> <span class=nx>guessServiceRegion</span><span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=nx>url</span><span class=p>,</span> <span class=k>this</span><span class=p>.</span><span class=nx>headers</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>service</span> <span class=o>=</span> <span class=nx>service</span> <span class=o>||</span> <span class=nx>guessedService</span> <span class=o>||</span> <span class=s2>&#34;&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>region</span> <span class=o>=</span> <span class=nx>region</span> <span class=o>||</span> <span class=nx>guessedRegion</span> <span class=o>||</span> <span class=s2>&#34;us-east-1&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>cache</span> <span class=o>=</span> <span class=nx>cache</span> <span class=o>||</span> <span class=cm>/* @__PURE__ */</span> <span class=k>new</span> <span class=nx>Map</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>datetime</span> <span class=o>=</span> <span class=nx>datetime</span> <span class=o>||</span> <span class=k>new</span> <span class=nb>Date</span><span class=p>().</span><span class=nx>toISOString</span><span class=p>().</span><span class=nx>replace</span><span class=p>(</span><span class=sr>/[:-]|\.\d{3}/g</span><span class=p>,</span> <span class=s2>&#34;&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>signQuery</span> <span class=o>=</span> <span class=nx>signQuery</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>appendSessionToken</span> <span class=o>=</span> <span class=nx>appendSessionToken</span> <span class=o>||</span> <span class=k>this</span><span class=p>.</span><span class=nx>service</span> <span class=o>===</span> <span class=s2>&#34;iotdevicegateway&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>headers</span><span class=p>.</span><span class=k>delete</span><span class=p>(</span><span class=s2>&#34;Host&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=nx>service</span> <span class=o>===</span> <span class=s2>&#34;s3&#34;</span> <span class=o>&amp;&amp;</span> <span class=o>!</span><span class=k>this</span><span class=p>.</span><span class=nx>signQuery</span> <span class=o>&amp;&amp;</span> <span class=o>!</span><span class=k>this</span><span class=p>.</span><span class=nx>headers</span><span class=p>.</span><span class=nx>has</span><span class=p>(</span><span class=s2>&#34;X-Amz-Content-Sha256&#34;</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>headers</span><span class=p>.</span><span class=nx>set</span><span class=p>(</span><span class=s2>&#34;X-Amz-Content-Sha256&#34;</span><span class=p>,</span> <span class=s2>&#34;UNSIGNED-PAYLOAD&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>      <span class=kr>const</span> <span class=nx>params</span> <span class=o>=</span> <span class=k>this</span><span class=p>.</span><span class=nx>signQuery</span> <span class=o>?</span> <span class=k>this</span><span class=p>.</span><span class=nx>url</span><span class=p>.</span><span class=nx>searchParams</span> <span class=o>:</span> <span class=k>this</span><span class=p>.</span><span class=nx>headers</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=nx>params</span><span class=p>.</span><span class=nx>set</span><span class=p>(</span><span class=s2>&#34;X-Amz-Date&#34;</span><span class=p>,</span> <span class=k>this</span><span class=p>.</span><span class=nx>datetime</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=nx>sessionToken</span> <span class=o>&amp;&amp;</span> <span class=o>!</span><span class=k>this</span><span class=p>.</span><span class=nx>appendSessionToken</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>params</span><span class=p>.</span><span class=nx>set</span><span class=p>(</span><span class=s2>&#34;X-Amz-Security-Token&#34;</span><span class=p>,</span> <span class=k>this</span><span class=p>.</span><span class=nx>sessionToken</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>signableHeaders</span> <span class=o>=</span> <span class=p>[</span><span class=s2>&#34;host&#34;</span><span class=p>,</span> <span class=p>...</span><span class=k>this</span><span class=p>.</span><span class=nx>headers</span><span class=p>.</span><span class=nx>keys</span><span class=p>()].</span><span class=nx>filter</span><span class=p>((</span><span class=nx>header</span><span class=p>)</span> <span class=p>=&gt;</span> <span class=nx>allHeaders</span> <span class=o>||</span> <span class=o>!</span><span class=nx>UNSIGNABLE_HEADERS</span><span class=p>.</span><span class=nx>has</span><span class=p>(</span><span class=nx>header</span><span class=p>)).</span><span class=nx>sort</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>signedHeaders</span> <span class=o>=</span> <span class=k>this</span><span class=p>.</span><span class=nx>signableHeaders</span><span class=p>.</span><span class=nx>join</span><span class=p>(</span><span class=s2>&#34;;&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>canonicalHeaders</span> <span class=o>=</span> <span class=k>this</span><span class=p>.</span><span class=nx>signableHeaders</span><span class=p>.</span><span class=nx>map</span><span class=p>((</span><span class=nx>header</span><span class=p>)</span> <span class=p>=&gt;</span> <span class=nx>header</span> <span class=o>+</span> <span class=s2>&#34;:&#34;</span> <span class=o>+</span> <span class=p>(</span><span class=nx>header</span> <span class=o>===</span> <span class=s2>&#34;host&#34;</span> <span class=o>?</span> <span class=k>this</span><span class=p>.</span><span class=nx>url</span><span class=p>.</span><span class=nx>host</span> <span class=o>:</span> <span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=nx>headers</span><span class=p>.</span><span class=nx>get</span><span class=p>(</span><span class=nx>header</span><span class=p>)</span> <span class=o>||</span> <span class=s2>&#34;&#34;</span><span class=p>).</span><span class=nx>replace</span><span class=p>(</span><span class=sr>/\s+/g</span><span class=p>,</span> <span class=s2>&#34; &#34;</span><span class=p>))).</span><span class=nx>join</span><span class=p>(</span><span class=s2>&#34;\n&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>credentialString</span> <span class=o>=</span> <span class=p>[</span><span class=k>this</span><span class=p>.</span><span class=nx>datetime</span><span class=p>.</span><span class=nx>slice</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span> <span class=mi>8</span><span class=p>),</span> <span class=k>this</span><span class=p>.</span><span class=nx>region</span><span class=p>,</span> <span class=k>this</span><span class=p>.</span><span class=nx>service</span><span class=p>,</span> <span class=s2>&#34;aws4_request&#34;</span><span class=p>].</span><span class=nx>join</span><span class=p>(</span><span class=s2>&#34;/&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=nx>signQuery</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=nx>service</span> <span class=o>===</span> <span class=s2>&#34;s3&#34;</span> <span class=o>&amp;&amp;</span> <span class=o>!</span><span class=nx>params</span><span class=p>.</span><span class=nx>has</span><span class=p>(</span><span class=s2>&#34;X-Amz-Expires&#34;</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>          <span class=nx>params</span><span class=p>.</span><span class=nx>set</span><span class=p>(</span><span class=s2>&#34;X-Amz-Expires&#34;</span><span class=p>,</span> <span class=s2>&#34;86400&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=nx>params</span><span class=p>.</span><span class=nx>set</span><span class=p>(</span><span class=s2>&#34;X-Amz-Algorithm&#34;</span><span class=p>,</span> <span class=s2>&#34;AWS4-HMAC-SHA256&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=nx>params</span><span class=p>.</span><span class=nx>set</span><span class=p>(</span><span class=s2>&#34;X-Amz-Credential&#34;</span><span class=p>,</span> <span class=k>this</span><span class=p>.</span><span class=nx>accessKeyId</span> <span class=o>+</span> <span class=s2>&#34;/&#34;</span> <span class=o>+</span> <span class=k>this</span><span class=p>.</span><span class=nx>credentialString</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=nx>params</span><span class=p>.</span><span class=nx>set</span><span class=p>(</span><span class=s2>&#34;X-Amz-SignedHeaders&#34;</span><span class=p>,</span> <span class=k>this</span><span class=p>.</span><span class=nx>signedHeaders</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=nx>service</span> <span class=o>===</span> <span class=s2>&#34;s3&#34;</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>try</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>          <span class=k>this</span><span class=p>.</span><span class=nx>encodedPath</span> <span class=o>=</span> <span class=nb>decodeURIComponent</span><span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=nx>url</span><span class=p>.</span><span class=nx>pathname</span><span class=p>.</span><span class=nx>replace</span><span class=p>(</span><span class=sr>/\+/g</span><span class=p>,</span> <span class=s2>&#34; &#34;</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span> <span class=k>catch</span> <span class=p>(</span><span class=nx>e</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>          <span class=k>this</span><span class=p>.</span><span class=nx>encodedPath</span> <span class=o>=</span> <span class=k>this</span><span class=p>.</span><span class=nx>url</span><span class=p>.</span><span class=nx>pathname</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>encodedPath</span> <span class=o>=</span> <span class=k>this</span><span class=p>.</span><span class=nx>url</span><span class=p>.</span><span class=nx>pathname</span><span class=p>.</span><span class=nx>replace</span><span class=p>(</span><span class=sr>/\/+/g</span><span class=p>,</span> <span class=s2>&#34;/&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=nx>singleEncode</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>encodedPath</span> <span class=o>=</span> <span class=nb>encodeURIComponent</span><span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=nx>encodedPath</span><span class=p>).</span><span class=nx>replace</span><span class=p>(</span><span class=sr>/%2F/g</span><span class=p>,</span> <span class=s2>&#34;/&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>encodedPath</span> <span class=o>=</span> <span class=nx>encodeRfc3986</span><span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=nx>encodedPath</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=kr>const</span> <span class=nx>seenKeys</span> <span class=o>=</span> <span class=cm>/* @__PURE__ */</span> <span class=k>new</span> <span class=nx>Set</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>encodedSearch</span> <span class=o>=</span> <span class=p>[...</span><span class=k>this</span><span class=p>.</span><span class=nx>url</span><span class=p>.</span><span class=nx>searchParams</span><span class=p>].</span><span class=nx>filter</span><span class=p>(([</span><span class=nx>k</span><span class=p>])</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=nx>k</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>          <span class=k>return</span> <span class=kc>false</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=nx>service</span> <span class=o>===</span> <span class=s2>&#34;s3&#34;</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>          <span class=k>if</span> <span class=p>(</span><span class=nx>seenKeys</span><span class=p>.</span><span class=nx>has</span><span class=p>(</span><span class=nx>k</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=kc>false</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>          <span class=nx>seenKeys</span><span class=p>.</span><span class=nx>add</span><span class=p>(</span><span class=nx>k</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=kc>true</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=p>}).</span><span class=nx>map</span><span class=p>((</span><span class=nx>pair</span><span class=p>)</span> <span class=p>=&gt;</span> <span class=nx>pair</span><span class=p>.</span><span class=nx>map</span><span class=p>((</span><span class=nx>p</span><span class=p>)</span> <span class=p>=&gt;</span> <span class=nx>encodeRfc3986</span><span class=p>(</span><span class=nb>encodeURIComponent</span><span class=p>(</span><span class=nx>p</span><span class=p>)))).</span><span class=nx>sort</span><span class=p>(([</span><span class=nx>k1</span><span class=p>,</span> <span class=nx>v1</span><span class=p>],</span> <span class=p>[</span><span class=nx>k2</span><span class=p>,</span> <span class=nx>v2</span><span class=p>])</span> <span class=p>=&gt;</span> <span class=nx>k1</span> <span class=o>&lt;</span> <span class=nx>k2</span> <span class=o>?</span> <span class=o>-</span><span class=mi>1</span> <span class=o>:</span> <span class=nx>k1</span> <span class=o>&gt;</span> <span class=nx>k2</span> <span class=o>?</span> <span class=mi>1</span> <span class=o>:</span> <span class=nx>v1</span> <span class=o>&lt;</span> <span class=nx>v2</span> <span class=o>?</span> <span class=o>-</span><span class=mi>1</span> <span class=o>:</span> <span class=nx>v1</span> <span class=o>&gt;</span> <span class=nx>v2</span> <span class=o>?</span> <span class=mi>1</span> <span class=o>:</span> <span class=mi>0</span><span class=p>).</span><span class=nx>map</span><span class=p>((</span><span class=nx>pair</span><span class=p>)</span> <span class=p>=&gt;</span> <span class=nx>pair</span><span class=p>.</span><span class=nx>join</span><span class=p>(</span><span class=s2>&#34;=&#34;</span><span class=p>)).</span><span class=nx>join</span><span class=p>(</span><span class=s2>&#34;&amp;&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=kr>async</span> <span class=nx>sign</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=nx>signQuery</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>url</span><span class=p>.</span><span class=nx>searchParams</span><span class=p>.</span><span class=nx>set</span><span class=p>(</span><span class=s2>&#34;X-Amz-Signature&#34;</span><span class=p>,</span> <span class=kr>await</span> <span class=k>this</span><span class=p>.</span><span class=nx>signature</span><span class=p>());</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=nx>sessionToken</span> <span class=o>&amp;&amp;</span> <span class=k>this</span><span class=p>.</span><span class=nx>appendSessionToken</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>          <span class=k>this</span><span class=p>.</span><span class=nx>url</span><span class=p>.</span><span class=nx>searchParams</span><span class=p>.</span><span class=nx>set</span><span class=p>(</span><span class=s2>&#34;X-Amz-Security-Token&#34;</span><span class=p>,</span> <span class=k>this</span><span class=p>.</span><span class=nx>sessionToken</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>headers</span><span class=p>.</span><span class=nx>set</span><span class=p>(</span><span class=s2>&#34;Authorization&#34;</span><span class=p>,</span> <span class=kr>await</span> <span class=k>this</span><span class=p>.</span><span class=nx>authHeader</span><span class=p>());</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>      <span class=k>return</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>method</span><span class=o>:</span> <span class=k>this</span><span class=p>.</span><span class=nx>method</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=nx>url</span><span class=o>:</span> <span class=k>this</span><span class=p>.</span><span class=nx>url</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=nx>headers</span><span class=o>:</span> <span class=k>this</span><span class=p>.</span><span class=nx>headers</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=nx>body</span><span class=o>:</span> <span class=k>this</span><span class=p>.</span><span class=nx>body</span>
+</span></span><span class=line><span class=cl>      <span class=p>};</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=kr>async</span> <span class=nx>authHeader</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>return</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;AWS4-HMAC-SHA256 Credential=&#34;</span> <span class=o>+</span> <span class=k>this</span><span class=p>.</span><span class=nx>accessKeyId</span> <span class=o>+</span> <span class=s2>&#34;/&#34;</span> <span class=o>+</span> <span class=k>this</span><span class=p>.</span><span class=nx>credentialString</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;SignedHeaders=&#34;</span> <span class=o>+</span> <span class=k>this</span><span class=p>.</span><span class=nx>signedHeaders</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;Signature=&#34;</span> <span class=o>+</span> <span class=kr>await</span> <span class=k>this</span><span class=p>.</span><span class=nx>signature</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>      <span class=p>].</span><span class=nx>join</span><span class=p>(</span><span class=s2>&#34;, &#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=kr>async</span> <span class=nx>signature</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=kr>const</span> <span class=nx>date</span> <span class=o>=</span> <span class=k>this</span><span class=p>.</span><span class=nx>datetime</span><span class=p>.</span><span class=nx>slice</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span> <span class=mi>8</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=kr>const</span> <span class=nx>cacheKey</span> <span class=o>=</span> <span class=p>[</span><span class=k>this</span><span class=p>.</span><span class=nx>secretAccessKey</span><span class=p>,</span> <span class=nx>date</span><span class=p>,</span> <span class=k>this</span><span class=p>.</span><span class=nx>region</span><span class=p>,</span> <span class=k>this</span><span class=p>.</span><span class=nx>service</span><span class=p>].</span><span class=nx>join</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>      <span class=kd>let</span> <span class=nx>kCredentials</span> <span class=o>=</span> <span class=k>this</span><span class=p>.</span><span class=nx>cache</span><span class=p>.</span><span class=nx>get</span><span class=p>(</span><span class=nx>cacheKey</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=nx>kCredentials</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kr>const</span> <span class=nx>kDate</span> <span class=o>=</span> <span class=kr>await</span> <span class=nx>hmac</span><span class=p>(</span><span class=s2>&#34;AWS4&#34;</span> <span class=o>+</span> <span class=k>this</span><span class=p>.</span><span class=nx>secretAccessKey</span><span class=p>,</span> <span class=nx>date</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=kr>const</span> <span class=nx>kRegion</span> <span class=o>=</span> <span class=kr>await</span> <span class=nx>hmac</span><span class=p>(</span><span class=nx>kDate</span><span class=p>,</span> <span class=k>this</span><span class=p>.</span><span class=nx>region</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=kr>const</span> <span class=nx>kService</span> <span class=o>=</span> <span class=kr>await</span> <span class=nx>hmac</span><span class=p>(</span><span class=nx>kRegion</span><span class=p>,</span> <span class=k>this</span><span class=p>.</span><span class=nx>service</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=nx>kCredentials</span> <span class=o>=</span> <span class=kr>await</span> <span class=nx>hmac</span><span class=p>(</span><span class=nx>kService</span><span class=p>,</span> <span class=s2>&#34;aws4_request&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>cache</span><span class=p>.</span><span class=nx>set</span><span class=p>(</span><span class=nx>cacheKey</span><span class=p>,</span> <span class=nx>kCredentials</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>      <span class=k>return</span> <span class=nx>buf2hex</span><span class=p>(</span><span class=kr>await</span> <span class=nx>hmac</span><span class=p>(</span><span class=nx>kCredentials</span><span class=p>,</span> <span class=kr>await</span> <span class=k>this</span><span class=p>.</span><span class=nx>stringToSign</span><span class=p>()));</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=kr>async</span> <span class=nx>stringToSign</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>return</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;AWS4-HMAC-SHA256&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>datetime</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>credentialString</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=nx>buf2hex</span><span class=p>(</span><span class=kr>await</span> <span class=nx>hash</span><span class=p>(</span><span class=kr>await</span> <span class=k>this</span><span class=p>.</span><span class=nx>canonicalString</span><span class=p>()))</span>
+</span></span><span class=line><span class=cl>      <span class=p>].</span><span class=nx>join</span><span class=p>(</span><span class=s2>&#34;\n&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=kr>async</span> <span class=nx>canonicalString</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>return</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>method</span><span class=p>.</span><span class=nx>toUpperCase</span><span class=p>(),</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>encodedPath</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>encodedSearch</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>canonicalHeaders</span> <span class=o>+</span> <span class=s2>&#34;\n&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>signedHeaders</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=kr>await</span> <span class=k>this</span><span class=p>.</span><span class=nx>hexBodyHash</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>      <span class=p>].</span><span class=nx>join</span><span class=p>(</span><span class=s2>&#34;\n&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=kr>async</span> <span class=nx>hexBodyHash</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=kd>let</span> <span class=nx>hashHeader</span> <span class=o>=</span> <span class=k>this</span><span class=p>.</span><span class=nx>headers</span><span class=p>.</span><span class=nx>get</span><span class=p>(</span><span class=s2>&#34;X-Amz-Content-Sha256&#34;</span><span class=p>)</span> <span class=o>||</span> <span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=nx>service</span> <span class=o>===</span> <span class=s2>&#34;s3&#34;</span> <span class=o>&amp;&amp;</span> <span class=k>this</span><span class=p>.</span><span class=nx>signQuery</span> <span class=o>?</span> <span class=s2>&#34;UNSIGNED-PAYLOAD&#34;</span> <span class=o>:</span> <span class=kc>null</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=p>(</span><span class=nx>hashHeader</span> <span class=o>==</span> <span class=kc>null</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=nx>body</span> <span class=o>&amp;&amp;</span> <span class=k>typeof</span> <span class=k>this</span><span class=p>.</span><span class=nx>body</span> <span class=o>!==</span> <span class=s2>&#34;string&#34;</span> <span class=o>&amp;&amp;</span> <span class=o>!</span><span class=p>(</span><span class=s2>&#34;byteLength&#34;</span> <span class=k>in</span> <span class=k>this</span><span class=p>.</span><span class=nx>body</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>          <span class=k>throw</span> <span class=k>new</span> <span class=nb>Error</span><span class=p>(</span><span class=s2>&#34;body must be a string, ArrayBuffer or ArrayBufferView, unless you include the X-Amz-Content-Sha256 header&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=nx>hashHeader</span> <span class=o>=</span> <span class=nx>buf2hex</span><span class=p>(</span><span class=kr>await</span> <span class=nx>hash</span><span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=nx>body</span> <span class=o>||</span> <span class=s2>&#34;&#34;</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>      <span class=k>return</span> <span class=nx>hashHeader</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=p>};</span>
+</span></span><span class=line><span class=cl>  <span class=kr>async</span> <span class=kd>function</span> <span class=nx>hmac</span><span class=p>(</span><span class=nx>key</span><span class=p>,</span> <span class=nx>string</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=nx>cryptoKey</span> <span class=o>=</span> <span class=kr>await</span> <span class=nx>crypto</span><span class=p>.</span><span class=nx>subtle</span><span class=p>.</span><span class=nx>importKey</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>      <span class=s2>&#34;raw&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>      <span class=k>typeof</span> <span class=nx>key</span> <span class=o>===</span> <span class=s2>&#34;string&#34;</span> <span class=o>?</span> <span class=nx>encoder</span><span class=p>.</span><span class=nx>encode</span><span class=p>(</span><span class=nx>key</span><span class=p>)</span> <span class=o>:</span> <span class=nx>key</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>      <span class=p>{</span> <span class=nx>name</span><span class=o>:</span> <span class=s2>&#34;HMAC&#34;</span><span class=p>,</span> <span class=nx>hash</span><span class=o>:</span> <span class=p>{</span> <span class=nx>name</span><span class=o>:</span> <span class=s2>&#34;SHA-256&#34;</span> <span class=p>}</span> <span class=p>},</span>
+</span></span><span class=line><span class=cl>      <span class=kc>false</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>      <span class=p>[</span><span class=s2>&#34;sign&#34;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>    <span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nx>crypto</span><span class=p>.</span><span class=nx>subtle</span><span class=p>.</span><span class=nx>sign</span><span class=p>(</span><span class=s2>&#34;HMAC&#34;</span><span class=p>,</span> <span class=nx>cryptoKey</span><span class=p>,</span> <span class=nx>encoder</span><span class=p>.</span><span class=nx>encode</span><span class=p>(</span><span class=nx>string</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=kr>async</span> <span class=kd>function</span> <span class=nx>hash</span><span class=p>(</span><span class=nx>content</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nx>crypto</span><span class=p>.</span><span class=nx>subtle</span><span class=p>.</span><span class=nx>digest</span><span class=p>(</span><span class=s2>&#34;SHA-256&#34;</span><span class=p>,</span> <span class=k>typeof</span> <span class=nx>content</span> <span class=o>===</span> <span class=s2>&#34;string&#34;</span> <span class=o>?</span> <span class=nx>encoder</span><span class=p>.</span><span class=nx>encode</span><span class=p>(</span><span class=nx>content</span><span class=p>)</span> <span class=o>:</span> <span class=nx>content</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=kd>function</span> <span class=nx>buf2hex</span><span class=p>(</span><span class=nx>buffer</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nb>Array</span><span class=p>.</span><span class=nx>prototype</span><span class=p>.</span><span class=nx>map</span><span class=p>.</span><span class=nx>call</span><span class=p>(</span><span class=k>new</span> <span class=nx>Uint8Array</span><span class=p>(</span><span class=nx>buffer</span><span class=p>),</span> <span class=p>(</span><span class=nx>x</span><span class=p>)</span> <span class=p>=&gt;</span> <span class=p>(</span><span class=s2>&#34;0&#34;</span> <span class=o>+</span> <span class=nx>x</span><span class=p>.</span><span class=nx>toString</span><span class=p>(</span><span class=mi>16</span><span class=p>)).</span><span class=nx>slice</span><span class=p>(</span><span class=o>-</span><span class=mi>2</span><span class=p>)).</span><span class=nx>join</span><span class=p>(</span><span class=s2>&#34;&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=kd>function</span> <span class=nx>encodeRfc3986</span><span class=p>(</span><span class=nx>urlEncodedStr</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nx>urlEncodedStr</span><span class=p>.</span><span class=nx>replace</span><span class=p>(</span><span class=sr>/[!&#39;()*]/g</span><span class=p>,</span> <span class=p>(</span><span class=nx>c</span><span class=p>)</span> <span class=p>=&gt;</span> <span class=s2>&#34;%&#34;</span> <span class=o>+</span> <span class=nx>c</span><span class=p>.</span><span class=nx>charCodeAt</span><span class=p>(</span><span class=mi>0</span><span class=p>).</span><span class=nx>toString</span><span class=p>(</span><span class=mi>16</span><span class=p>).</span><span class=nx>toUpperCase</span><span class=p>());</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=kd>function</span> <span class=nx>guessServiceRegion</span><span class=p>(</span><span class=nx>url</span><span class=p>,</span> <span class=nx>headers</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=p>{</span> <span class=nx>hostname</span><span class=p>,</span> <span class=nx>pathname</span> <span class=p>}</span> <span class=o>=</span> <span class=nx>url</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=nx>hostname</span><span class=p>.</span><span class=nx>endsWith</span><span class=p>(</span><span class=s2>&#34;.r2.cloudflarestorage.com&#34;</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>return</span> <span class=p>[</span><span class=s2>&#34;s3&#34;</span><span class=p>,</span> <span class=s2>&#34;auto&#34;</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=nx>hostname</span><span class=p>.</span><span class=nx>endsWith</span><span class=p>(</span><span class=s2>&#34;.backblazeb2.com&#34;</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=kr>const</span> <span class=nx>match2</span> <span class=o>=</span> <span class=nx>hostname</span><span class=p>.</span><span class=nx>match</span><span class=p>(</span><span class=sr>/^(?:[^.]+\.)?s3\.([^.]+)\.backblazeb2\.com$/</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=k>return</span> <span class=nx>match2</span> <span class=o>!=</span> <span class=kc>null</span> <span class=o>?</span> <span class=p>[</span><span class=s2>&#34;s3&#34;</span><span class=p>,</span> <span class=nx>match2</span><span class=p>[</span><span class=mi>1</span><span class=p>]]</span> <span class=o>:</span> <span class=p>[</span><span class=s2>&#34;&#34;</span><span class=p>,</span> <span class=s2>&#34;&#34;</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=nx>match</span> <span class=o>=</span> <span class=nx>hostname</span><span class=p>.</span><span class=nx>replace</span><span class=p>(</span><span class=s2>&#34;dualstack.&#34;</span><span class=p>,</span> <span class=s2>&#34;&#34;</span><span class=p>).</span><span class=nx>match</span><span class=p>(</span><span class=sr>/([^.]+)\.(?:([^.]*)\.)?amazonaws\.com(?:\.cn)?$/</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=kd>let</span> <span class=p>[</span><span class=nx>service</span><span class=p>,</span> <span class=nx>region</span><span class=p>]</span> <span class=o>=</span> <span class=p>(</span><span class=nx>match</span> <span class=o>||</span> <span class=p>[</span><span class=s2>&#34;&#34;</span><span class=p>,</span> <span class=s2>&#34;&#34;</span><span class=p>]).</span><span class=nx>slice</span><span class=p>(</span><span class=mi>1</span><span class=p>,</span> <span class=mi>3</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=nx>region</span> <span class=o>===</span> <span class=s2>&#34;us-gov&#34;</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=nx>region</span> <span class=o>=</span> <span class=s2>&#34;us-gov-west-1&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span> <span class=k>else</span> <span class=k>if</span> <span class=p>(</span><span class=nx>region</span> <span class=o>===</span> <span class=s2>&#34;s3&#34;</span> <span class=o>||</span> <span class=nx>region</span> <span class=o>===</span> <span class=s2>&#34;s3-accelerate&#34;</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=nx>region</span> <span class=o>=</span> <span class=s2>&#34;us-east-1&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=nx>service</span> <span class=o>=</span> <span class=s2>&#34;s3&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span> <span class=k>else</span> <span class=k>if</span> <span class=p>(</span><span class=nx>service</span> <span class=o>===</span> <span class=s2>&#34;iot&#34;</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=p>(</span><span class=nx>hostname</span><span class=p>.</span><span class=nx>startsWith</span><span class=p>(</span><span class=s2>&#34;iot.&#34;</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>service</span> <span class=o>=</span> <span class=s2>&#34;execute-api&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span> <span class=k>else</span> <span class=k>if</span> <span class=p>(</span><span class=nx>hostname</span><span class=p>.</span><span class=nx>startsWith</span><span class=p>(</span><span class=s2>&#34;data.jobs.iot.&#34;</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>service</span> <span class=o>=</span> <span class=s2>&#34;iot-jobs-data&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>service</span> <span class=o>=</span> <span class=nx>pathname</span> <span class=o>===</span> <span class=s2>&#34;/mqtt&#34;</span> <span class=o>?</span> <span class=s2>&#34;iotdevicegateway&#34;</span> <span class=o>:</span> <span class=s2>&#34;iotdata&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span> <span class=k>else</span> <span class=k>if</span> <span class=p>(</span><span class=nx>service</span> <span class=o>===</span> <span class=s2>&#34;autoscaling&#34;</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=kr>const</span> <span class=nx>targetPrefix</span> <span class=o>=</span> <span class=p>(</span><span class=nx>headers</span><span class=p>.</span><span class=nx>get</span><span class=p>(</span><span class=s2>&#34;X-Amz-Target&#34;</span><span class=p>)</span> <span class=o>||</span> <span class=s2>&#34;&#34;</span><span class=p>).</span><span class=nx>split</span><span class=p>(</span><span class=s2>&#34;.&#34;</span><span class=p>)[</span><span class=mi>0</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=p>(</span><span class=nx>targetPrefix</span> <span class=o>===</span> <span class=s2>&#34;AnyScaleFrontendService&#34;</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>service</span> <span class=o>=</span> <span class=s2>&#34;application-autoscaling&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span> <span class=k>else</span> <span class=k>if</span> <span class=p>(</span><span class=nx>targetPrefix</span> <span class=o>===</span> <span class=s2>&#34;AnyScaleScalingPlannerFrontendService&#34;</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>service</span> <span class=o>=</span> <span class=s2>&#34;autoscaling-plans&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span> <span class=k>else</span> <span class=k>if</span> <span class=p>(</span><span class=nx>region</span> <span class=o>==</span> <span class=kc>null</span> <span class=o>&amp;&amp;</span> <span class=nx>service</span><span class=p>.</span><span class=nx>startsWith</span><span class=p>(</span><span class=s2>&#34;s3-&#34;</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=nx>region</span> <span class=o>=</span> <span class=nx>service</span><span class=p>.</span><span class=nx>slice</span><span class=p>(</span><span class=mi>3</span><span class=p>).</span><span class=nx>replace</span><span class=p>(</span><span class=sr>/^fips-|^external-1/</span><span class=p>,</span> <span class=s2>&#34;&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=nx>service</span> <span class=o>=</span> <span class=s2>&#34;s3&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span> <span class=k>else</span> <span class=k>if</span> <span class=p>(</span><span class=nx>service</span><span class=p>.</span><span class=nx>endsWith</span><span class=p>(</span><span class=s2>&#34;-fips&#34;</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=nx>service</span> <span class=o>=</span> <span class=nx>service</span><span class=p>.</span><span class=nx>slice</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span> <span class=o>-</span><span class=mi>5</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span> <span class=k>else</span> <span class=k>if</span> <span class=p>(</span><span class=nx>region</span> <span class=o>&amp;&amp;</span> <span class=sr>/-\d$/</span><span class=p>.</span><span class=nx>test</span><span class=p>(</span><span class=nx>service</span><span class=p>)</span> <span class=o>&amp;&amp;</span> <span class=o>!</span><span class=sr>/-\d$/</span><span class=p>.</span><span class=nx>test</span><span class=p>(</span><span class=nx>region</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=p>[</span><span class=nx>service</span><span class=p>,</span> <span class=nx>region</span><span class=p>]</span> <span class=o>=</span> <span class=p>[</span><span class=nx>region</span><span class=p>,</span> <span class=nx>service</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>[</span><span class=nx>HOST_SERVICES</span><span class=p>[</span><span class=nx>service</span><span class=p>]</span> <span class=o>||</span> <span class=nx>service</span><span class=p>,</span> <span class=nx>region</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>// index.js
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kd>var</span> <span class=nx>UNSIGNABLE_HEADERS2</span> <span class=o>=</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;x-forwarded-proto&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;x-real-ip&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=p>];</span>
+</span></span><span class=line><span class=cl>  <span class=kd>function</span> <span class=nx>filterHeaders</span><span class=p>(</span><span class=nx>headers</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nb>Array</span><span class=p>.</span><span class=nx>from</span><span class=p>(</span><span class=nx>headers</span><span class=p>.</span><span class=nx>entries</span><span class=p>()).</span><span class=nx>filter</span><span class=p>((</span><span class=nx>pair</span><span class=p>)</span> <span class=p>=&gt;</span> <span class=o>!</span><span class=nx>UNSIGNABLE_HEADERS2</span><span class=p>.</span><span class=nx>includes</span><span class=p>(</span><span class=nx>pair</span><span class=p>[</span><span class=mi>0</span><span class=p>])</span> <span class=o>&amp;&amp;</span> <span class=o>!</span><span class=nx>pair</span><span class=p>[</span><span class=mi>0</span><span class=p>].</span><span class=nx>startsWith</span><span class=p>(</span><span class=s2>&#34;cf-&#34;</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=kr>async</span> <span class=kd>function</span> <span class=nx>handleRequest</span><span class=p>(</span><span class=nx>event</span><span class=p>,</span> <span class=nx>client2</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=nx>request</span> <span class=o>=</span> <span class=nx>event</span><span class=p>.</span><span class=nx>request</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=p>[</span><span class=s2>&#34;GET&#34;</span><span class=p>,</span> <span class=s2>&#34;HEAD&#34;</span><span class=p>].</span><span class=nx>includes</span><span class=p>(</span><span class=nx>request</span><span class=p>.</span><span class=nx>method</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>return</span> <span class=k>new</span> <span class=nx>Response</span><span class=p>(</span><span class=kc>null</span><span class=p>,</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>status</span><span class=o>:</span> <span class=mi>405</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=nx>statusText</span><span class=o>:</span> <span class=s2>&#34;Method Not Allowed&#34;</span>
+</span></span><span class=line><span class=cl>      <span class=p>});</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=nx>url</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>URL</span><span class=p>(</span><span class=nx>request</span><span class=p>.</span><span class=nx>url</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=kd>let</span> <span class=nx>path</span> <span class=o>=</span> <span class=nx>url</span><span class=p>.</span><span class=nx>pathname</span><span class=p>.</span><span class=nx>replace</span><span class=p>(</span><span class=sr>/^\//</span><span class=p>,</span> <span class=s2>&#34;&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nx>path</span> <span class=o>=</span> <span class=nx>path</span><span class=p>.</span><span class=nx>replace</span><span class=p>(</span><span class=sr>/\/$/</span><span class=p>,</span> <span class=s2>&#34;&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=nx>pathSegments</span> <span class=o>=</span> <span class=nx>path</span><span class=p>.</span><span class=nx>split</span><span class=p>(</span><span class=s2>&#34;/&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=nx>ALLOW_LIST_BUCKET</span> <span class=o>!==</span> <span class=s2>&#34;true&#34;</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=p>(</span><span class=nx>BUCKET_NAME</span> <span class=o>===</span> <span class=s2>&#34;$path&#34;</span> <span class=o>&amp;&amp;</span> <span class=nx>pathSegments</span><span class=p>[</span><span class=mi>0</span><span class=p>].</span><span class=nx>length</span> <span class=o>&lt;</span> <span class=mi>2</span> <span class=o>||</span> <span class=nx>BUCKET_NAME</span> <span class=o>!==</span> <span class=s2>&#34;$path&#34;</span> <span class=o>&amp;&amp;</span> <span class=nx>path</span><span class=p>.</span><span class=nx>length</span> <span class=o>===</span> <span class=mi>0</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=k>new</span> <span class=nx>Response</span><span class=p>(</span><span class=kc>null</span><span class=p>,</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>          <span class=nx>status</span><span class=o>:</span> <span class=mi>404</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>          <span class=nx>statusText</span><span class=o>:</span> <span class=s2>&#34;Not Found&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=p>});</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>switch</span> <span class=p>(</span><span class=nx>BUCKET_NAME</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>case</span> <span class=s2>&#34;$path&#34;</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>        <span class=nx>url</span><span class=p>.</span><span class=nx>hostname</span> <span class=o>=</span> <span class=nx>B2_ENDPOINT</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>break</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>break</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=k>case</span> <span class=s2>&#34;$host&#34;</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>        <span class=nx>url</span><span class=p>.</span><span class=nx>hostname</span> <span class=o>=</span> <span class=nx>url</span><span class=p>.</span><span class=nx>hostname</span><span class=p>.</span><span class=nx>split</span><span class=p>(</span><span class=s2>&#34;.&#34;</span><span class=p>)[</span><span class=mi>0</span><span class=p>]</span> <span class=o>+</span> <span class=s2>&#34;.&#34;</span> <span class=o>+</span> <span class=nx>B2_ENDPOINT</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>break</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=k>default</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>        <span class=nx>url</span><span class=p>.</span><span class=nx>hostname</span> <span class=o>=</span> <span class=nx>BUCKET_NAME</span> <span class=o>+</span> <span class=s2>&#34;.&#34;</span> <span class=o>+</span> <span class=nx>B2_ENDPOINT</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>break</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=nx>headers</span> <span class=o>=</span> <span class=nx>filterHeaders</span><span class=p>(</span><span class=nx>request</span><span class=p>.</span><span class=nx>headers</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=nx>signedRequest</span> <span class=o>=</span> <span class=kr>await</span> <span class=nx>client2</span><span class=p>.</span><span class=nx>sign</span><span class=p>(</span><span class=nx>url</span><span class=p>.</span><span class=nx>toString</span><span class=p>(),</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=nx>method</span><span class=o>:</span> <span class=nx>request</span><span class=p>.</span><span class=nx>method</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>      <span class=nx>headers</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>      <span class=nx>body</span><span class=o>:</span> <span class=nx>request</span><span class=p>.</span><span class=nx>body</span>
+</span></span><span class=line><span class=cl>    <span class=p>});</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nx>fetch</span><span class=p>(</span><span class=nx>signedRequest</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=kd>var</span> <span class=nx>endpointRegex</span> <span class=o>=</span> <span class=sr>/^s3\.([a-zA-Z0-9-]+)\.backblazeb2\.com$/</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=kd>var</span> <span class=p>[,</span> <span class=nx>aws_region</span><span class=p>]</span> <span class=o>=</span> <span class=nx>B2_ENDPOINT</span><span class=p>.</span><span class=nx>match</span><span class=p>(</span><span class=nx>endpointRegex</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=kd>var</span> <span class=nx>client</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>AwsClient</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;accessKeyId&#34;</span><span class=o>:</span> <span class=nx>B2_APPLICATION_KEY_ID</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;secretAccessKey&#34;</span><span class=o>:</span> <span class=nx>B2_APPLICATION_KEY</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;service&#34;</span><span class=o>:</span> <span class=s2>&#34;s3&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;region&#34;</span><span class=o>:</span> <span class=nx>aws_region</span>
+</span></span><span class=line><span class=cl>  <span class=p>});</span>
+</span></span><span class=line><span class=cl>  <span class=nx>addEventListener</span><span class=p>(</span><span class=s2>&#34;fetch&#34;</span><span class=p>,</span> <span class=kd>function</span><span class=p>(</span><span class=nx>event</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>event</span><span class=p>.</span><span class=nx>respondWith</span><span class=p>(</span><span class=nx>handleRequest</span><span class=p>(</span><span class=nx>event</span><span class=p>,</span> <span class=nx>client</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>  <span class=p>});</span>
+</span></span><span class=line><span class=cl><span class=p>})();</span>
+</span></span><span class=line><span class=cl><span class=c1>//# sourceMappingURL=index.js.map
+</span></span></span></code></pre></td></tr></table></div></div><h5 id=2设置-worker-环境变量 class=headerLink><a href=#2%e8%ae%be%e7%bd%ae-worker-%e7%8e%af%e5%a2%83%e5%8f%98%e9%87%8f class=header-mark></a>2、设置 Worker 环境变量</h5><ul><li><code>ALLOW_LIST_BUCKET</code>：true</li><li><code>B2_APPLICATION_KEY</code>：K004WJZP11111111111111111111Q</li><li><code>B2_APPLICATION_KEY_ID</code>：0042e9999999920000000001</li><li><code>B2_ENDPOINT</code>：s3.us-west-004.backblazeb2.com</li><li><code>BUCKET_NAME</code>：eallion-static</li></ul><p>APP KEY 和 ID 要去 Backblaze 后台生成，<code>B2_ENDPOINT</code> 要去自己的 B2 存储桶里查看。</p><h5 id=3手动添加-cname-解析到-b2 class=headerLink><a href=#3%e6%89%8b%e5%8a%a8%e6%b7%bb%e5%8a%a0-cname-%e8%a7%a3%e6%9e%90%e5%88%b0-b2 class=header-mark></a>3、手动添加 CNAME 解析到 B2</h5><p><figure><a class=lightgallery href=/assets/images/posts/2023/07/b2_cf_record.png title=/assets/images/posts/2023/07/b2_cf_record.png data-thumbnail=/assets/images/posts/2023/07/b2_cf_record.png><img loading=lazy src=/assets/images/posts/2023/07/b2_cf_record.png srcset="/assets/images/posts/2023/07/b2_cf_record.png, /assets/images/posts/2023/07/b2_cf_record.png 1.5x, /assets/images/posts/2023/07/b2_cf_record.png 2x" alt=/assets/images/posts/2023/07/b2_cf_record.png></a></figure></p><ul><li><code>类型</code>：选 <code>CNAME</code></li><li><code>名称</code>：用于 <code>回退源</code>，如：<code>b2.example.com</code> ，就填入 <code>b2</code></li><li><code>内容</code>：填入自己 B2 存储桶分配的 <code>S3 URL</code> ，有的教程这里写的是 <code>Friendly URL</code> ，没必要，还要多一步反代。</li></ul><p><figure><a class=lightgallery href=/assets/images/posts/2023/07/backblaze_url.png title=/assets/images/posts/2023/07/backblaze_url.png data-thumbnail=/assets/images/posts/2023/07/backblaze_url.png><img loading=lazy src=/assets/images/posts/2023/07/backblaze_url.png srcset="/assets/images/posts/2023/07/backblaze_url.png, /assets/images/posts/2023/07/backblaze_url.png 1.5x, /assets/images/posts/2023/07/backblaze_url.png 2x" alt=/assets/images/posts/2023/07/backblaze_url.png></a></figure></p><h5 id=4配置回退源 class=headerLink><a href=#4%e9%85%8d%e7%bd%ae%e5%9b%9e%e9%80%80%e6%ba%90 class=header-mark></a>4、配置回退源</h5><p><code>Zones</code> 中的域名为 Backblaze B2 设置的 CNAME 名称是什么，那回退源就填什么，如：<code>b2.example.com</code>。<br>参考前文即可。</p><h5 id=5配置自定义主机名 class=headerLink><a href=#5%e9%85%8d%e7%bd%ae%e8%87%aa%e5%ae%9a%e4%b9%89%e4%b8%bb%e6%9c%ba%e5%90%8d class=header-mark></a>5、配置自定义主机名</h5><p>参考前文。</p><h5 id=6配置-worker-路由 class=headerLink><a href=#6%e9%85%8d%e7%bd%ae-worker-%e8%b7%af%e7%94%b1 class=header-mark></a>6、配置 Worker 路由</h5><ul><li><code>路由</code>：一定要填生产环境用的域名，不要填 Cloudflare 的源域名；</li><li><code>Worker</code>：选择上一步创建的 Worker；</li><li><code>环境</code>：Production。</li></ul><p>为 Backblaze B2 添加 Worker 路由与 Cloudflare R2 不同，需要添加 2 条：</p><ul><li><code>b2.example.com/*</code> 也需要加入 Worker 路由中</li><li><code>images.eallion.com/*</code></li></ul><h3 id=尾声 class=headerLink><a href=#%e5%b0%be%e5%a3%b0 class=header-mark></a>尾声</h3><p>写长博客太折磨人了！主要是怕自己过一段时间会忘记怎么配置的，写个备忘录记录一下。</p></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2024-03-26&nbsp;<a class=git-hash href=https://github.com/eallion/eallion.com/commit/d47701292529e126bab14f7e867ec1b5aa3546a6 target=_blank title="commit by Charles Chin(eallions@gmail.com) d47701292529e126bab14f7e867ec1b5aa3546a6: docs: default comment" rel="noopener noreferrer">
+<i class="fas fa-hashtag fa-fw"></i>d4770129</a></span></div><div class=post-info-license></div></div><div class="post-info-line print:!tw-hidden"><div class=post-info-md><span><a class=link-to-mardown href=/cdn-cname-cloudflare/index.md target=_blank rel="noopener noreferrer">阅读原始文档</a>
+</span><span>|&nbsp;<a class=link-to-report href="https://github.com/eallion/eallion.com/issues/new?title=[bug]%20%E5%9B%BE%E5%BA%8A+CDN+CNAME+%E6%8E%A5%E5%85%A5+Cloudflare+SaaS+%E5%AE%9E%E7%8E%B0%E5%88%86%E6%B5%81&body=|Field|Value|%0A|-|-|%0A|Title|%E5%9B%BE%E5%BA%8A+CDN+CNAME+%E6%8E%A5%E5%85%A5+Cloudflare+SaaS+%E5%AE%9E%E7%8E%B0%E5%88%86%E6%B5%81|%0A|Url|https://www.eallion.com/cdn-cname-cloudflare/|%0A|Filename|https://github.com/eallion/eallion.com/blob/main/posts/code/2023-07-29-CDN-CNAME-Cloudflare.md|" target=_blank rel="noopener noreferrer">报告问题</a></span></div><div class=post-info-share></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/hugo/>Hugo</a>,&nbsp;<a href=/tags/blog/>Blog</a>,&nbsp;<a href=/tags/cname/>Cname</a>,&nbsp;<a href=/tags/cloudflare/>Cloudflare</a></section><section class=print:!tw-hidden><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class="post-nav print:tw-hidden"><a href=/s3-sync/ class=prev rel=prev title="利用 GitHub Actions 同步对象存储"><i class="fas fa-angle-left fa-fw"></i>利用 GitHub Actions 同步对象存储</a>
+<a href=/self-hosted-github-flavored-reactions/ class=next rel=next title="自部署 GitHub 风格的 Reactions 点赞功能">自部署 GitHub 风格的 Reactions 点赞功能<i class="fas fa-angle-right fa-fw"></i></a></div></div><div id=comments class=print:!tw-hidden><div id=giscus></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://giscus.app/>giscus</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>由 <a href=https://gohugo.io/ target=_blank rel="noopener noreferrer" title="Hugo 0.124.1">Hugo</a> 强力驱动&nbsp;|&nbsp;托管在 <a title="腾讯云边缘安全加速平台 EdgeOne" href=https://e5n.cc/s/teo target=_blank rel="noopener noreffer">EdgeOne</a> 上&nbsp;|&nbsp;主题 - <a href=https://github.com/HEIGE-PCloud/DoIt target=_blank rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a></div><div class=footer-line><i class="far fa-copyright fa-fw"></i>2006 - 2024&nbsp;|&nbsp;<span class=license><a title='eallion.com 版权信息' href=https://www.eallion.com/copyright/ target=_blank rel='noopener noreferrer'>eallion.com</a> All Rights Reserved.</span><span class=icp-splitter>&nbsp;|&nbsp;</span><br class=icp-br><span class=icp><a title="ICP 备案号" href=https://beian.miit.gov.cn/ target=_blank rel="noopener noreferrer">浙ICP备16031768号-2</a></span></div><div class=footer-line></div><div class=footer-line></div></div><script>"serviceWorker"in navigator&&(navigator.serviceWorker.register("/sw.min.js",{scope:"/"}).then(function(){}),navigator.serviceWorker.ready.then(function(){}))</script></footer></div><div id=fixed-buttons class=print:!tw-hidden><a href=#back-to-top id=back-to-top-button class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><div class=assets><link rel=stylesheet href=/lib/lightgallery/lightgallery.min.b38ee65d6456beb2d034bf554505f4ca47e421548b7cd26e8a7805fd2673b6c3.css integrity="sha256-s47mXWRWvrLQNL9VRQX0ykfkIVSLfNJuingF/SZztsM="><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:1e3},comment:{giscus:{darkTheme:"dark_dimmed",dataCategory:"Giscus",dataCategoryId:"DIC_kwDOD6gExM4CS9eF",dataEmitMetadata:"0",dataInputPosition:"bottom",dataLang:"zh-CN",dataLoading:"lazy",dataMapping:"pathname",dataReactionsEnabled:"1",dataRepo:"eallion/eallion.com",dataRepoId:"MDEwOlJlcG9zaXRvcnkyNjI2Njk1MDg=",dataStrict:"1",lightTheme:"light"}},lightGallery:{actualSize:!1,exThumbImage:"data-thumbnail",hideBarsDelay:2e3,selector:".lightgallery",speed:400,thumbContHeight:80,thumbWidth:80,thumbnail:!0},search:{algoliaAppID:"UIYUIFMJAW",algoliaIndex:"eallion",algoliaSearchKey:"6d69a1276d37f570210831b222bcb123",highlightTag:"em",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"algolia"},table:{sort:!0}}</script><script src=/lib/object-fit-images/ofi.min.8c2fded8e3119fcb15699d6752e3834a4b20ba353ca20f0842419c466f2dc97b.js integrity="sha256-jC/e2OMRn8sVaZ1nUuODSksgujU8og8IQkGcRm8tyXs="></script><script src=/lib/tablesort/tablesort.min.92de6dec051677787aed63503575b2f9be73f21f2745574e59647bc139a92d40.js integrity="sha256-kt5t7AUWd3h67WNQNXWy+b5z8h8nRVdOWWR7wTmpLUA="></script><script src=/lib/lightgallery/lightgallery.min.e1c797df44ba6ba4cbc5c52eabbf2300e8a4865abe4ed52f91830bf1fd2bb76e.js integrity="sha256-4ceX30S6a6TLxcUuq78jAOikhlq+TtUvkYML8f0rt24="></script><script src=/lib/lightgallery/lg-thumbnail.min.c7fedc31b278580c1ee0065d9186510ff245bb983987b9f05315cb2488045c4f.js integrity="sha256-x/7cMbJ4WAwe4AZdkYZRD/JFu5g5h7nwUxXLJIgEXE8="></script><script src=/lib/lightgallery/lg-zoom.min.0470e1215c4c9a64efce50c5969b898d6553eba697bd31a5e1663ad8ab48374c.js integrity="sha256-BHDhIVxMmmTvzlDFlpuJjWVT66aXvTGl4WY62KtIN0w="></script><script src=/lib/clipboard/clipboard.min.e17a1d816e13c0826e0ed7febfabc3277f45571234bde0bf9120829a7169edc9.js integrity="sha256-4XodgW4TwIJuDtf+v6vDJ39FVxI0veC/kSCCmnFp7ck="></script><script src=/js/theme.min.js defer></script><script src=/js/giscus.min.js defer></script></div></body></html>

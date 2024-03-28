@@ -1,0 +1,1201 @@
+<!doctype html><html lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=onion-location content="http://eallionskii7e32j3ncxnccyqq6uf7rbxwmst4x6mxeswx6fvrdtsmad.onion"><meta name=giscus:backlink content="https://www.eallion.com/neodb/"><title>NeoDB API 创建观影页面-大大的小蜗牛</title><meta name=Description content><meta property="og:title" content="NeoDB API 创建观影页面">
+<meta property="og:description" content="这篇文章介绍了如何使用NeoDB API创建观影页面。文章中包含了注册NeoDB账号、生成NeoDB Token、标记影音、下载NeoDB数据、新建HTML模板等步骤。作者提到他选择将数据下载到本地进行静态化处理，以提高性能。他还提到了注册Mastodon和NeoDB的过程，并简要介绍了Shell Script脚本的使用。最后文章提供了一些必要的CSS和JS代码来修改页面样式和处理数据。"><meta property="og:type" content="article"><meta property="og:url" content="https://www.eallion.com/neodb/"><meta property="og:image" content="https://www.eallion.com/assets/images/og/neodb.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2023-07-11T23:27:23+08:00"><meta property="article:modified_time" content="2024-03-26T17:59:51+08:00"><meta property="og:site_name" content="大大的小蜗牛"><meta property="og:see_also" content="https://www.eallion.com/neodb_token/"><meta property="og:see_also" content="https://www.eallion.com/douban-sync/"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://www.eallion.com/assets/images/og/neodb.png"><meta name=twitter:title content="NeoDB API 创建观影页面"><meta name=twitter:description content="这篇文章介绍了如何使用NeoDB API创建观影页面。文章中包含了注册NeoDB账号、生成NeoDB Token、标记影音、下载NeoDB数据、新建HTML模板等步骤。作者提到他选择将数据下载到本地进行静态化处理，以提高性能。他还提到了注册Mastodon和NeoDB的过程，并简要介绍了Shell Script脚本的使用。最后文章提供了一些必要的CSS和JS代码来修改页面样式和处理数据。"><meta name=twitter:site content="@eallion"><meta name=application-name content="大大的小蜗牛"><meta name=apple-mobile-web-app-title content="大大的小蜗牛"><meta name=theme-color content="#f8f8f8"><meta name=msapplication-TileColor content="#da532c"><meta name=twitter:creator content="@eallion"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://www.eallion.com/neodb/><link rel=prev href=https://www.eallion.com/neodb_token/><link rel=next href=https://www.eallion.com/douban-sync/><link rel=stylesheet href=/css/main.min.css><link rel=stylesheet href=/lib/normalize/normalize.min.055364f5be272caa092b0e6654c165828707f8ab971e2656383a6d6392bc345e.css integrity="sha256-BVNk9b4nLKoJKw5mVMFlgocH+KuXHiZWODptY5K8NF4="><link rel=stylesheet href=/css/color.b0a0f8c429ce52dfa2805b5f9e99ccdae1e8fbfd9adf4f3ddb409d8201fc0c5a.css integrity="sha256-sKD4xCnOUt+igFtfnpnM2uHo+/2a308920CdggH8DFo="><link rel=stylesheet href=/css/style.min.css><link rel=preload as=style onload='this.onload=null,this.rel="stylesheet"' href=/lib/fontawesome-free/all.min.43202d5486e011f9684a17bd6846b5c16a2619002bfc783f7e32e20dfb6bf857.css integrity="sha256-QyAtVIbgEfloShe9aEa1wWomGQAr/Hg/fjLiDftr+Fc="><noscript><link rel=stylesheet href=/lib/fontawesome-free/all.min.43202d5486e011f9684a17bd6846b5c16a2619002bfc783f7e32e20dfb6bf857.css integrity="sha256-QyAtVIbgEfloShe9aEa1wWomGQAr/Hg/fjLiDftr+Fc="></noscript><link rel=preload as=style onload='this.onload=null,this.rel="stylesheet"' href=/lib/animate/animate.min.5fbaeb9f8e25d7e0143bae61d4b1802c16ce7390b96ceb2d498b0d96ff4c853f.css integrity="sha256-X7rrn44l1+AUO65h1LGALBbOc5C5bOstSYsNlv9MhT8="><noscript><link rel=stylesheet href=/lib/animate/animate.min.5fbaeb9f8e25d7e0143bae61d4b1802c16ce7390b96ceb2d498b0d96ff4c853f.css integrity="sha256-X7rrn44l1+AUO65h1LGALBbOc5C5bOstSYsNlv9MhT8="></noscript><meta name=google-site-verification content="9Mvl_9FEM5JphVmp-u9ljtlChFohWuBBFjlSS89QKVU"><meta name=msvalidate.01 content="68A03C00DAFAD54E3739A8D372D9371B"><meta name=yandex-verification content="ff49a8cfbbaad423"><meta name=p:domain_verify content="b9e3534b99f9bd82f3b8688a1fa122a8"><meta name=baidu-site-verification content="ZWIiTFJWJkGQ11ZJ"><meta name=sogou_site_verification content="SZM7r2UEOz"><meta name=360-site-verification content="05afe845fd64ce6966deadce74479b5b"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"NeoDB API 创建观影页面","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eallion.com/neodb/"},"image":["https://www.eallion.com/images/Apple-Devices-Preview.png"],"genre":"posts","keywords":["hugo","blog","neodb","movie"],"wordcount":3455,"url":"https://www.eallion.com/neodb/","datePublished":"2023-07-11T23:27:23+08:00","dateModified":"2024-03-26T17:59:51+08:00","license":"This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.","publisher":{"@type":"Organization","name":"Charles Chin","logo":"https://www.eallion.com/eallion.webp"},"author":[{"@type":"Person","name":"大大的小蜗牛","url":"https://eallion.com/"}],"description":""}</script><script src=/lib/instant.page/instantpage.min.js defer type=module></script><link href=https://e5n.cc/@eallion rel=me></head><body header-desktop=normal header-mobile=auto><script type=text/javascript>function setTheme(e){document.body.setAttribute("theme",e),document.documentElement.style.setProperty("color-scheme",e==="light"?"light":"dark"),e==="light"?document.documentElement.classList.remove("tw-dark"):document.documentElement.classList.add("tw-dark"),window.theme=e,window.isDark=window.theme!=="light"}function saveTheme(e){window.localStorage&&localStorage.setItem("theme",e)}function getMeta(e){const t=document.getElementsByTagName("meta");for(let n=0;n<t.length;n++)if(t[n].getAttribute("name")===e)return t[n];return""}if(window.localStorage&&localStorage.getItem("theme")){let e=localStorage.getItem("theme");e==="light"||e==="dark"||e==="black"?setTheme(e):setTheme(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}else"auto"==="light"||"auto"==="dark"||"auto"==="black"?(setTheme("auto"),saveTheme("auto")):(saveTheme("auto"),setTheme(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"));let metaColors={light:"#f8f8f8",dark:"#252627",black:"#000000"};getMeta("theme-color").content=metaColors[document.body.getAttribute("theme")],window.switchThemeEventSet=new Set</script><div id=back-to-top></div><div id=mask></div><div class=wrapper><header class="desktop print:!tw-hidden" id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title=大大的小蜗牛>大大的小蜗牛</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/ title=首页><i class='fas fa-home'></i> 首页 </a><a class=menu-item href=/posts/ title=所有文章><i class='fas fa-blog'></i> 博客 </a><a class=menu-item href=/mastodon/ title="Mastodon Toots 嘀咕"><i class='fab fa-mastodon'></i> 嘀咕 </a><a class=menu-item href=/media/ title="NeoDB 书影音记录"><i class='fas fa-film'></i> 书影音 </a><a class=menu-item href=/steam/ title="Steam 游戏清单"><i class='fab fa-steam'></i> 游戏库 </a><a class=menu-item href=/links/ title=友情链接><i class='fas fa-users'></i> 友情链接 </a><a class=menu-item href=/stats/ title=统计><i class='fas fa-chart-bar'></i> 统计 </a><a class=menu-item href=/about/ title=关于我关于本站><i class='fas fa-info'></i> 关于 </a><span class="menu-item delimiter"></span><a href=javascript:void(0); class="menu-item language" title=选择语言>简体中文<i class="fas fa-chevron-right fa-fw"></i>
+<select class=language-select title=选择语言 id=language-select-desktop onchange="location=this.value"><option value=/neodb/ selected>简体中文</option></select>
+</a><span class="menu-item search" id=search-desktop><input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i>
+</a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i>
+</a><span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i>
+</span></span><a href=javascript:void(0); class="menu-item theme-select" title=切换主题><i class="fas fa-adjust fa-fw"></i>
+<select class=color-theme-select id=theme-select-desktop title=切换主题><option value=light>浅色</option><option value=dark>深色</option><option value=black>黑色</option><option value=auto>跟随系统</option></select></a></div></div></div></header><header class="mobile print:!tw-hidden" id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title=大大的小蜗牛>大大的小蜗牛</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i>
+</a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i>
+</a><span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/ title=首页><i class='fas fa-home'></i>首页</a><a class=menu-item href=/posts/ title=所有文章><i class='fas fa-blog'></i>博客</a><a class=menu-item href=/mastodon/ title="Mastodon Toots 嘀咕"><i class='fab fa-mastodon'></i>嘀咕</a><a class=menu-item href=/media/ title="NeoDB 书影音记录"><i class='fas fa-film'></i>书影音</a><a class=menu-item href=/steam/ title="Steam 游戏清单"><i class='fab fa-steam'></i>游戏库</a><a class=menu-item href=/links/ title=友情链接><i class='fas fa-users'></i>友情链接</a><a class=menu-item href=/stats/ title=统计><i class='fas fa-chart-bar'></i>统计</a><a class=menu-item href=/about/ title=关于我关于本站><i class='fas fa-info'></i>关于</a><a href=javascript:void(0); class="menu-item theme-select" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i>
+<select class=color-theme-select id=theme-select-mobile title=切换主题><option value=light>浅色</option><option value=dark>深色</option><option value=black>黑色</option><option value=auto>跟随系统</option></select>
+</a><a href=javascript:void(0); class=menu-item title=选择语言>简体中文<i class="fas fa-chevron-right fa-fw"></i>
+<select class=language-select title=选择语言 onchange="location=this.value"><option value=/neodb/ selected>简体中文</option></select></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class="toc print:!tw-hidden" id=toc-auto><h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto><nav id=TableOfContents><ul><li><ul><li><a href=#前言>前言</a></li><li><a href=#1-注册-neodb-账号>1. 注册 NeoDB 账号</a></li><li><a href=#2-生成-neodb-的-token>2. 生成 NeoDB 的 Token</a></li><li><a href=#3-标记影音>3. 标记影音</a></li><li><a href=#4-下载-neodb-数据>4. 下载 NeoDB 数据</a></li><li><a href=#5-新建-moviehtml-模板>5. 新建 movie.html 模板</a></li><li><a href=#6-css-样式>6. CSS 样式</a></li><li><a href=#7-js代码>7. JS代码</a></li><li><a href=#8-附加-github-actions>8. 附加 GitHub Actions</a></li></ul></li></ul></nav></div></div><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC","true")</script><article class="page single print:!tw-w-full print:!tw-max-w-none print:!tw-m-0 print:!tw-p-0"><h1 class="single-title animate__animated animate__flipInX">NeoDB API 创建观影页面</h1><div class=post-meta><div class=post-meta-line><span class=post-author><span class=author><span class=screen-reader-text></span><a href=https://www.eallion.com/authors/eallion><img src=https://www.eallion.com/eallion.webp alt='大大的小蜗牛 avatar' class="tw-inline-block tw-max-h-4 tw-rounded-full tw-translate-y-[-2px] tw-mr-1">大大的小蜗牛</a></span></span>&nbsp;<span class=post-category>收录于 </span>&nbsp;<span class=post-category>类别 <a href=/categories/%E4%BB%A3%E7%A0%81/><i class="far fa-folder fa-fw"></i>代码</a></span>&nbsp;<span class=post-category>和</span>&nbsp;<span class=post-series>系列 <a href=/series/neodb/><i class="far fa-list-alt fa-fw"></i>NeoDB</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2023-07-11>2023-07-11</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime=2024-03-26>2024-03-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3455 字&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;</div></div><div class="details series-nav open"><div class="details-summary series-title"><span>系列-NeoDB</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content series-content"><nav><ul><li><span class=active>NeoDB API 创建观影页面</span></li><li><a href=/neodb_token/>NeoDB 获取 Access Token</a></li><li><a href=/douban-sync/>豆瓣同步到 Notion 和 Neodb</a></li></ul></nav></div></div><div class="details toc print:!tw-block" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><ul><li><a href=#前言>前言</a></li><li><a href=#1-注册-neodb-账号>1. 注册 NeoDB 账号</a></li><li><a href=#2-生成-neodb-的-token>2. 生成 NeoDB 的 Token</a></li><li><a href=#3-标记影音>3. 标记影音</a></li><li><a href=#4-下载-neodb-数据>4. 下载 NeoDB 数据</a></li><li><a href=#5-新建-moviehtml-模板>5. 新建 movie.html 模板</a></li><li><a href=#6-css-样式>6. CSS 样式</a></li><li><a href=#7-js代码>7. JS代码</a></li><li><a href=#8-附加-github-actions>8. 附加 GitHub Actions</a></li></ul></li></ul></nav></div></div><div class=post-ai><div class=ai-header><div class=ai-title><svg role="img" width="1em" height="1em" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="ai-title-icon"><title>OpenAI ChatGPT3.5</title><path d="M22.2819 9.8211a5.9847 5.9847.0 00-.5157-4.9108 6.0462 6.0462.0 00-6.5098-2.9A6.0651 6.0651.0 004.9807 4.1818a5.9847 5.9847.0 00-3.9977 2.9 6.0462 6.0462.0 00.7427 7.0966 5.98 5.98.0 00.511 4.9107 6.051 6.051.0 006.5146 2.9001A5.9847 5.9847.0 0013.2599 24a6.0557 6.0557.0 005.7718-4.2058 5.9894 5.9894.0 003.9977-2.9001 6.0557 6.0557.0 00-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755.0 01-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948.0 00.3927-.6813v-6.7369l2.02 1.1686a.071.071.0 01.038.052v5.5826a4.504 4.504.0 01-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708.0 01-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712.0 00.7806.0l5.8428-3.3685v2.3324a.0804.0804.0 01-.0332.0615L9.74 19.9502a4.4992 4.4992.0 01-6.1408-1.6464zM2.3408 7.8956a4.485 4.485.0 012.3655-1.9728V11.6a.7664.7664.0 00.3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757.0 01-.071.0l-4.8303-2.7865A4.504 4.504.0 012.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757.0 01.071.0l4.8303 2.7913a4.4944 4.4944.0 01-.6765 8.1042v-5.6772a.79.79.0 00-.407-.667zm2.0107-3.0231-.142-.0852-4.7735-2.7818a.7759.7759.0 00-.7854.0L9.409 9.2297V6.8974a.0662.0662.0 01.0284-.0615l4.8303-2.7866a4.4992 4.4992.0 016.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804.0 01-.038-.0567V6.0742a4.4992 4.4992.0 017.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948.0 00-.3927.6813zm1.0976-2.3654 2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997z"/></svg><div class=ai-title-text><a href=https://www.eallion.com/ai-summary/ target=_blank rel="noopener noreferrer" alt="AI 智能摘要" title="AI 智能摘要">AI 摘要</a></div></div><div class=ai-title-tooltip><i class="far fa-question-circle"></i>
+<span class=ai-title-tooltip-text>Pre-generated by ChatGPT 3.5</span></div></div><div id=ai-explanation class=ai-explanation>这篇文章介绍了如何使用NeoDB API创建观影页面。文章中包含了注册NeoDB账号、生成NeoDB Token、标记影音、下载NeoDB数据、新建HTML模板等步骤。作者提到他选择将数据下载到本地进行静态化处理，以提高性能。他还提到了注册Mastodon和NeoDB的过程，并简要介绍了Shell Script脚本的使用。最后文章提供了一些必要的CSS和JS代码来修改页面样式和处理数据。</div></div><div class=content id=content><h3 id=前言 class=headerLink><a href=#%e5%89%8d%e8%a8%80 class=header-mark></a>前言</h3><p>几个月之前在 <a href=https://mastodon.social/@eallion/110383954479048514 target=_blank rel="noopener noreferrer">长毛象联邦宇宙</a> 里问过 NeoDB 官方有没有 API，得到肯定回答后，我就着手计划把观影页面的 API 搬到 NeoDB 了。前几天豆瓣的图片挂掉之后，加快了这一进程。<br>感谢豆瓣以前提供的无偿服务。不过这也印证了 <a href=https://memos.eallion.com/m/5733 target=_blank rel="noopener noreferrer">SaaS 服务不可信</a> 的观点。</p><p>有很多吐槽，但是算了，直接开始写备忘录。<br>我没有使用通过 API 获取动态数据的方式，而是把数据都下载到本地。静态化后性能会更好。</p><h3 id=1-注册-neodb-账号 class=headerLink><a href=#1-%e6%b3%a8%e5%86%8c-neodb-%e8%b4%a6%e5%8f%b7 class=header-mark></a>1. 注册 NeoDB 账号</h3><p>注册 NeoDB 账号前，需要注册一个 Mastodon 长毛象宇宙的账号，有很多实例可以注册。然后用 Mastodon 账号就可以登录 NeoDB 了。最新的 NeoDB 似乎已经可以绑定邮箱登录了。<br>注册 Mastodon 和 NeoDB 这些都是小事情，暂时略过，默认任何人都会了。<br>比如我就注册在 <a href=https://mastodon.social/@eallion target=_blank rel="noopener noreferrer">mastodon.social</a> ，我以前还自建过 Mastodon，不过没必要。</p><h3 id=2-生成-neodb-的-token class=headerLink><a href=#2-%e7%94%9f%e6%88%90-neodb-%e7%9a%84-token class=header-mark></a>2. 生成 NeoDB 的 Token</h3><p>参考：《<a href=https://eallion.com/neodb_token target=_blank rel="noopener noreferrer">NeoDB 获取 Access Token</a>》一文。</p><h3 id=3-标记影音 class=headerLink><a href=#3-%e6%a0%87%e8%ae%b0%e5%bd%b1%e9%9f%b3 class=header-mark></a>3. 标记影音</h3><p>3.1 在 <a href=https://neodb.social/ target=_blank rel="noopener noreferrer">NeoDB</a> 标记：</p><ul><li><a href=https://neodb.social/discover/ target=_blank rel="noopener noreferrer">https://neodb.social/discover/</a></li></ul><p>3.2 在 NeoDB <a href=https://neodb.social/account/data target=_blank rel="noopener noreferrer">数据</a> 设置里导入其他平台标记的数据：</p><ul><li><a href=https://neodb.social/account/data target=_blank rel="noopener noreferrer">https://neodb.social/account/data</a></li></ul><h3 id=4-下载-neodb-数据 class=headerLink><a href=#4-%e4%b8%8b%e8%bd%bd-neodb-%e6%95%b0%e6%8d%ae class=header-mark></a>4. 下载 NeoDB 数据</h3><p>因为 NeoDB 限制分页，需要按页数下载，不能一次下载所有数据。<br>就写了个 Shell Script 脚本下载：</p><p>注意替换 <code>QuhZZpr8bE711111111111X2OPaSRKU</code> 即 <code>Access Token</code> 。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#! /bin/sh
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl>curl -X <span class=s1>&#39;GET&#39;</span> <span class=s1>&#39;https://neodb.social/api/me/shelf/complete?category=movie&amp;page=1&#39;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    -H <span class=s1>&#39;accept: application/json&#39;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    -H <span class=s1>&#39;Authorization: Bearer QuhZZpr8bE711111111111X2OPaSRKU&#39;</span> &gt; movie1.json
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>curl -X <span class=s1>&#39;GET&#39;</span> <span class=s1>&#39;https://neodb.social/api/me/shelf/complete?category=tv&amp;page=1&#39;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    -H <span class=s1>&#39;accept: application/json&#39;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    -H <span class=s1>&#39;Authorization: Bearer QuhZZpr8bE711111111111X2OPaSRKU&#39;</span> &gt; tv1.json
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>pages</span><span class=o>=</span><span class=k>$(</span>jq <span class=s1>&#39;.pages&#39;</span> movie1.json<span class=k>)</span>
+</span></span><span class=line><span class=cl><span class=nv>tv_pages</span><span class=o>=</span><span class=k>$(</span>jq <span class=s1>&#39;.pages&#39;</span> tv1.json<span class=k>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 下载 Movie 分类</span>
+</span></span><span class=line><span class=cl><span class=c1># 循环下载文件，因为 page 1 已经下载过了，从 2 开始</span>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=o>((</span><span class=nv>i</span><span class=o>=</span>2<span class=p>;</span> i&lt;<span class=o>=</span><span class=nv>$pages</span><span class=p>;</span> i++<span class=o>))</span><span class=p>;</span> <span class=k>do</span>
+</span></span><span class=line><span class=cl>  <span class=nv>url</span><span class=o>=</span><span class=s2>&#34;https://neodb.social/api/me/shelf/complete?category=movie&amp;page=</span><span class=nv>$i</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nv>filename</span><span class=o>=</span><span class=s2>&#34;movie</span><span class=nv>$i</span><span class=s2>.json&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 下载文件并保存为对应的文件名</span>
+</span></span><span class=line><span class=cl>curl -X <span class=s1>&#39;GET&#39;</span> <span class=s2>&#34;</span><span class=nv>$url</span><span class=s2>&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  -H <span class=s1>&#39;accept: application/json&#39;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  -H <span class=s1>&#39;Authorization: Bearer QuhZZpr8bE711111111111X2OPaSRKU&#39;</span> &gt; <span class=s2>&#34;</span><span class=nv>$filename</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>done</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 下载 TV 分类</span>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=o>((</span><span class=nv>i</span><span class=o>=</span>2<span class=p>;</span> i&lt;<span class=o>=</span><span class=nv>$tv_pages</span><span class=p>;</span> i++<span class=o>))</span><span class=p>;</span> <span class=k>do</span>
+</span></span><span class=line><span class=cl>    <span class=nv>tv_url</span><span class=o>=</span><span class=s2>&#34;https://neodb.social/api/me/shelf/complete?category=tv&amp;page=</span><span class=nv>$i</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=nv>tv_filename</span><span class=o>=</span><span class=s2>&#34;tv</span><span class=nv>$i</span><span class=s2>.json&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>curl -X <span class=s1>&#39;GET&#39;</span> <span class=s2>&#34;</span><span class=nv>$tv_url</span><span class=s2>&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    -H <span class=s1>&#39;accept: application/json&#39;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    -H <span class=s1>&#39;Authorization: Bearer ${{ secrets.NEODB_ACCESS_TOKEN }}&#39;</span> &gt; <span class=s2>&#34;</span><span class=nv>$tv_filename</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>done</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 把所有数据合并成一个文件</span>
+</span></span><span class=line><span class=cl>jq -c -s <span class=s1>&#39;{data: map(.data[]) | unique | sort_by(.created_time) | reverse, pages: map(.pages)[0], count: map(.count)[0]}&#39;</span> *.json &gt; movie.json
+</span></span></code></pre></td></tr></table></div></div><p>然后就会得到一个包含所有标记数据的文件——<code>movie.json</code> 。</p><p>把 <code>movie.json</code> 文件复制到目录 <code>data/neodb/movie.json</code> 。</p><p><figure><a class=lightgallery href=/assets/images/posts/2023/07/movie_json.png title=/assets/images/posts/2023/07/movie_json.png data-thumbnail=/assets/images/posts/2023/07/movie_json.png><img loading=lazy src=/assets/images/posts/2023/07/movie_json.png srcset="/assets/images/posts/2023/07/movie_json.png, /assets/images/posts/2023/07/movie_json.png 1.5x, /assets/images/posts/2023/07/movie_json.png 2x" alt=/assets/images/posts/2023/07/movie_json.png></a></figure></p><h3 id=5-新建-moviehtml-模板 class=headerLink><a href=#5-%e6%96%b0%e5%bb%ba-moviehtml-%e6%a8%a1%e6%9d%bf class=header-mark></a>5. 新建 movie.html 模板</h3><p>在 Hugo 根目录或者主题目录 <code>layouts/_default</code> 新建一个 <i class="fab fa-github fa-fw"></i><a href=https://github.com/eallion/eallion.com/blob/9c7fdeb341056e8ae0f3822f3d5077a946711a3b/layouts/_default/movie.html target=_blank rel="noopener noreferrer">movie.html</a> 模板。<br>如果不知道模板长什么样，可以复制正在使用的主题下其他 Page 在用的模板，然后改下名字。<br>核心代码：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span><span class=lnt>136
+</span><span class=lnt>137
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-html data-lang=html><span class=line><span class=cl><span class=c>&lt;!-- 其他代码 --&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c>&lt;!-- 引入 Style 。注意路径，放在 static 目录--&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>link</span> <span class=na>rel</span><span class=o>=</span><span class=s>&#34;stylesheet&#34;</span> <span class=na>href</span><span class=o>=</span><span class=s>&#34;/movie.css&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c>&lt;!-- 获取本地 Json 数据 --&gt;</span>
+</span></span><span class=line><span class=cl>{{ $movies := getJSON &#34;data/neodb/movie.json&#34; }}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>div</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;yourContent&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>div</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;sort-by-items&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>&lt;</span><span class=nt>a</span> <span class=na>href</span><span class=o>=</span><span class=s>&#34;javascript:void 0;&#34;</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;sort-by-item active&#34;</span> <span class=na>data-order</span><span class=o>=</span><span class=s>&#34;time&#34;</span><span class=p>&gt;&lt;</span><span class=nt>i</span>
+</span></span><span class=line><span class=cl>                <span class=na>class</span><span class=o>=</span><span class=s>&#34;fas fa-sort-amount-down&#34;</span><span class=p>&gt;&lt;/</span><span class=nt>i</span><span class=p>&gt;</span> 观影时间排序<span class=p>&lt;/</span><span class=nt>a</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>&lt;</span><span class=nt>a</span> <span class=na>href</span><span class=o>=</span><span class=s>&#34;javascript:void 0;&#34;</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;sort-by-item&#34;</span> <span class=na>data-order</span><span class=o>=</span><span class=s>&#34;rating&#34;</span><span class=p>&gt;&lt;</span><span class=nt>i</span>
+</span></span><span class=line><span class=cl>                <span class=na>class</span><span class=o>=</span><span class=s>&#34;fas fa-sort-numeric-down-alt&#34;</span><span class=p>&gt;&lt;/</span><span class=nt>i</span><span class=p>&gt;</span> 评分排序<span class=p>&lt;/</span><span class=nt>a</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>&lt;</span><span class=nt>a</span> <span class=na>href</span><span class=o>=</span><span class=s>&#34;javascript:void 0;&#34;</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;sort-by-item&#34;</span> <span class=na>data-order</span><span class=o>=</span><span class=s>&#34;count&#34;</span><span class=p>&gt;&lt;</span><span class=nt>i</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;fas fa-sort-alpha-down-alt&#34;</span><span class=p>&gt;&lt;/</span><span class=nt>i</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>            评分人数排序<span class=p>&lt;/</span><span class=nt>a</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=p>&lt;</span><span class=nt>div</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;movie&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            {{ range $movies.data }}
+</span></span><span class=line><span class=cl>            {{ $title := .item.display_title }}
+</span></span><span class=line><span class=cl>            {{ $rating := .item.rating }}
+</span></span><span class=line><span class=cl>            {{ $movie_url := .item.url }}
+</span></span><span class=line><span class=cl>            {{ $cover := .item.cover_image_url }}
+</span></span><span class=line><span class=cl>            {{ $cover_name := path.Base $cover }}
+</span></span><span class=line><span class=cl>            {{ $cate_movie := &#34;movie&#34; }}
+</span></span><span class=line><span class=cl>            {{ $cate_tv := &#34;tv&#34; }}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=p>&lt;</span><span class=nt>div</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;movies sorting&#34;</span> <span class=na>data-marked</span><span class=o>=</span><span class=s>&#34;{{ .created_time }}&#34;</span> <span class=na>data-year</span><span class=o>=</span><span class=s>&#39;{{  dateFormat &#34;2006-01-02 15:04:05&#34; .created_time }}&#39;</span> <span class=na>data-star</span><span class=o>=</span><span class=s>&#34;{{ .rating_grade }}&#34;</span> <span class=na>data-rating</span><span class=o>=</span><span class=s>&#34;{{ .item.rating }}&#34;</span> <span class=na>data-count</span><span class=o>=</span><span class=s>&#34;{{ .item.rating_count }}&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                    <span class=p>&lt;</span><span class=nt>div</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;cover&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                        <span class=p>&lt;</span><span class=nt>div</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;cover__container&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                            {{ range .item.external_resources }}
+</span></span><span class=line><span class=cl>                                {{ if (in .url &#34;douban&#34;) }}
+</span></span><span class=line><span class=cl>                                    <span class=p>&lt;</span><span class=nt>a</span> <span class=na>href</span><span class=o>=</span><span class=s>&#34;{{ .url }}&#34;</span> <span class=na>target</span><span class=o>=</span><span class=s>&#34;_blank&#34;</span> <span class=na>rel</span><span class=o>=</span><span class=s>&#34;noreferrer noopener nofollow&#34;</span><span class=p>&gt;&lt;</span><span class=nt>img</span> <span class=na>alt</span><span class=o>=</span><span class=s>&#34;{{ $title }}&#34;</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;lazy&#34;</span> <span class=na>loading</span><span class=o>=</span><span class=s>&#34;lazy&#34;</span> <span class=na>data-src</span><span class=o>=</span><span class=s>&#34;/assets/images/posts/neodb/{{ $cover_name }}&#34;</span><span class=p>&gt;&lt;/</span><span class=nt>a</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                                {{ end }}
+</span></span><span class=line><span class=cl>                            {{ end }}
+</span></span><span class=line><span class=cl>                        <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                    <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                    <span class=p>&lt;</span><span class=nt>div</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;title&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                        {{ $hasDouban := false }}
+</span></span><span class=line><span class=cl>                        {{ range .item.external_resources }}
+</span></span><span class=line><span class=cl>                            {{ if (in .url &#34;douban&#34;) }}
+</span></span><span class=line><span class=cl>                                {{ $hasDouban = true }}
+</span></span><span class=line><span class=cl>                                <span class=p>&lt;</span><span class=nt>a</span> <span class=na>href</span><span class=o>=</span><span class=s>&#34;{{ .url }}&#34;</span> <span class=na>target</span><span class=o>=</span><span class=s>&#34;_blank&#34;</span> <span class=na>rel</span><span class=o>=</span><span class=s>&#34;noreferrer noopener nofollow&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                                    {{ $title }}
+</span></span><span class=line><span class=cl>                                <span class=p>&lt;/</span><span class=nt>a</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                                {{ end }}
+</span></span><span class=line><span class=cl>                            {{ end }}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                            {{ if not $hasDouban }}
+</span></span><span class=line><span class=cl>                                <span class=p>&lt;</span><span class=nt>a</span> <span class=na>href</span><span class=o>=</span><span class=s>&#34;https://neodb.social{{ $movie_url }}&#34;</span> <span class=na>target</span><span class=o>=</span><span class=s>&#34;_blank&#34;</span> <span class=na>rel</span><span class=o>=</span><span class=s>&#34;noreferrer noopener nofollow&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                                    {{ $title }}
+</span></span><span class=line><span class=cl>                                <span class=p>&lt;/</span><span class=nt>a</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                            {{ end }}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                    <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                    <span class=p>&lt;</span><span class=nt>div</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;rating&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                        {{ range $star := (seq 0 2 8) }}
+</span></span><span class=line><span class=cl>                        {{ if gt $rating $star }}
+</span></span><span class=line><span class=cl>                        <span class=p>&lt;</span><span class=nt>span</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;rating_star&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                            <span class=p>&lt;</span><span class=nt>svg</span> <span class=na>viewBox</span><span class=o>=</span><span class=s>&#34;0 0 24 24&#34;</span> <span class=na>width</span><span class=o>=</span><span class=s>&#34;24&#34;</span> <span class=na>height</span><span class=o>=</span><span class=s>&#34;24&#34;</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;stars&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                                <span class=p>&lt;</span><span class=nt>path</span> <span class=na>fill</span><span class=o>=</span><span class=s>&#34;none&#34;</span> <span class=na>d</span><span class=o>=</span><span class=s>&#34;M0 0h24v24H0z&#34;</span><span class=p>&gt;&lt;/</span><span class=nt>path</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                                <span class=p>&lt;</span><span class=nt>path</span> <span class=na>fill</span><span class=o>=</span><span class=s>&#34;currentColor&#34;</span> <span class=na>d</span><span class=o>=</span><span class=s>&#34;M12 18.26l-7.053 3.948 1.575-7.928L.587 8.792l8.027-.952L12 .5l3.386 7.34 8.027.952-5.935 5.488 1.575 7.928z&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                                <span class=p>&lt;/</span><span class=nt>path</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                            <span class=p>&lt;/</span><span class=nt>svg</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                        <span class=p>&lt;/</span><span class=nt>span</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                        {{ else }}
+</span></span><span class=line><span class=cl>                        <span class=p>&lt;</span><span class=nt>span</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;rating_star&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                            <span class=p>&lt;</span><span class=nt>svg</span> <span class=na>viewBox</span><span class=o>=</span><span class=s>&#34;0 0 24 24&#34;</span> <span class=na>width</span><span class=o>=</span><span class=s>&#34;24&#34;</span> <span class=na>height</span><span class=o>=</span><span class=s>&#34;24&#34;</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;stars white&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                                <span class=p>&lt;</span><span class=nt>path</span> <span class=na>fill</span><span class=o>=</span><span class=s>&#34;none&#34;</span> <span class=na>d</span><span class=o>=</span><span class=s>&#34;M0 0h24v24H0z&#34;</span><span class=p>&gt;&lt;/</span><span class=nt>path</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                                <span class=p>&lt;</span><span class=nt>path</span> <span class=na>fill</span><span class=o>=</span><span class=s>&#34;currentcolor&#34;</span> <span class=na>d</span><span class=o>=</span><span class=s>&#34;M12 18.26l-7.053 3.948 1.575-7.928L.587 8.792l8.027-.952L12 .5l3.386 7.34 8.027.952-5.935 5.488 1.575 7.928z&#34;</span><span class=p>&gt;&lt;/</span><span class=nt>path</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                            <span class=p>&lt;/</span><span class=nt>svg</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                        <span class=p>&lt;/</span><span class=nt>span</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                        {{ end }}
+</span></span><span class=line><span class=cl>                        {{ end }}
+</span></span><span class=line><span class=cl>                        <span class=p>&lt;</span><span class=nt>span</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;rating_star&#34;</span><span class=p>&gt;</span>{{ $rating }}<span class=p>&lt;/</span><span class=nt>span</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                    <span class=p>&lt;</span><span class=nt>div</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;rating_count hidden&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                        <span class=p>&lt;</span><span class=nt>span</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                            <span class=p>&lt;</span><span class=nt>svg</span> <span class=na>viewBox</span><span class=o>=</span><span class=s>&#34;0 0 24 24&#34;</span> <span class=na>width</span><span class=o>=</span><span class=s>&#34;24&#34;</span> <span class=na>height</span><span class=o>=</span><span class=s>&#34;24&#34;</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;stars&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                                <span class=p>&lt;</span><span class=nt>path</span> <span class=na>fill</span><span class=o>=</span><span class=s>&#34;none&#34;</span> <span class=na>d</span><span class=o>=</span><span class=s>&#34;M0 0h24v24H0z&#34;</span><span class=p>&gt;&lt;/</span><span class=nt>path</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                                <span class=p>&lt;</span><span class=nt>path</span> <span class=na>fill</span><span class=o>=</span><span class=s>&#34;currentColor&#34;</span> <span class=na>d</span><span class=o>=</span><span class=s>&#34;M12 18.26l-7.053 3.948 1.575-7.928L.587 8.792l8.027-.952L12 .5l3.386 7.34 8.027.952-5.935 5.488 1.575 7.928z&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                                <span class=p>&lt;/</span><span class=nt>path</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                            <span class=p>&lt;/</span><span class=nt>svg</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                        <span class=p>&lt;/</span><span class=nt>span</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                        <span class=p>&lt;</span><span class=nt>span</span><span class=p>&gt;&lt;</span><span class=nt>a</span> <span class=na>href</span><span class=o>=</span><span class=s>&#34;https://neodb.social{{ $movie_url }}&#34;</span> <span class=na>target</span><span class=o>=</span><span class=s>&#34;_blank&#34;</span> <span class=na>rel</span><span class=o>=</span><span class=s>&#34;noreferrer noopener nofollow&#34;</span><span class=p>&gt;</span>{{ .item.rating_count }} {{ T `movie_count_text` }}<span class=p>&lt;/</span><span class=nt>a</span><span class=p>&gt;&lt;/</span><span class=nt>span</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                    <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                    <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                    <span class=p>&lt;</span><span class=nt>div</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;referrer&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                        {{ if eq .item.category $cate_movie }}
+</span></span><span class=line><span class=cl>                        <span class=p>&lt;</span><span class=nt>i</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;fas fa-film fa-fw&#34;</span><span class=p>&gt;&lt;/</span><span class=nt>i</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                        {{ else if eq .item.category $cate_tv }}
+</span></span><span class=line><span class=cl>                        <span class=p>&lt;</span><span class=nt>i</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;fas fa-tv fa-xs&#34;</span><span class=p>&gt;&lt;/</span><span class=nt>i</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                        {{ end }}
+</span></span><span class=line><span class=cl>                        <span class=p>&lt;</span><span class=nt>span</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;neodb&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                            <span class=p>&lt;</span><span class=nt>a</span> <span class=na>href</span><span class=o>=</span><span class=s>&#34;https://neodb.social{{ $movie_url }}&#34;</span> <span class=na>target</span><span class=o>=</span><span class=s>&#34;_blank&#34;</span> <span class=na>rel</span><span class=o>=</span><span class=s>&#34;noreferrer noopener nofollow&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                                <span class=p>&lt;</span><span class=nt>img</span> <span class=na>src</span><span class=o>=</span><span class=s>&#34;/assets/images/movie/neodbsocial.jpg&#34;</span> <span class=na>loading</span><span class=o>=</span><span class=s>&#34;lazy&#34;</span> <span class=na>alt</span><span class=o>=</span><span class=s>&#34;NeoDB&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                            <span class=p>&lt;/</span><span class=nt>a</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                        <span class=p>&lt;/</span><span class=nt>span</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                        {{ range .item.external_resources }}
+</span></span><span class=line><span class=cl>                            {{ $parsedURL := urls.Parse .url }}
+</span></span><span class=line><span class=cl>                            {{ $host := $parsedURL.Hostname }}
+</span></span><span class=line><span class=cl>                            {{ $title := .title }}
+</span></span><span class=line><span class=cl>                                <span class=p>&lt;</span><span class=nt>span</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;external-resource&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                                    <span class=p>&lt;</span><span class=nt>a</span> <span class=na>href</span><span class=o>=</span><span class=s>&#34;{{ .url }}&#34;</span> <span class=na>target</span><span class=o>=</span><span class=s>&#34;_blank&#34;</span> <span class=na>rel</span><span class=o>=</span><span class=s>&#34;noreferrer noopener nofollow&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                                        <span class=p>&lt;</span><span class=nt>img</span> <span class=na>src</span><span class=o>=</span><span class=s>&#34;/assets/images/movie/{{ $host }}.png&#34;</span> <span class=na>loading</span><span class=o>=</span><span class=s>&#34;lazy&#34;</span> <span class=na>alt</span><span class=o>=</span><span class=s>&#34;{{ $title }}&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                                    <span class=p>&lt;/</span><span class=nt>a</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                                <span class=p>&lt;/</span><span class=nt>span</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                        {{ end }}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                        <span class=c>&lt;!-- &lt;span class=&#34;rottentomatoes&#34;&gt;
+</span></span></span><span class=line><span class=cl><span class=c>                            &lt;a href=&#34;http://www.google.com/search?hl=en&amp;q={{ $title }}+rotten+tomatoes&amp;btnI=I&#34; target=&#34;_blank&#34; rel=&#34;noreferrer noopener nofollow&#34;&gt;
+</span></span></span><span class=line><span class=cl><span class=c>                                &lt;img src=&#34;/assets/images/movie/www.rottentomatoes.com.png&#34; loading=&#34;lazy&#34; alt=&#34;NeoDB&#34;&gt;
+</span></span></span><span class=line><span class=cl><span class=c>                            &lt;/a&gt;
+</span></span></span><span class=line><span class=cl><span class=c>                        &lt;/span&gt; --&gt;</span>
+</span></span><span class=line><span class=cl>                    <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>            <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>            {{ end }}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>article</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>script</span> <span class=na>type</span><span class=o>=</span><span class=s>&#34;text/javascript&#34;</span> <span class=na>src</span><span class=o>=</span><span class=s>&#34;/assets/lazyload.iife.min.js?v=17.8.3&#34;</span><span class=p>&gt;&lt;/</span><span class=nt>script</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>script</span> <span class=na>type</span><span class=o>=</span><span class=s>&#34;text/javascript&#34;</span> <span class=na>src</span><span class=o>=</span><span class=s>&#34;/assets/movie.min.js?v=2023.07.11&#34;</span><span class=p>&gt;&lt;/</span><span class=nt>script</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>script</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=kd>var</span> <span class=nx>lazyLoadInstance</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>LazyLoad</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>        <span class=c1>// Your custom settings go here
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=p>});</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>script</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c>&lt;!-- 其他代码 --&gt;</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=6-css-样式 class=headerLink><a href=#6-css-%e6%a0%b7%e5%bc%8f class=header-mark></a>6. CSS 样式</h3><p>这是一些必要的 CSS，只会影响到观影页面，没有侵入性。<br>可把 CSS 放入 Hugo 的 <code>static</code> 目录</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span><span class=lnt>136
+</span><span class=lnt>137
+</span><span class=lnt>138
+</span><span class=lnt>139
+</span><span class=lnt>140
+</span><span class=lnt>141
+</span><span class=lnt>142
+</span><span class=lnt>143
+</span><span class=lnt>144
+</span><span class=lnt>145
+</span><span class=lnt>146
+</span><span class=lnt>147
+</span><span class=lnt>148
+</span><span class=lnt>149
+</span><span class=lnt>150
+</span><span class=lnt>151
+</span><span class=lnt>152
+</span><span class=lnt>153
+</span><span class=lnt>154
+</span><span class=lnt>155
+</span><span class=lnt>156
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-css data-lang=css><span class=line><span class=cl><span class=p>.</span><span class=nc>movie</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>display</span><span class=p>:</span> <span class=k>grid</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>width</span><span class=p>:</span> <span class=mi>100</span><span class=kt>%</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>gap</span><span class=p>:</span> <span class=mi>10</span><span class=kt>px</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>margin-top</span><span class=p>:</span> <span class=mi>1</span><span class=kt>rem</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>@</span><span class=k>media</span> <span class=o>(</span><span class=nt>min-width</span><span class=o>:</span> <span class=nt>1000px</span><span class=o>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=p>.</span><span class=nc>movie</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>grid-template-columns</span><span class=p>:</span> <span class=nf>repeat</span><span class=p>(</span><span class=mi>5</span><span class=p>,</span> <span class=nf>minmax</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span> <span class=mi>1</span><span class=n>fr</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>@</span><span class=k>media</span> <span class=nt>only</span> <span class=nt>screen</span> <span class=nt>and</span> <span class=o>(</span><span class=nt>max-width</span><span class=o>:</span> <span class=nt>1000px</span><span class=o>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=p>.</span><span class=nc>movie</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>grid-template-columns</span><span class=p>:</span> <span class=nf>repeat</span><span class=p>(</span><span class=mi>4</span><span class=p>,</span> <span class=nf>minmax</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span> <span class=mi>1</span><span class=n>fr</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>@</span><span class=k>media</span> <span class=nt>only</span> <span class=nt>screen</span> <span class=nt>and</span> <span class=o>(</span><span class=nt>max-width</span><span class=o>:</span> <span class=nt>680px</span><span class=o>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=p>.</span><span class=nc>movie</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>grid-template-columns</span><span class=p>:</span> <span class=nf>repeat</span><span class=p>(</span><span class=mi>3</span><span class=p>,</span> <span class=nf>minmax</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span> <span class=mi>1</span><span class=n>fr</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>@</span><span class=k>media</span> <span class=o>(</span><span class=nt>max-width</span><span class=o>:</span> <span class=nt>359px</span><span class=o>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=p>.</span><span class=nc>movie</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>grid-template-columns</span><span class=p>:</span> <span class=nf>repeat</span><span class=p>(</span><span class=mi>2</span><span class=p>,</span> <span class=nf>minmax</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span> <span class=mi>1</span><span class=n>fr</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>.</span><span class=nc>movie</span> <span class=p>.</span><span class=nc>cover</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>position</span><span class=p>:</span> <span class=kc>relative</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>border-radius</span><span class=p>:</span> <span class=mf>0.25</span><span class=kt>rem</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>width</span><span class=p>:</span> <span class=mi>100</span><span class=kt>%</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>height</span><span class=p>:</span> <span class=mi>100</span><span class=kt>%</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>.</span><span class=nc>movie</span> <span class=p>.</span><span class=nc>cover</span> <span class=p>.</span><span class=nc>cover__container</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>position</span><span class=p>:</span> <span class=kc>relative</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>border-radius</span><span class=p>:</span> <span class=mf>0.25</span><span class=kt>rem</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>background-image</span><span class=p>:</span> <span class=nb>linear-gradient</span><span class=p>(</span><span class=kc>to</span> <span class=kc>bottom</span><span class=p>,</span> <span class=mh>#ddd</span><span class=p>,</span> <span class=mh>#f5f5f5</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>overflow</span><span class=p>:</span> <span class=kc>hidden</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>padding-top</span><span class=p>:</span> <span class=mf>177.78</span><span class=kt>%</span><span class=p>;</span> <span class=c>/* 9:16 竖屏宽高比的容器 */</span>
+</span></span><span class=line><span class=cl>    <span class=k>padding-top</span><span class=p>:</span> <span class=mf>133.33</span><span class=kt>%</span><span class=p>;</span> <span class=c>/* 3:4 宽高比的容器 */</span>
+</span></span><span class=line><span class=cl>    <span class=k>padding-top</span><span class=p>:</span> <span class=mi>150</span><span class=kt>%</span><span class=p>;</span> <span class=c>/* 豆瓣常见的宽高比的容器 */</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>.</span><span class=nc>movie</span> <span class=p>.</span><span class=nc>cover</span> <span class=p>.</span><span class=nc>cover__container</span> <span class=nt>img</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>position</span><span class=p>:</span> <span class=kc>absolute</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>top</span><span class=p>:</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>left</span><span class=p>:</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>display</span><span class=p>:</span> <span class=kc>block</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>width</span><span class=p>:</span> <span class=mi>100</span><span class=kt>%</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>height</span><span class=p>:</span> <span class=mi>100</span><span class=kt>%</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>cursor</span><span class=p>:</span> <span class=kc>pointer</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kp>-o-</span><span class=k>object-fit</span><span class=p>:</span> <span class=kc>cover</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>object-fit</span><span class=p>:</span> <span class=kc>cover</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>transition</span><span class=p>:</span> <span class=kc>all</span> <span class=mf>0.6</span><span class=kt>s</span> <span class=kc>ease</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>.</span><span class=nc>movie</span> <span class=p>.</span><span class=nc>cover</span> <span class=p>.</span><span class=nc>cover__container</span> <span class=nt>img</span><span class=p>:</span><span class=nd>hover</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>transform</span><span class=p>:</span> <span class=nb>scale</span><span class=p>(</span><span class=mf>1.1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>.</span><span class=nc>movie</span> <span class=p>.</span><span class=nc>movies</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>display</span><span class=p>:</span> <span class=kc>flex</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>flex-flow</span><span class=p>:</span> <span class=kc>column</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>justify-content</span><span class=p>:</span> <span class=kc>center</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>align-items</span><span class=p>:</span> <span class=kc>center</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>margin</span><span class=p>:</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>margin-bottom</span><span class=p>:</span> <span class=mi>2</span><span class=kt>rem</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>.</span><span class=nc>movie</span> <span class=p>.</span><span class=nc>title</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>margin-top</span><span class=p>:</span> <span class=mf>0.25</span><span class=kt>rem</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>width</span><span class=p>:</span> <span class=mi>100</span><span class=kt>%</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>white-space</span><span class=p>:</span> <span class=kc>nowrap</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>overflow</span><span class=p>:</span> <span class=kc>hidden</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>text-overflow</span><span class=p>:</span> <span class=kc>ellipsis</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>padding-bottom</span><span class=p>:</span> <span class=mf>0.5</span><span class=kt>rem</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>.</span><span class=nc>movie</span> <span class=p>.</span><span class=nc>title</span><span class=o>,</span>
+</span></span><span class=line><span class=cl><span class=p>.</span><span class=nc>movie</span> <span class=p>.</span><span class=nc>rating</span><span class=o>,</span>
+</span></span><span class=line><span class=cl><span class=p>.</span><span class=nc>movie</span> <span class=p>.</span><span class=nc>referrer</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>margin-right</span><span class=p>:</span> <span class=kc>auto</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>.</span><span class=nc>movie</span> <span class=p>.</span><span class=nc>rating</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>display</span><span class=p>:</span> <span class=kc>flex</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kp>-webkit-</span><span class=n>box-align</span><span class=p>:</span> <span class=kc>center</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>align-items</span><span class=p>:</span> <span class=kc>center</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>font-size</span><span class=p>:</span> <span class=mf>0.875</span><span class=kt>rem</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>.</span><span class=nc>movie</span> <span class=p>.</span><span class=nc>rating</span> <span class=nt>span</span><span class=p>:</span><span class=nd>last-child</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>margin-right</span><span class=p>:</span> <span class=mf>0.5</span><span class=kt>rem</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>.</span><span class=nc>movie</span> <span class=p>.</span><span class=nc>rating</span> <span class=p>.</span><span class=nc>stars</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>margin-right</span><span class=p>:</span> <span class=mi>1</span><span class=kt>px</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>width</span><span class=p>:</span> <span class=mf>0.875</span><span class=kt>rem</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>height</span><span class=p>:</span> <span class=mf>0.875</span><span class=kt>rem</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>color</span><span class=p>:</span> <span class=mh>#fccd59</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>.</span><span class=nc>movie</span> <span class=p>.</span><span class=nc>rating</span> <span class=p>.</span><span class=nc>stars</span><span class=p>.</span><span class=nc>white</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>color</span><span class=p>:</span> <span class=mh>#eee</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>.</span><span class=nc>movie</span> <span class=p>.</span><span class=nc>movies</span> <span class=p>.</span><span class=nc>referrer</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>display</span><span class=p>:</span> <span class=kc>flex</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>justify-content</span><span class=p>:</span> <span class=kc>center</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>align-items</span><span class=p>:</span> <span class=kc>center</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>margin-top</span><span class=p>:</span> <span class=mf>0.5</span><span class=kt>rem</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>gap</span><span class=p>:</span> <span class=mi>5</span><span class=kt>px</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>.</span><span class=nc>movie</span> <span class=p>.</span><span class=nc>movies</span> <span class=p>.</span><span class=nc>referrer</span> <span class=nt>img</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>width</span><span class=p>:</span> <span class=mi>1</span><span class=kt>rem</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>height</span><span class=p>:</span> <span class=mi>1</span><span class=kt>rem</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>opacity</span><span class=p>:</span> <span class=mf>0.7</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>.</span><span class=nc>movie</span> <span class=p>.</span><span class=nc>movies</span> <span class=p>.</span><span class=nc>referrer</span> <span class=nt>img</span><span class=p>:</span><span class=nd>hover</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>opacity</span><span class=p>:</span> <span class=mf>0.95</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>transition</span><span class=p>:</span> <span class=kc>all</span> <span class=mf>0.6</span><span class=kt>s</span> <span class=kc>ease</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>.</span><span class=nc>sort-by-items</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>text-align</span><span class=p>:</span> <span class=kc>left</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>.</span><span class=nc>rating_count</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>display</span><span class=p>:</span> <span class=kc>flex</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>text-align</span><span class=p>:</span> <span class=kc>left</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>justify-content</span><span class=p>:</span> <span class=kc>flex-start</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>align-items</span><span class=p>:</span> <span class=kc>center</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>white-space</span><span class=p>:</span> <span class=kc>nowrap</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>overflow</span><span class=p>:</span> <span class=kc>hidden</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>.</span><span class=nc>rating_star</span><span class=p>.</span><span class=nc>hidden</span><span class=o>,</span>
+</span></span><span class=line><span class=cl><span class=p>.</span><span class=nc>rating_count</span><span class=p>.</span><span class=nc>hidden</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>display</span><span class=p>:</span> <span class=kc>none</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>.</span><span class=nc>sort-by-item</span><span class=p>.</span><span class=nc>active</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>background</span><span class=p>:</span> <span class=nb>rgba</span><span class=p>(</span><span class=mi>85</span><span class=p>,</span><span class=mi>85</span><span class=p>,</span><span class=mi>85</span><span class=p>,</span><span class=mf>.1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>.</span><span class=nc>sort-by-item</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>padding</span><span class=p>:</span> <span class=mi>0</span> <span class=mi>5</span><span class=kt>px</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=7-js代码 class=headerLink><a href=#7-js%e4%bb%a3%e7%a0%81 class=header-mark></a>7. JS代码</h3><p>其实可以不需要 JS。所有数据都通过脚本和 Hugo 程序处理好了。这一段 JS 主要是用于排序。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span><span class=lnt>71
+</span><span class=lnt>72
+</span><span class=lnt>73
+</span><span class=lnt>74
+</span><span class=lnt>75
+</span><span class=lnt>76
+</span><span class=lnt>77
+</span><span class=lnt>78
+</span><span class=lnt>79
+</span><span class=lnt>80
+</span><span class=lnt>81
+</span><span class=lnt>82
+</span><span class=lnt>83
+</span><span class=lnt>84
+</span><span class=lnt>85
+</span><span class=lnt>86
+</span><span class=lnt>87
+</span><span class=lnt>88
+</span><span class=lnt>89
+</span><span class=lnt>90
+</span><span class=lnt>91
+</span><span class=lnt>92
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-js data-lang=js><span class=line><span class=cl><span class=kd>function</span> <span class=nx>search</span><span class=p>(</span><span class=nx>e</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// 隐藏所有 .sorting 元素
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nb>document</span><span class=p>.</span><span class=nx>querySelectorAll</span><span class=p>(</span><span class=s1>&#39;.sorting&#39;</span><span class=p>).</span><span class=nx>forEach</span><span class=p>(</span><span class=nx>item</span> <span class=p>=&gt;</span> <span class=nx>item</span><span class=p>.</span><span class=nx>classList</span><span class=p>.</span><span class=nx>add</span><span class=p>(</span><span class=s1>&#39;hide&#39;</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// 移除之前处于活动状态的 .dvtjjf 元素
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nb>document</span><span class=p>.</span><span class=nx>querySelector</span><span class=p>(</span><span class=sb>`.dvtjjf.active[data-search=&#34;</span><span class=si>${</span><span class=nx>e</span><span class=p>.</span><span class=nx>target</span><span class=p>.</span><span class=nx>dataset</span><span class=p>.</span><span class=nx>search</span><span class=si>}</span><span class=sb>&#34;]`</span><span class=p>)</span><span class=o>?</span><span class=p>.</span><span class=nx>classList</span><span class=p>.</span><span class=nx>remove</span><span class=p>(</span><span class=s1>&#39;active&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=nx>e</span><span class=p>.</span><span class=nx>target</span><span class=p>.</span><span class=nx>dataset</span><span class=p>.</span><span class=nx>value</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=c1>// 将当前点击的 .dvtjjf 元素设为活动状态
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=nx>e</span><span class=p>.</span><span class=nx>target</span><span class=p>.</span><span class=nx>classList</span><span class=p>.</span><span class=nx>add</span><span class=p>(</span><span class=s1>&#39;active&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// 构建属性选择器数组
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=kr>const</span> <span class=nx>searchItems</span> <span class=o>=</span> <span class=nb>document</span><span class=p>.</span><span class=nx>querySelectorAll</span><span class=p>(</span><span class=s1>&#39;.dvtjjf.active&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=nx>attributes</span> <span class=o>=</span> <span class=nb>Array</span><span class=p>.</span><span class=nx>from</span><span class=p>(</span><span class=nx>searchItems</span><span class=p>,</span> <span class=nx>searchItem</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kr>const</span> <span class=nx>property</span> <span class=o>=</span> <span class=sb>`data-</span><span class=si>${</span><span class=nx>searchItem</span><span class=p>.</span><span class=nx>dataset</span><span class=p>.</span><span class=nx>search</span><span class=si>}</span><span class=sb>`</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=kr>const</span> <span class=nx>logic</span> <span class=o>=</span> <span class=nx>searchItem</span><span class=p>.</span><span class=nx>dataset</span><span class=p>.</span><span class=nx>method</span> <span class=o>===</span> <span class=s1>&#39;contain&#39;</span> <span class=o>?</span> <span class=s1>&#39;*&#39;</span> <span class=o>:</span> <span class=s1>&#39;^&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=kr>const</span> <span class=nx>value</span> <span class=o>=</span> <span class=nx>searchItem</span><span class=p>.</span><span class=nx>dataset</span><span class=p>.</span><span class=nx>method</span> <span class=o>===</span> <span class=s1>&#39;contain&#39;</span> <span class=o>?</span> <span class=sb>`</span><span class=si>${</span><span class=nx>searchItem</span><span class=p>.</span><span class=nx>dataset</span><span class=p>.</span><span class=nx>value</span><span class=si>}</span><span class=sb>`</span> <span class=o>:</span> <span class=nx>searchItem</span><span class=p>.</span><span class=nx>dataset</span><span class=p>.</span><span class=nx>value</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=sb>`[</span><span class=si>${</span><span class=nx>property</span><span class=si>}${</span><span class=nx>logic</span><span class=si>}</span><span class=sb>=&#39;</span><span class=si>${</span><span class=nx>value</span><span class=si>}</span><span class=sb>&#39;]`</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>});</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// 构建选择器字符串
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=kr>const</span> <span class=nx>selector</span> <span class=o>=</span> <span class=sb>`.sorting</span><span class=si>${</span><span class=nx>attributes</span><span class=p>.</span><span class=nx>join</span><span class=p>(</span><span class=s1>&#39;&#39;</span><span class=p>)</span><span class=si>}</span><span class=sb>`</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// 显示匹配选择器的元素
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nb>document</span><span class=p>.</span><span class=nx>querySelectorAll</span><span class=p>(</span><span class=nx>selector</span><span class=p>).</span><span class=nx>forEach</span><span class=p>(</span><span class=nx>item</span> <span class=p>=&gt;</span> <span class=nx>item</span><span class=p>.</span><span class=nx>classList</span><span class=p>.</span><span class=nx>remove</span><span class=p>(</span><span class=s1>&#39;hide&#39;</span><span class=p>));</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>window</span><span class=p>.</span><span class=nx>addEventListener</span><span class=p>(</span><span class=s1>&#39;click&#39;</span><span class=p>,</span> <span class=kd>function</span> <span class=p>(</span><span class=nx>e</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=nx>e</span><span class=p>.</span><span class=nx>target</span><span class=p>.</span><span class=nx>classList</span><span class=p>.</span><span class=nx>contains</span><span class=p>(</span><span class=s1>&#39;sc-gtsrHT&#39;</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>e</span><span class=p>.</span><span class=nx>preventDefault</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>        <span class=nx>search</span><span class=p>(</span><span class=nx>e</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>});</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>function</span> <span class=nx>sort</span><span class=p>(</span><span class=nx>e</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=nx>sortBy</span> <span class=o>=</span> <span class=nx>e</span><span class=p>.</span><span class=nx>target</span><span class=p>.</span><span class=nx>dataset</span><span class=p>.</span><span class=nx>order</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=nx>style</span> <span class=o>=</span> <span class=nb>document</span><span class=p>.</span><span class=nx>createElement</span><span class=p>(</span><span class=s1>&#39;style&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nx>style</span><span class=p>.</span><span class=nx>classList</span><span class=p>.</span><span class=nx>add</span><span class=p>(</span><span class=s1>&#39;sort-order-style&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// 移除之前的排序样式
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nb>document</span><span class=p>.</span><span class=nx>querySelector</span><span class=p>(</span><span class=s1>&#39;style.sort-order-style&#39;</span><span class=p>)</span><span class=o>?</span><span class=p>.</span><span class=nx>remove</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// 移除之前处于活动状态的 .sort-by-item 元素
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nb>document</span><span class=p>.</span><span class=nx>querySelector</span><span class=p>(</span><span class=s1>&#39;.sort-by-item.active&#39;</span><span class=p>)</span><span class=o>?</span><span class=p>.</span><span class=nx>classList</span><span class=p>.</span><span class=nx>remove</span><span class=p>(</span><span class=s1>&#39;active&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// 将当前点击的 .sort-by-item 元素设为活动状态
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nx>e</span><span class=p>.</span><span class=nx>target</span><span class=p>.</span><span class=nx>classList</span><span class=p>.</span><span class=nx>add</span><span class=p>(</span><span class=s1>&#39;active&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=nx>sortBy</span> <span class=o>===</span> <span class=s1>&#39;rating&#39;</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kr>const</span> <span class=nx>movies</span> <span class=o>=</span> <span class=nb>Array</span><span class=p>.</span><span class=nx>from</span><span class=p>(</span><span class=nb>document</span><span class=p>.</span><span class=nx>querySelectorAll</span><span class=p>(</span><span class=s1>&#39;.sorting&#39;</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1>// 根据评分进行排序
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=nx>movies</span><span class=p>.</span><span class=nx>sort</span><span class=p>((</span><span class=nx>movieA</span><span class=p>,</span> <span class=nx>movieB</span><span class=p>)</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=kr>const</span> <span class=nx>ratingA</span> <span class=o>=</span> <span class=nb>parseFloat</span><span class=p>(</span><span class=nx>movieA</span><span class=p>.</span><span class=nx>dataset</span><span class=p>.</span><span class=nx>rating</span><span class=p>)</span> <span class=o>||</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=kr>const</span> <span class=nx>ratingB</span> <span class=o>=</span> <span class=nb>parseFloat</span><span class=p>(</span><span class=nx>movieB</span><span class=p>.</span><span class=nx>dataset</span><span class=p>.</span><span class=nx>rating</span><span class=p>)</span> <span class=o>||</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=p>(</span><span class=nx>ratingA</span> <span class=o>===</span> <span class=nx>ratingB</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=nx>ratingA</span> <span class=o>&gt;</span> <span class=nx>ratingB</span> <span class=o>?</span> <span class=o>-</span><span class=mi>1</span> <span class=o>:</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>});</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1>// 生成排序样式表
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=kr>const</span> <span class=nx>stylesheet</span> <span class=o>=</span> <span class=nx>movies</span><span class=p>.</span><span class=nx>map</span><span class=p>((</span><span class=nx>movie</span><span class=p>,</span> <span class=nx>idx</span><span class=p>)</span> <span class=p>=&gt;</span> <span class=sb>`.sorting[data-rating=&#34;</span><span class=si>${</span><span class=nx>movie</span><span class=p>.</span><span class=nx>dataset</span><span class=p>.</span><span class=nx>rating</span><span class=si>}</span><span class=sb>&#34;] { order: </span><span class=si>${</span><span class=nx>idx</span><span class=si>}</span><span class=sb>; }`</span><span class=p>).</span><span class=nx>join</span><span class=p>(</span><span class=s1>&#39;\r\n&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=nx>style</span><span class=p>.</span><span class=nx>innerHTML</span> <span class=o>=</span> <span class=nx>stylesheet</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=nb>document</span><span class=p>.</span><span class=nx>body</span><span class=p>.</span><span class=nx>appendChild</span><span class=p>(</span><span class=nx>style</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span> <span class=k>else</span> <span class=k>if</span> <span class=p>(</span><span class=nx>sortBy</span> <span class=o>===</span> <span class=s1>&#39;count&#39;</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kr>const</span> <span class=nx>movies</span> <span class=o>=</span> <span class=nb>Array</span><span class=p>.</span><span class=nx>from</span><span class=p>(</span><span class=nb>document</span><span class=p>.</span><span class=nx>querySelectorAll</span><span class=p>(</span><span class=s1>&#39;.sorting&#39;</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1>// 根据评分人数进行排序
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=nx>movies</span><span class=p>.</span><span class=nx>sort</span><span class=p>((</span><span class=nx>movieA</span><span class=p>,</span> <span class=nx>movieB</span><span class=p>)</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=kr>const</span> <span class=nx>countA</span> <span class=o>=</span> <span class=nb>parseInt</span><span class=p>(</span><span class=nx>movieA</span><span class=p>.</span><span class=nx>dataset</span><span class=p>.</span><span class=nx>count</span><span class=p>)</span> <span class=o>||</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=kr>const</span> <span class=nx>countB</span> <span class=o>=</span> <span class=nb>parseInt</span><span class=p>(</span><span class=nx>movieB</span><span class=p>.</span><span class=nx>dataset</span><span class=p>.</span><span class=nx>count</span><span class=p>)</span> <span class=o>||</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=p>(</span><span class=nx>countA</span> <span class=o>===</span> <span class=nx>countB</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=nx>countA</span> <span class=o>&gt;</span> <span class=nx>countB</span> <span class=o>?</span> <span class=o>-</span><span class=mi>1</span> <span class=o>:</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>});</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1>// 生成排序样式表
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=kr>const</span> <span class=nx>stylesheet</span> <span class=o>=</span> <span class=nx>movies</span><span class=p>.</span><span class=nx>map</span><span class=p>((</span><span class=nx>movie</span><span class=p>,</span> <span class=nx>idx</span><span class=p>)</span> <span class=p>=&gt;</span> <span class=sb>`.sorting[data-count=&#34;</span><span class=si>${</span><span class=nx>movie</span><span class=p>.</span><span class=nx>dataset</span><span class=p>.</span><span class=nx>count</span><span class=si>}</span><span class=sb>&#34;] { order: </span><span class=si>${</span><span class=nx>idx</span><span class=si>}</span><span class=sb>; }`</span><span class=p>).</span><span class=nx>join</span><span class=p>(</span><span class=s1>&#39;\r\n&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=nx>style</span><span class=p>.</span><span class=nx>innerHTML</span> <span class=o>=</span> <span class=nx>stylesheet</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=nb>document</span><span class=p>.</span><span class=nx>body</span><span class=p>.</span><span class=nx>appendChild</span><span class=p>(</span><span class=nx>style</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>window</span><span class=p>.</span><span class=nx>addEventListener</span><span class=p>(</span><span class=s1>&#39;click&#39;</span><span class=p>,</span> <span class=kd>function</span> <span class=p>(</span><span class=nx>e</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=nx>e</span><span class=p>.</span><span class=nx>target</span><span class=p>.</span><span class=nx>classList</span><span class=p>.</span><span class=nx>contains</span><span class=p>(</span><span class=s1>&#39;sort-by-item&#39;</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>e</span><span class=p>.</span><span class=nx>preventDefault</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>        <span class=nx>sort</span><span class=p>(</span><span class=nx>e</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>});</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=8-附加-github-actions class=headerLink><a href=#8-%e9%99%84%e5%8a%a0-github-actions class=header-mark></a>8. 附加 GitHub Actions</h3><p>GitHub Actions 处理 Json 数据的好处是不用每次都手动下载更新，而且 Access Token 可以保存在 GitHub 仓库的 Secrets Setting 里。</p><p><figure><a class=lightgallery href=/assets/images/posts/2023/07/secrets.png title=/assets/images/posts/2023/07/secrets.png data-thumbnail=/assets/images/posts/2023/07/secrets.png><img loading=lazy src=/assets/images/posts/2023/07/secrets.png srcset="/assets/images/posts/2023/07/secrets.png, /assets/images/posts/2023/07/secrets.png 1.5x, /assets/images/posts/2023/07/secrets.png 2x" alt=/assets/images/posts/2023/07/secrets.png></a></figure></p><p>然后填入前面步骤得到的 Access Token</p><ul><li><code>Name *</code>：<code>NEODB_ACCESS_TOKEN</code></li><li><code>Secret *</code>：<code>QuhZZpr111111111111111110X2OPaSRKU</code></li></ul><p><figure><a class=lightgallery href=/assets/images/posts/2023/07/secret.png title=/assets/images/posts/2023/07/secret.png data-thumbnail=/assets/images/posts/2023/07/secret.png><img loading=lazy src=/assets/images/posts/2023/07/secret.png srcset="/assets/images/posts/2023/07/secret.png, /assets/images/posts/2023/07/secret.png 1.5x, /assets/images/posts/2023/07/secret.png 2x" alt=/assets/images/posts/2023/07/secret.png></a></figure></p><p>下面是具体的 GitHub Actions <i class="fab fa-github fa-fw"></i><a href=https://github.com/eallion/eallion.com/blob/9c7fdeb341056e8ae0f3822f3d5077a946711a3b/.github/workflows/neodb.yml target=_blank rel="noopener noreferrer">neodb.yml</a> 代码。不需要用到的步骤直接删除即可。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span><span class=lnt>136
+</span><span class=lnt>137
+</span><span class=lnt>138
+</span><span class=lnt>139
+</span><span class=lnt>140
+</span><span class=lnt>141
+</span><span class=lnt>142
+</span><span class=lnt>143
+</span><span class=lnt>144
+</span><span class=lnt>145
+</span><span class=lnt>146
+</span><span class=lnt>147
+</span><span class=lnt>148
+</span><span class=lnt>149
+</span><span class=lnt>150
+</span><span class=lnt>151
+</span><span class=lnt>152
+</span><span class=lnt>153
+</span><span class=lnt>154
+</span><span class=lnt>155
+</span><span class=lnt>156
+</span><span class=lnt>157
+</span><span class=lnt>158
+</span><span class=lnt>159
+</span><span class=lnt>160
+</span><span class=lnt>161
+</span><span class=lnt>162
+</span><span class=lnt>163
+</span><span class=lnt>164
+</span><span class=lnt>165
+</span><span class=lnt>166
+</span><span class=lnt>167
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># .github/workflows/douban.yml</span>
+</span></span><span class=line><span class=cl>name: Sync NeoDB Data
+</span></span><span class=line><span class=cl>on:
+</span></span><span class=line><span class=cl>  schedule:
+</span></span><span class=line><span class=cl>  - cron: <span class=s2>&#34;0 17 * * *&#34;</span>
+</span></span><span class=line><span class=cl><span class=c1>#  watch:</span>
+</span></span><span class=line><span class=cl><span class=c1>#    types: [started]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  workflow_dispatch:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>jobs:
+</span></span><span class=line><span class=cl>  douban:
+</span></span><span class=line><span class=cl>    name: Sync NeoDB Data
+</span></span><span class=line><span class=cl>    runs-on: ubuntu-latest
+</span></span><span class=line><span class=cl>    steps:
+</span></span><span class=line><span class=cl>    - name: Checkout
+</span></span><span class=line><span class=cl>      uses: actions/checkout@v3
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 检查是否安装了 JQ</span>
+</span></span><span class=line><span class=cl>    - name: Check JQ
+</span></span><span class=line><span class=cl>      run: <span class=p>|</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> ! <span class=nb>command</span> -v jq <span class=p>&amp;</span>&gt; /dev/null<span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>          <span class=nb>echo</span> <span class=s2>&#34;jq is not installed. Installing...&#34;</span>
+</span></span><span class=line><span class=cl>          sudo apt-get update
+</span></span><span class=line><span class=cl>          sudo apt-get install -y jq
+</span></span><span class=line><span class=cl>        <span class=k>else</span>
+</span></span><span class=line><span class=cl>          <span class=nb>echo</span> <span class=s2>&#34;jq is already installed.&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=k>fi</span>
+</span></span><span class=line><span class=cl>        <span class=c1># 把当前目录保存到环境变量中</span>
+</span></span><span class=line><span class=cl>        <span class=nb>echo</span> <span class=s2>&#34;WORK_DIR=</span><span class=k>$(</span><span class=nb>pwd</span><span class=k>)</span><span class=s2>&#34;</span> &gt;&gt; <span class=nv>$GITHUB_ENV</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 获取本地现有文件的标记数</span>
+</span></span><span class=line><span class=cl>    - name: Get Current Count
+</span></span><span class=line><span class=cl>      run: <span class=p>|</span>
+</span></span><span class=line><span class=cl>        CURRENT_COUNT<span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>          jq <span class=s1>&#39;.count&#39;</span> data/neodb/movie.json
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=nb>echo</span> <span class=s2>&#34;CURRENT_COUNT=</span><span class=k>$(</span>CURRENT_COUNT<span class=k>)</span><span class=s2>&#34;</span> &gt;&gt; <span class=nv>$GITHUB_ENV</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    - name: Get NeoDB JSON and Count
+</span></span><span class=line><span class=cl>      run: <span class=p>|</span>
+</span></span><span class=line><span class=cl>        curl -X <span class=s1>&#39;GET&#39;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>        <span class=s1>&#39;https://neodb.social/api/me/shelf/complete?category=movie&amp;page=1&#39;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>        -H <span class=s1>&#39;accept: application/json&#39;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>        -H <span class=s1>&#39;Authorization: Bearer ${{ secrets.NEODB_ACCESS_TOKEN }}&#39;</span> &gt; movie1.json
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># 获取 NeoDB 上电影的标记数</span>
+</span></span><span class=line><span class=cl>        MOVIE_COUNT<span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>          jq <span class=s1>&#39;.count&#39;</span> movie1.json
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=nb>echo</span> <span class=s2>&#34;MOVIE_COUNT=</span><span class=k>$(</span>MOVIE_COUNT<span class=k>)</span><span class=s2>&#34;</span> &gt;&gt; <span class=nv>$GITHUB_ENV</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        curl -X <span class=s1>&#39;GET&#39;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>        <span class=s1>&#39;https://neodb.social/api/me/shelf/complete?category=tv&amp;page=1&#39;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>        -H <span class=s1>&#39;accept: application/json&#39;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>        -H <span class=s1>&#39;Authorization: Bearer ${{ secrets.NEODB_ACCESS_TOKEN }}&#39;</span> &gt; tv1.json
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># 获取 NeoDB 上电视剧的标记数</span>
+</span></span><span class=line><span class=cl>        TV_COUNT<span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>          jq <span class=s1>&#39;.count&#39;</span> tv1.json
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>REMOTE_COUNT</span><span class=o>=</span><span class=k>$(($(</span>MOVIE_COUNT<span class=k>)</span> <span class=o>+</span> <span class=k>$(</span>TV_COUNT<span class=k>)))</span>
+</span></span><span class=line><span class=cl>        <span class=nb>echo</span> <span class=s2>&#34;REMOTE_COUNT=</span><span class=nv>$REMOTE_COUNT</span><span class=s2>&#34;</span> &gt;&gt; <span class=nv>$GITHUB_ENV</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 对比本地的标记数和远程标记数，相等就跳过，不相等就下载新数据</span>
+</span></span><span class=line><span class=cl>    - name: Count Compare
+</span></span><span class=line><span class=cl>      run: <span class=p>|</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=o>[</span> <span class=s2>&#34;</span><span class=si>${</span><span class=p>{ env.REMOTE_COUNT </span><span class=si>}</span><span class=s2>}&#34;</span> <span class=o>=</span> <span class=s2>&#34;</span><span class=si>${</span><span class=p>{ env.CURRENT_COUNT </span><span class=si>}</span><span class=s2>}&#34;</span> <span class=o>]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>          <span class=nb>echo</span> <span class=s2>&#34;Variables are equal. Skipping the next steps.&#34;</span>
+</span></span><span class=line><span class=cl>          <span class=nb>exit</span> <span class=m>0</span>
+</span></span><span class=line><span class=cl>        <span class=k>else</span>
+</span></span><span class=line><span class=cl>          <span class=nb>echo</span> <span class=s2>&#34;Variables are not equal. Running the next steps.&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 下载所有数据</span>
+</span></span><span class=line><span class=cl>    - name: Get All NeoDB Count
+</span></span><span class=line><span class=cl>      <span class=k>if</span>: <span class=si>${</span><span class=p>{ env.REMOTE_COUNT != env.CURRENT_COUNT </span><span class=si>}</span><span class=o>}</span>
+</span></span><span class=line><span class=cl>      run: <span class=p>|</span>
+</span></span><span class=line><span class=cl>        <span class=c1>#从 json 中提取 pages 字段的值</span>
+</span></span><span class=line><span class=cl>        <span class=nv>pages</span><span class=o>=</span><span class=k>$(</span>jq <span class=s1>&#39;.pages&#39;</span> movie1.json<span class=k>)</span>
+</span></span><span class=line><span class=cl>        <span class=nv>tv_pages</span><span class=o>=</span><span class=k>$(</span>jq <span class=s1>&#39;.pages&#39;</span> tv1.json<span class=k>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># 个人使用，新建 WorkDIR ，排除 vercel.json 和 package.json 等</span>
+</span></span><span class=line><span class=cl>        mkdir neodb
+</span></span><span class=line><span class=cl>        <span class=nb>cd</span> neodb
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># 下载 Movie 分类</span>
+</span></span><span class=line><span class=cl>        <span class=k>for</span> <span class=o>((</span><span class=nv>i</span><span class=o>=</span>1<span class=p>;</span> i&lt;<span class=o>=</span><span class=nv>$pages</span><span class=p>;</span> i++<span class=o>))</span><span class=p>;</span> <span class=k>do</span>
+</span></span><span class=line><span class=cl>          <span class=nv>url</span><span class=o>=</span><span class=s2>&#34;https://neodb.social/api/me/shelf/complete?category=movie&amp;page=</span><span class=nv>$i</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>          <span class=nv>filename</span><span class=o>=</span><span class=s2>&#34;movie</span><span class=nv>$i</span><span class=s2>.json&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># 下载文件并保存为对应的文件名</span>
+</span></span><span class=line><span class=cl>        curl -X <span class=s1>&#39;GET&#39;</span> <span class=s2>&#34;</span><span class=nv>$url</span><span class=s2>&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>          -H <span class=s1>&#39;accept: application/json&#39;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>          -H <span class=s1>&#39;Authorization: Bearer ${{ secrets.NEODB_ACCESS_TOKEN }}&#39;</span> &gt; <span class=s2>&#34;</span><span class=nv>$filename</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=k>done</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># 下载 TV 分类</span>
+</span></span><span class=line><span class=cl>        <span class=k>for</span> <span class=o>((</span><span class=nv>i</span><span class=o>=</span>1<span class=p>;</span> i&lt;<span class=o>=</span><span class=nv>$tv_pages</span><span class=p>;</span> i++<span class=o>))</span><span class=p>;</span> <span class=k>do</span>
+</span></span><span class=line><span class=cl>          <span class=nv>tv_url</span><span class=o>=</span><span class=s2>&#34;https://neodb.social/api/me/shelf/complete?category=tv&amp;page=</span><span class=nv>$i</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>          <span class=nv>tv_filename</span><span class=o>=</span><span class=s2>&#34;tv</span><span class=nv>$i</span><span class=s2>.json&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>          curl -X <span class=s1>&#39;GET&#39;</span> <span class=s2>&#34;</span><span class=nv>$tv_url</span><span class=s2>&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>            -H <span class=s1>&#39;accept: application/json&#39;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>            -H <span class=s1>&#39;Authorization: Bearer ${{ secrets.NEODB_ACCESS_TOKEN }}&#39;</span> &gt; <span class=s2>&#34;</span><span class=nv>$tv_filename</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>          <span class=k>done</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># 把所有数据合并成一个文件</span>
+</span></span><span class=line><span class=cl>        jq -c -s <span class=s1>&#39;{data: map(.data[]) | unique | sort_by(.created_time) | reverse, pages: map(.pages)[0], count: map(.count)[0]}&#39;</span> *.json &gt; movie.json
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># 更新 NeoDB 数据</span>
+</span></span><span class=line><span class=cl>        cp -f movie.json <span class=si>${</span><span class=p>{ env.WORK_DIR </span><span class=si>}</span><span class=o>}</span>/data/neodb/
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    - name: Download NeoDB Cover
+</span></span><span class=line><span class=cl>      run: <span class=p>|</span>
+</span></span><span class=line><span class=cl>        <span class=c1># 检查 movie 目录是否存在，如果不存在则创建</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=o>[</span> ! -d <span class=s2>&#34;movie&#34;</span> <span class=o>]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>          mkdir movie
+</span></span><span class=line><span class=cl>        <span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># 读取本地的 movie.json 文件内容</span>
+</span></span><span class=line><span class=cl>        <span class=nv>json</span><span class=o>=</span><span class=k>$(</span>cat data/neodb/movie.json<span class=k>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># 提取图片 URL</span>
+</span></span><span class=line><span class=cl>        <span class=nv>image_urls</span><span class=o>=</span><span class=k>$(</span><span class=nb>echo</span> <span class=s2>&#34;</span><span class=nv>$json</span><span class=s2>&#34;</span> <span class=p>|</span> jq -r <span class=s1>&#39;.data[].item.cover_image_url&#39;</span><span class=k>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># 遍历图片 URL 并下载图片</span>
+</span></span><span class=line><span class=cl>        <span class=k>for</span> url in <span class=nv>$image_urls</span><span class=p>;</span> <span class=k>do</span>
+</span></span><span class=line><span class=cl>          <span class=nv>filename</span><span class=o>=</span><span class=k>$(</span>basename <span class=s2>&#34;</span><span class=nv>$url</span><span class=s2>&#34;</span><span class=k>)</span>
+</span></span><span class=line><span class=cl>          <span class=nv>filepath</span><span class=o>=</span><span class=s2>&#34;data/neodb/cover/</span><span class=nv>$filename</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>          <span class=c1># 检查文件是否已存在</span>
+</span></span><span class=line><span class=cl>          <span class=k>if</span> <span class=o>[</span> -f <span class=s2>&#34;</span><span class=nv>$filepath</span><span class=s2>&#34;</span> <span class=o>]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>            <span class=nb>echo</span> <span class=s2>&#34;Skipping </span><span class=nv>$filename</span><span class=s2> - File already exists&#34;</span>
+</span></span><span class=line><span class=cl>          <span class=k>else</span>
+</span></span><span class=line><span class=cl>            <span class=c1># 使用 curl 命令下载图片</span>
+</span></span><span class=line><span class=cl>            curl -o <span class=s2>&#34;</span><span class=nv>$filepath</span><span class=s2>&#34;</span> <span class=s2>&#34;</span><span class=nv>$url</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>            <span class=nb>echo</span> <span class=s2>&#34;Downloaded </span><span class=nv>$filename</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>            <span class=nb>echo</span> <span class=s2>&#34;REMOTE_COUNT=&#39;&#39;&#34;</span> &gt;&gt; <span class=nv>$GITHUB_ENV</span>
+</span></span><span class=line><span class=cl>          <span class=k>fi</span>
+</span></span><span class=line><span class=cl>        <span class=k>done</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 把修改后的数据提交到 GitHub 仓库</span>
+</span></span><span class=line><span class=cl>    - name: Git Add and Commit
+</span></span><span class=line><span class=cl>      <span class=k>if</span>: <span class=si>${</span><span class=p>{ env.REMOTE_COUNT != env.CURRENT_COUNT </span><span class=si>}</span><span class=o>}</span>
+</span></span><span class=line><span class=cl>      uses: EndBug/add-and-commit@v9
+</span></span><span class=line><span class=cl>      with:
+</span></span><span class=line><span class=cl>        message: <span class=s1>&#39;chore(data): update neodb data&#39;</span>
+</span></span><span class=line><span class=cl>        add: <span class=s1>&#39;./data/neodb&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 调用另外的 GitHub Actions 构建 Hugo</span>
+</span></span><span class=line><span class=cl>    - name: Build Hugo and Deploy
+</span></span><span class=line><span class=cl>      <span class=k>if</span>: <span class=si>${</span><span class=p>{ env.REMOTE_COUNT != env.CURRENT_COUNT </span><span class=si>}</span><span class=o>}</span>
+</span></span><span class=line><span class=cl>      uses: peter-evans/repository-dispatch@v2
+</span></span><span class=line><span class=cl>      with:
+</span></span><span class=line><span class=cl>          event-type: <span class=s2>&#34;Build Hugo and Deploy&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 把海报上传到腾讯云</span>
+</span></span><span class=line><span class=cl>    - name: Upload Cover to Tencent COS
+</span></span><span class=line><span class=cl>      <span class=k>if</span>: <span class=si>${</span><span class=p>{ env.REMOTE_COUNT != env.CURRENT_COUNT </span><span class=si>}</span><span class=o>}</span>
+</span></span><span class=line><span class=cl>      uses: zkqiang/tencent-cos-action@v0.1.0
+</span></span><span class=line><span class=cl>      with:
+</span></span><span class=line><span class=cl>        args: upload -rs ./data/neodb/cover/ /images/neodb/
+</span></span><span class=line><span class=cl>        secret_id: <span class=si>${</span><span class=p>{ secrets.SECRET_COS_ID </span><span class=si>}</span><span class=o>}</span>
+</span></span><span class=line><span class=cl>        secret_key: <span class=si>${</span><span class=p>{ secrets.SECRET_COS_KEY </span><span class=si>}</span><span class=o>}</span>
+</span></span><span class=line><span class=cl>        bucket: <span class=si>${</span><span class=p>{ secrets.COS_CDN_BUCKET </span><span class=si>}</span><span class=o>}</span>
+</span></span><span class=line><span class=cl>        region: ap-shanghai
+</span></span></code></pre></td></tr></table></div></div></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2024-03-26&nbsp;<a class=git-hash href=https://github.com/eallion/eallion.com/commit/d47701292529e126bab14f7e867ec1b5aa3546a6 target=_blank title="commit by Charles Chin(eallions@gmail.com) d47701292529e126bab14f7e867ec1b5aa3546a6: docs: default comment" rel="noopener noreferrer">
+<i class="fas fa-hashtag fa-fw"></i>d4770129</a></span></div><div class=post-info-license></div></div><div class="post-info-line print:!tw-hidden"><div class=post-info-md><span><a class=link-to-mardown href=/neodb/index.md target=_blank rel="noopener noreferrer">阅读原始文档</a>
+</span><span>|&nbsp;<a class=link-to-report href="https://github.com/eallion/eallion.com/issues/new?title=[bug]%20NeoDB+API+%E5%88%9B%E5%BB%BA%E8%A7%82%E5%BD%B1%E9%A1%B5%E9%9D%A2&body=|Field|Value|%0A|-|-|%0A|Title|NeoDB+API+%E5%88%9B%E5%BB%BA%E8%A7%82%E5%BD%B1%E9%A1%B5%E9%9D%A2|%0A|Url|https://www.eallion.com/neodb/|%0A|Filename|https://github.com/eallion/eallion.com/blob/main/posts/code/2023-07-11-neodb.md|" target=_blank rel="noopener noreferrer">报告问题</a></span></div><div class=post-info-share></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/hugo/>Hugo</a>,&nbsp;<a href=/tags/blog/>Blog</a>,&nbsp;<a href=/tags/neodb/>Neodb</a>,&nbsp;<a href=/tags/movie/>Movie</a></section><section class=print:!tw-hidden><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class="post-nav print:tw-hidden"><a href=/neodb_token/ class=prev rel=prev title="NeoDB 获取 Access Token"><i class="fas fa-angle-left fa-fw"></i>NeoDB 获取 Access Token</a>
+<a href=/douban-sync/ class=next rel=next title="豆瓣同步到 Notion 和 Neodb">豆瓣同步到 Notion 和 Neodb<i class="fas fa-angle-right fa-fw"></i></a></div></div><div id=comments class=print:!tw-hidden><div id=giscus></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://giscus.app/>giscus</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>由 <a href=https://gohugo.io/ target=_blank rel="noopener noreferrer" title="Hugo 0.124.1">Hugo</a> 强力驱动&nbsp;|&nbsp;托管在 <a title="腾讯云边缘安全加速平台 EdgeOne" href=https://e5n.cc/s/teo target=_blank rel="noopener noreffer">EdgeOne</a> 上&nbsp;|&nbsp;主题 - <a href=https://github.com/HEIGE-PCloud/DoIt target=_blank rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a></div><div class=footer-line><i class="far fa-copyright fa-fw"></i>2006 - 2024&nbsp;|&nbsp;<span class=license><a title='eallion.com 版权信息' href=https://www.eallion.com/copyright/ target=_blank rel='noopener noreferrer'>eallion.com</a> All Rights Reserved.</span><span class=icp-splitter>&nbsp;|&nbsp;</span><br class=icp-br><span class=icp><a title="ICP 备案号" href=https://beian.miit.gov.cn/ target=_blank rel="noopener noreferrer">浙ICP备16031768号-2</a></span></div><div class=footer-line></div><div class=footer-line></div></div><script>"serviceWorker"in navigator&&(navigator.serviceWorker.register("/sw.min.js",{scope:"/"}).then(function(){}),navigator.serviceWorker.ready.then(function(){}))</script></footer></div><div id=fixed-buttons class=print:!tw-hidden><a href=#back-to-top id=back-to-top-button class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><div class=assets><link rel=stylesheet href=/lib/lightgallery/lightgallery.min.b38ee65d6456beb2d034bf554505f4ca47e421548b7cd26e8a7805fd2673b6c3.css integrity="sha256-s47mXWRWvrLQNL9VRQX0ykfkIVSLfNJuingF/SZztsM="><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:1e3},comment:{giscus:{darkTheme:"dark_dimmed",dataCategory:"Giscus",dataCategoryId:"DIC_kwDOD6gExM4CS9eF",dataEmitMetadata:"0",dataInputPosition:"bottom",dataLang:"zh-CN",dataLoading:"lazy",dataMapping:"pathname",dataReactionsEnabled:"1",dataRepo:"eallion/eallion.com",dataRepoId:"MDEwOlJlcG9zaXRvcnkyNjI2Njk1MDg=",dataStrict:"1",lightTheme:"light"}},lightGallery:{actualSize:!1,exThumbImage:"data-thumbnail",hideBarsDelay:2e3,selector:".lightgallery",speed:400,thumbContHeight:80,thumbWidth:80,thumbnail:!0},search:{algoliaAppID:"UIYUIFMJAW",algoliaIndex:"eallion",algoliaSearchKey:"6d69a1276d37f570210831b222bcb123",highlightTag:"em",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"algolia"},table:{sort:!0}}</script><script src=/lib/object-fit-images/ofi.min.8c2fded8e3119fcb15699d6752e3834a4b20ba353ca20f0842419c466f2dc97b.js integrity="sha256-jC/e2OMRn8sVaZ1nUuODSksgujU8og8IQkGcRm8tyXs="></script><script src=/lib/tablesort/tablesort.min.92de6dec051677787aed63503575b2f9be73f21f2745574e59647bc139a92d40.js integrity="sha256-kt5t7AUWd3h67WNQNXWy+b5z8h8nRVdOWWR7wTmpLUA="></script><script src=/lib/lightgallery/lightgallery.min.e1c797df44ba6ba4cbc5c52eabbf2300e8a4865abe4ed52f91830bf1fd2bb76e.js integrity="sha256-4ceX30S6a6TLxcUuq78jAOikhlq+TtUvkYML8f0rt24="></script><script src=/lib/lightgallery/lg-thumbnail.min.c7fedc31b278580c1ee0065d9186510ff245bb983987b9f05315cb2488045c4f.js integrity="sha256-x/7cMbJ4WAwe4AZdkYZRD/JFu5g5h7nwUxXLJIgEXE8="></script><script src=/lib/lightgallery/lg-zoom.min.0470e1215c4c9a64efce50c5969b898d6553eba697bd31a5e1663ad8ab48374c.js integrity="sha256-BHDhIVxMmmTvzlDFlpuJjWVT66aXvTGl4WY62KtIN0w="></script><script src=/lib/clipboard/clipboard.min.e17a1d816e13c0826e0ed7febfabc3277f45571234bde0bf9120829a7169edc9.js integrity="sha256-4XodgW4TwIJuDtf+v6vDJ39FVxI0veC/kSCCmnFp7ck="></script><script src=/js/theme.min.js defer></script><script src=/js/giscus.min.js defer></script></div></body></html>

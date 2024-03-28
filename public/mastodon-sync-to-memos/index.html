@@ -1,0 +1,394 @@
+<!doctype html><html lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=onion-location content="http://eallionskii7e32j3ncxnccyqq6uf7rbxwmst4x6mxeswx6fvrdtsmad.onion"><meta name=giscus:backlink content="https://www.eallion.com/mastodon-sync-to-memos/"><title>Mastodon 同步到 Memos-大大的小蜗牛</title><meta name=Description content><meta property="og:title" content="Mastodon 同步到 Memos">
+<meta property="og:description" content="文章介绍了如何使用 Shell 脚本将 Mastodon 上的内容同步到 Memos。作者使用 Shell 脚本实现了这一功能，并提供了详细的配置和操作步骤。脚本会检查最新的 Mastodon 内容，并将其发布到 Memos 上，同时记录 Mastodon ID 和 Memos ID 的绑定关系。同时，作者还分享了自己在使用过程中遇到的问题和解决方案,并给出了具体示例和代码。"><meta property="og:type" content="article"><meta property="og:url" content="https://www.eallion.com/mastodon-sync-to-memos/"><meta property="og:image" content="https://www.eallion.com/assets/images/og/mastodon-sync-to-memos.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2024-03-09T16:57:49+08:00"><meta property="article:modified_time" content="2024-03-09T16:57:49+08:00"><meta property="og:site_name" content="大大的小蜗牛"><meta property="og:see_also" content="https://www.eallion.com/fediverse/"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://www.eallion.com/assets/images/og/mastodon-sync-to-memos.png"><meta name=twitter:title content="Mastodon 同步到 Memos"><meta name=twitter:description content="文章介绍了如何使用 Shell 脚本将 Mastodon 上的内容同步到 Memos。作者使用 Shell 脚本实现了这一功能，并提供了详细的配置和操作步骤。脚本会检查最新的 Mastodon 内容，并将其发布到 Memos 上，同时记录 Mastodon ID 和 Memos ID 的绑定关系。同时，作者还分享了自己在使用过程中遇到的问题和解决方案,并给出了具体示例和代码。"><meta name=twitter:site content="@eallion"><meta name=application-name content="大大的小蜗牛"><meta name=apple-mobile-web-app-title content="大大的小蜗牛"><meta name=theme-color content="#f8f8f8"><meta name=msapplication-TileColor content="#da532c"><meta name=twitter:creator content="@eallion"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://www.eallion.com/mastodon-sync-to-memos/><link rel=prev href=https://www.eallion.com/hugo-redirect-landing-page/><link rel=next href=https://www.eallion.com/what-does-he-eat/><link rel=stylesheet href=/css/main.min.css><link rel=stylesheet href=/lib/normalize/normalize.min.055364f5be272caa092b0e6654c165828707f8ab971e2656383a6d6392bc345e.css integrity="sha256-BVNk9b4nLKoJKw5mVMFlgocH+KuXHiZWODptY5K8NF4="><link rel=stylesheet href=/css/color.b0a0f8c429ce52dfa2805b5f9e99ccdae1e8fbfd9adf4f3ddb409d8201fc0c5a.css integrity="sha256-sKD4xCnOUt+igFtfnpnM2uHo+/2a308920CdggH8DFo="><link rel=stylesheet href=/css/style.min.css><link rel=preload as=style onload='this.onload=null,this.rel="stylesheet"' href=/lib/fontawesome-free/all.min.43202d5486e011f9684a17bd6846b5c16a2619002bfc783f7e32e20dfb6bf857.css integrity="sha256-QyAtVIbgEfloShe9aEa1wWomGQAr/Hg/fjLiDftr+Fc="><noscript><link rel=stylesheet href=/lib/fontawesome-free/all.min.43202d5486e011f9684a17bd6846b5c16a2619002bfc783f7e32e20dfb6bf857.css integrity="sha256-QyAtVIbgEfloShe9aEa1wWomGQAr/Hg/fjLiDftr+Fc="></noscript><link rel=preload as=style onload='this.onload=null,this.rel="stylesheet"' href=/lib/animate/animate.min.5fbaeb9f8e25d7e0143bae61d4b1802c16ce7390b96ceb2d498b0d96ff4c853f.css integrity="sha256-X7rrn44l1+AUO65h1LGALBbOc5C5bOstSYsNlv9MhT8="><noscript><link rel=stylesheet href=/lib/animate/animate.min.5fbaeb9f8e25d7e0143bae61d4b1802c16ce7390b96ceb2d498b0d96ff4c853f.css integrity="sha256-X7rrn44l1+AUO65h1LGALBbOc5C5bOstSYsNlv9MhT8="></noscript><meta name=google-site-verification content="9Mvl_9FEM5JphVmp-u9ljtlChFohWuBBFjlSS89QKVU"><meta name=msvalidate.01 content="68A03C00DAFAD54E3739A8D372D9371B"><meta name=yandex-verification content="ff49a8cfbbaad423"><meta name=p:domain_verify content="b9e3534b99f9bd82f3b8688a1fa122a8"><meta name=baidu-site-verification content="ZWIiTFJWJkGQ11ZJ"><meta name=sogou_site_verification content="SZM7r2UEOz"><meta name=360-site-verification content="05afe845fd64ce6966deadce74479b5b"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Mastodon 同步到 Memos","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eallion.com/mastodon-sync-to-memos/"},"image":["https://www.eallion.com/images/Apple-Devices-Preview.png"],"genre":"posts","keywords":["Mastodon","Memos","Webhook","脚本"],"wordcount":2204,"url":"https://www.eallion.com/mastodon-sync-to-memos/","datePublished":"2024-03-09T16:57:49+08:00","dateModified":"2024-03-09T16:57:49+08:00","license":"This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.","publisher":{"@type":"Organization","name":"Charles Chin","logo":"https://www.eallion.com/eallion.webp"},"author":[{"@type":"Person","name":"大大的小蜗牛","url":"https://eallion.com/"}],"description":""}</script><script src=/lib/instant.page/instantpage.min.js defer type=module></script><link href=https://e5n.cc/@eallion rel=me></head><body header-desktop=normal header-mobile=auto><script type=text/javascript>function setTheme(e){document.body.setAttribute("theme",e),document.documentElement.style.setProperty("color-scheme",e==="light"?"light":"dark"),e==="light"?document.documentElement.classList.remove("tw-dark"):document.documentElement.classList.add("tw-dark"),window.theme=e,window.isDark=window.theme!=="light"}function saveTheme(e){window.localStorage&&localStorage.setItem("theme",e)}function getMeta(e){const t=document.getElementsByTagName("meta");for(let n=0;n<t.length;n++)if(t[n].getAttribute("name")===e)return t[n];return""}if(window.localStorage&&localStorage.getItem("theme")){let e=localStorage.getItem("theme");e==="light"||e==="dark"||e==="black"?setTheme(e):setTheme(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}else"auto"==="light"||"auto"==="dark"||"auto"==="black"?(setTheme("auto"),saveTheme("auto")):(saveTheme("auto"),setTheme(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"));let metaColors={light:"#f8f8f8",dark:"#252627",black:"#000000"};getMeta("theme-color").content=metaColors[document.body.getAttribute("theme")],window.switchThemeEventSet=new Set</script><div id=back-to-top></div><div id=mask></div><div class=wrapper><header class="desktop print:!tw-hidden" id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title=大大的小蜗牛>大大的小蜗牛</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/ title=首页><i class='fas fa-home'></i> 首页 </a><a class=menu-item href=/posts/ title=所有文章><i class='fas fa-blog'></i> 博客 </a><a class=menu-item href=/mastodon/ title="Mastodon Toots 嘀咕"><i class='fab fa-mastodon'></i> 嘀咕 </a><a class=menu-item href=/media/ title="NeoDB 书影音记录"><i class='fas fa-film'></i> 书影音 </a><a class=menu-item href=/steam/ title="Steam 游戏清单"><i class='fab fa-steam'></i> 游戏库 </a><a class=menu-item href=/links/ title=友情链接><i class='fas fa-users'></i> 友情链接 </a><a class=menu-item href=/stats/ title=统计><i class='fas fa-chart-bar'></i> 统计 </a><a class=menu-item href=/about/ title=关于我关于本站><i class='fas fa-info'></i> 关于 </a><span class="menu-item delimiter"></span><a href=javascript:void(0); class="menu-item language" title=选择语言>简体中文<i class="fas fa-chevron-right fa-fw"></i>
+<select class=language-select title=选择语言 id=language-select-desktop onchange="location=this.value"><option value=/mastodon-sync-to-memos/ selected>简体中文</option></select>
+</a><span class="menu-item search" id=search-desktop><input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i>
+</a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i>
+</a><span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i>
+</span></span><a href=javascript:void(0); class="menu-item theme-select" title=切换主题><i class="fas fa-adjust fa-fw"></i>
+<select class=color-theme-select id=theme-select-desktop title=切换主题><option value=light>浅色</option><option value=dark>深色</option><option value=black>黑色</option><option value=auto>跟随系统</option></select></a></div></div></div></header><header class="mobile print:!tw-hidden" id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title=大大的小蜗牛>大大的小蜗牛</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i>
+</a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i>
+</a><span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/ title=首页><i class='fas fa-home'></i>首页</a><a class=menu-item href=/posts/ title=所有文章><i class='fas fa-blog'></i>博客</a><a class=menu-item href=/mastodon/ title="Mastodon Toots 嘀咕"><i class='fab fa-mastodon'></i>嘀咕</a><a class=menu-item href=/media/ title="NeoDB 书影音记录"><i class='fas fa-film'></i>书影音</a><a class=menu-item href=/steam/ title="Steam 游戏清单"><i class='fab fa-steam'></i>游戏库</a><a class=menu-item href=/links/ title=友情链接><i class='fas fa-users'></i>友情链接</a><a class=menu-item href=/stats/ title=统计><i class='fas fa-chart-bar'></i>统计</a><a class=menu-item href=/about/ title=关于我关于本站><i class='fas fa-info'></i>关于</a><a href=javascript:void(0); class="menu-item theme-select" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i>
+<select class=color-theme-select id=theme-select-mobile title=切换主题><option value=light>浅色</option><option value=dark>深色</option><option value=black>黑色</option><option value=auto>跟随系统</option></select>
+</a><a href=javascript:void(0); class=menu-item title=选择语言>简体中文<i class="fas fa-chevron-right fa-fw"></i>
+<select class=language-select title=选择语言 onchange="location=this.value"><option value=/mastodon-sync-to-memos/ selected>简体中文</option></select></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class="toc print:!tw-hidden" id=toc-auto><h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto><nav id=TableOfContents><ul><li><ul><li><a href=#tldr>TL;DR</a></li><li><a href=#前言>前言</a></li><li><a href=#已测试版本>已测试版本</a></li><li><a href=#安装工具>安装工具</a></li><li><a href=#webhook-工具>Webhook 工具</a></li><li><a href=#脚本内容>脚本内容</a><ul><li><a href=#宝塔面板>宝塔面板</a></li></ul></li><li><a href=#json-数据文件内容>JSON 数据文件内容</a></li></ul></li></ul></nav></div></div><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC","true")</script><article class="page single print:!tw-w-full print:!tw-max-w-none print:!tw-m-0 print:!tw-p-0"><h1 class="single-title animate__animated animate__flipInX">Mastodon 同步到 Memos</h1><div class=post-meta><div class=post-meta-line><span class=post-author><span class=author><span class=screen-reader-text></span><a href=https://www.eallion.com/authors/eallion><img src=https://www.eallion.com/eallion.webp alt='大大的小蜗牛 avatar' class="tw-inline-block tw-max-h-4 tw-rounded-full tw-translate-y-[-2px] tw-mr-1">大大的小蜗牛</a></span></span>&nbsp;<span class=post-category>收录于 </span>&nbsp;<span class=post-category>类别 <a href=/categories/%E4%BB%A3%E7%A0%81/><i class="far fa-folder fa-fw"></i>代码</a></span>&nbsp;<span class=post-category>和</span>&nbsp;<span class=post-series>系列 <a href=/series/mastodon/><i class="far fa-list-alt fa-fw"></i>Mastodon</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2024-03-09>2024-03-09</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime=2024-03-09>2024-03-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2204 字&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div></div><div class="details series-nav open"><div class="details-summary series-title"><span>系列-嘀咕</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content series-content"><nav><ul><li><a href=/fediverse/>联邦宇宙及 Mastodon 简介</a></li><li><span class=active>Mastodon 同步到 Memos</span></li></ul></nav></div></div><div class="details toc print:!tw-block" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><ul><li><a href=#tldr>TL;DR</a></li><li><a href=#前言>前言</a></li><li><a href=#已测试版本>已测试版本</a></li><li><a href=#安装工具>安装工具</a></li><li><a href=#webhook-工具>Webhook 工具</a></li><li><a href=#脚本内容>脚本内容</a><ul><li><a href=#宝塔面板>宝塔面板</a></li></ul></li><li><a href=#json-数据文件内容>JSON 数据文件内容</a></li></ul></li></ul></nav></div></div><div class=post-ai><div class=ai-header><div class=ai-title><svg role="img" width="1em" height="1em" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="ai-title-icon"><title>OpenAI ChatGPT3.5</title><path d="M22.2819 9.8211a5.9847 5.9847.0 00-.5157-4.9108 6.0462 6.0462.0 00-6.5098-2.9A6.0651 6.0651.0 004.9807 4.1818a5.9847 5.9847.0 00-3.9977 2.9 6.0462 6.0462.0 00.7427 7.0966 5.98 5.98.0 00.511 4.9107 6.051 6.051.0 006.5146 2.9001A5.9847 5.9847.0 0013.2599 24a6.0557 6.0557.0 005.7718-4.2058 5.9894 5.9894.0 003.9977-2.9001 6.0557 6.0557.0 00-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755.0 01-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948.0 00.3927-.6813v-6.7369l2.02 1.1686a.071.071.0 01.038.052v5.5826a4.504 4.504.0 01-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708.0 01-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712.0 00.7806.0l5.8428-3.3685v2.3324a.0804.0804.0 01-.0332.0615L9.74 19.9502a4.4992 4.4992.0 01-6.1408-1.6464zM2.3408 7.8956a4.485 4.485.0 012.3655-1.9728V11.6a.7664.7664.0 00.3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757.0 01-.071.0l-4.8303-2.7865A4.504 4.504.0 012.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757.0 01.071.0l4.8303 2.7913a4.4944 4.4944.0 01-.6765 8.1042v-5.6772a.79.79.0 00-.407-.667zm2.0107-3.0231-.142-.0852-4.7735-2.7818a.7759.7759.0 00-.7854.0L9.409 9.2297V6.8974a.0662.0662.0 01.0284-.0615l4.8303-2.7866a4.4992 4.4992.0 016.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804.0 01-.038-.0567V6.0742a4.4992 4.4992.0 017.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948.0 00-.3927.6813zm1.0976-2.3654 2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997z"/></svg><div class=ai-title-text><a href=https://www.eallion.com/ai-summary/ target=_blank rel="noopener noreferrer" alt="AI 智能摘要" title="AI 智能摘要">AI 摘要</a></div></div><div class=ai-title-tooltip><i class="far fa-question-circle"></i>
+<span class=ai-title-tooltip-text>Pre-generated by ChatGPT 3.5</span></div></div><div id=ai-explanation class=ai-explanation>文章介绍了如何使用 Shell 脚本将 Mastodon 上的内容同步到 Memos。作者使用 Shell 脚本实现了这一功能，并提供了详细的配置和操作步骤。脚本会检查最新的 Mastodon 内容，并将其发布到 Memos 上，同时记录 Mastodon ID 和 Memos ID 的绑定关系。同时，作者还分享了自己在使用过程中遇到的问题和解决方案,并给出了具体示例和代码。</div></div><div class=content id=content><blockquote><p>最新脚本：<a href=https://gist.github.com/eallion/bf8861eb3292c2351c1067fba3198c26 target=_blank rel="noopener noreferrer">https://gist.github.com/eallion/bf8861eb3292c2351c1067fba3198c26</a></p></blockquote><blockquote><p>Update：添加宝塔面板的示例。</p></blockquote><h3 id=tldr class=headerLink><a href=#tldr class=header-mark></a>TL;DR</h3><p>直接跳转到本页 <a href=#%E8%84%9A%E6%9C%AC%E5%86%85%E5%AE%B9 rel>脚本内容</a> 查看脚本代码。</p><h3 id=前言 class=headerLink><a href=#%e5%89%8d%e8%a8%80 class=header-mark></a>前言</h3><p>不知道是我运气好还是不好，在我准备把 Memos 当成主力工具加入到我的工作流中的时候，遇上了 <code>v0.19.0</code> 的版本更新，这次版本更新带来了一系列大坑。除了 Memos 新版本的鲁棒性备受质疑，甚至连搭载它的服务器本身也被影响，我在 64G 内存的物理机上都跑不动它。就像网友所说，Memos 只像是一个练手的项目。果断弃之。Google Keep、Obsidian 这些工具哪里不好了吗？不把所有事务约束在一个工具里确实是麻烦了一点，但是 All in one 基本上也等于是 All in boom。<br>现在我对 <a href=https://memos.eallion.com/ target=_blank rel="noopener noreferrer">Memos</a> 的定位是用来备份我的 <a href=https://e5n.cc/@eallion target=_blank rel="noopener noreferrer">Mastodon</a>（方式之一）。</p><p>我一直喜欢 Webhook 这种主动式 Push 的方案，比 RSS、Cron 计划任务这些被动式 Pull 的方案简洁低碳环保，更具有即时性。主要是掌握主动的感觉让人觉得很爽。</p><p>下面开始介绍一下 Mastodon 利用 Webhook 同步嘟文到 Memos 的方法。我用的是 Shell Script 脚本，是一个很简单的脚本，只作了一些常识性的逻辑判断，可能不完美。用 Node.js、Python 等都可以实现。</p><h3 id=已测试版本 class=headerLink><a href=#%e5%b7%b2%e6%b5%8b%e8%af%95%e7%89%88%e6%9c%ac class=header-mark></a>已测试版本</h3><ul><li>Memos: <a href="https://github.com/usememos/memos/pkgs/container/memos/168812645?tag=0.18.2" target=_blank rel="noopener noreferrer"><code>v0.18.2</code></a></li><li>Mastodon: <a href="https://github.com/mastodon/mastodon/pkgs/container/mastodon/182724379?tag=v4.2.8" target=_blank rel="noopener noreferrer"><code>v4.2.8</code></a></li></ul><p>Mastodon 需要自己的实例，或者具有管理员权限能创建 Webhook 的账号才能使用此方法。</p><h3 id=安装工具 class=headerLink><a href=#%e5%ae%89%e8%a3%85%e5%b7%a5%e5%85%b7 class=header-mark></a>安装工具</h3><p>请在服务器上安装工具，若有报错，请根据错误日志安装其他对应工具</p><ul><li><code>sudo apt install jq</code></li><li><code>sudo apt install lynx</code></li></ul><h3 id=webhook-工具 class=headerLink><a href=#webhook-%e5%b7%a5%e5%85%b7 class=header-mark></a>Webhook 工具</h3><ul><li><a href=https://github.com/jkjoy/docker-webhook target=_blank rel="noopener noreferrer">https://github.com/jkjoy/docker-webhook</a></li><li><a href=https://github.com/adnanh/webhook target=_blank rel="noopener noreferrer">https://github.com/adnanh/webhook</a></li><li>宝塔面板 - 软件商店 - 搜索 Webhook 安装</li><li>1Panel - 未知</li></ul><p>Mastodon 前往 <code>https://{INSTANCE}/admin/webhooks</code> 创建一个 Webhook。<br>事件可以只选 <code>status:created</code>，回复和转嘟也都算此事件喔。<br>目的地 URL 就填自己部署的 Webhook 的链接，如：<code>https://webhook.example.com/hooks/mastodon-sync-to-memos</code><br>宝塔的是：<code>https://webhook.mybtserver.com:8888/hook?access_key=ACCESSKEY</code><br>Mastodon 的 Webhook 目的地 URL 建议绑定域名，不然 Sidekiq 可能处理不了。</p><p><figure><a class=lightgallery href=/assets/images/posts/2024/03/mastodon-webhook.png title=/assets/images/posts/2024/03/mastodon-webhook.png data-thumbnail=/assets/images/posts/2024/03/mastodon-webhook.png><img loading=lazy src=/assets/images/posts/2024/03/mastodon-webhook.png srcset="/assets/images/posts/2024/03/mastodon-webhook.png, /assets/images/posts/2024/03/mastodon-webhook.png 1.5x, /assets/images/posts/2024/03/mastodon-webhook.png 2x" alt=/assets/images/posts/2024/03/mastodon-webhook.png></a></figure></p><h3 id=脚本内容 class=headerLink><a href=#%e8%84%9a%e6%9c%ac%e5%86%85%e5%ae%b9 class=header-mark></a>脚本内容</h3><p>把下方的脚本内容保存到服务器上的一个 <code>.sh</code> 文件中，如当前用户的 Home 目录（<code>~</code>）的 <a href=https://gist.github.com/eallion/bf8861eb3292c2351c1067fba3198c26#file-mastodon_sync_to_memos-sh target=_blank rel="noopener noreferrer"><code>~/mastodon_sync_to_memos.sh</code></a> 文件中，并配置以下内容，请注意替换：</p><ul><li><code>MEMOS_HOST=""</code></li><li><code>MEMOS_ACCESS_TOKEN=""</code></li><li><code>MEMOS_VISIBILITY=""</code></li><li><code>MASTODON_INSTANCE=""</code></li><li><code>MASTODON_ID=""</code></li><li><code>SKIP_MASTODON_REPLY=</code></li><li><code>SKIP_MASTODON_REBLOG=</code></li><li><code>HOME_DIR=~</code></li><li><code>FILE_PATH=$HOME_DIR/.mastodon_memos_id.json</code></li></ul><blockquote><p>查找 Mastodon ID： https://<code>INSTANCE</code>/api/v1/accounts/lookup?acct=<code>USERNAME</code></p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span><span class=lnt>136
+</span><span class=lnt>137
+</span><span class=lnt>138
+</span><span class=lnt>139
+</span><span class=lnt>140
+</span><span class=lnt>141
+</span><span class=lnt>142
+</span><span class=lnt>143
+</span><span class=lnt>144
+</span><span class=lnt>145
+</span><span class=lnt>146
+</span><span class=lnt>147
+</span><span class=lnt>148
+</span><span class=lnt>149
+</span><span class=lnt>150
+</span><span class=lnt>151
+</span><span class=lnt>152
+</span><span class=lnt>153
+</span><span class=lnt>154
+</span><span class=lnt>155
+</span><span class=lnt>156
+</span><span class=lnt>157
+</span><span class=lnt>158
+</span><span class=lnt>159
+</span><span class=lnt>160
+</span><span class=lnt>161
+</span><span class=lnt>162
+</span><span class=lnt>163
+</span><span class=lnt>164
+</span><span class=lnt>165
+</span><span class=lnt>166
+</span><span class=lnt>167
+</span><span class=lnt>168
+</span><span class=lnt>169
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/bin/bash
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=c1># 已测试版本: </span>
+</span></span><span class=line><span class=cl><span class=c1># Memos: v0.18.2 </span>
+</span></span><span class=line><span class=cl><span class=c1># Mastodon: v4.2.8</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># ======================================================</span>
+</span></span><span class=line><span class=cl><span class=c1># 配置开始</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Memos Host</span>
+</span></span><span class=line><span class=cl><span class=nv>MEMOS_HOST</span><span class=o>=</span><span class=s2>&#34;&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Memos Access Token</span>
+</span></span><span class=line><span class=cl><span class=nv>MEMOS_ACCESS_TOKEN</span><span class=o>=</span><span class=s2>&#34;&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 发布 Memos 的可见性 (&#39;PUBLIC&#39;, &#39;PROTECTED&#39;, &#39;PRIVATE&#39;) 三选一</span>
+</span></span><span class=line><span class=cl><span class=nv>MEMOS_VISIBILITY</span><span class=o>=</span>PUBLIC
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Mastodon Instance</span>
+</span></span><span class=line><span class=cl><span class=nv>MASTODON_INSTANCE</span><span class=o>=</span><span class=s2>&#34;&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Mastodon ID, Find ID: https://INSTANCE/api/v1/accounts/lookup?acct=USERNAME</span>
+</span></span><span class=line><span class=cl><span class=nv>MASTODON_ID</span><span class=o>=</span><span class=s2>&#34;&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 跳过回复和转嘟</span>
+</span></span><span class=line><span class=cl><span class=nv>SKIP_MASTODON_REPLY</span><span class=o>=</span><span class=nb>true</span>
+</span></span><span class=line><span class=cl><span class=nv>SKIP_MASTODON_REBLOG</span><span class=o>=</span><span class=nb>true</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 获取当前用户的 Home 目录路径及保存 ID 的文件，保持默认，不用更改</span>
+</span></span><span class=line><span class=cl><span class=nv>HOME_DIR</span><span class=o>=</span>~
+</span></span><span class=line><span class=cl><span class=nv>FILE_PATH</span><span class=o>=</span><span class=nv>$HOME_DIR</span>/.mastodon_memos_id.json
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 配置结束</span>
+</span></span><span class=line><span class=cl><span class=c1># ======================================================</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 以下内容不用更改</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 检查 ID 文件是否存在</span>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[</span> ! -f <span class=s2>&#34;</span><span class=nv>$FILE_PATH</span><span class=s2>&#34;</span> <span class=o>]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=c1># 如果文件不存在，则创建文件并写入 JSON 数据</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s1>&#39;
+</span></span></span><span class=line><span class=cl><span class=s1>{
+</span></span></span><span class=line><span class=cl><span class=s1>  &#34;latest_memos_id&#34;: &#34;0&#34;,
+</span></span></span><span class=line><span class=cl><span class=s1>  &#34;latest_mastodon_id&#34;: &#34;0&#34;,
+</span></span></span><span class=line><span class=cl><span class=s1>  &#34;bind&#34;: []
+</span></span></span><span class=line><span class=cl><span class=s1>}
+</span></span></span><span class=line><span class=cl><span class=s1>&#39;</span> &gt; <span class=s2>&#34;</span><span class=nv>$FILE_PATH</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;Data file created: </span><span class=nv>$FILE_PATH</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>else</span>
+</span></span><span class=line><span class=cl>  <span class=c1># 如果文件存在，则跳过并进行后续步骤</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;Local data exist, skipping...&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 拼接 API 和 Token</span>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[[</span> <span class=s2>&#34;</span><span class=nv>$MEMOS_HOST</span><span class=s2>&#34;</span> !<span class=o>=</span> */ <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nv>MEMOS_HOST</span><span class=o>=</span><span class=s2>&#34;</span><span class=nv>$MEMOS_HOST</span><span class=s2>/&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl><span class=nv>MEMOS_API_HOST</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>MEMOS_HOST</span><span class=si>}</span><span class=s2>api/v1/memo&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>AUTHORIZATION</span><span class=o>=</span><span class=s2>&#34;Bearer </span><span class=si>${</span><span class=nv>MEMOS_ACCESS_TOKEN</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Memos 获取最新的 Memos ID</span>
+</span></span><span class=line><span class=cl><span class=nv>MEMOS_URL</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>MEMOS_API_HOST</span><span class=si>}</span><span class=s2>?creatorId=101&amp;rowStatus=NORMAL&amp;limit=1&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>LATEST_MEMOS_ID</span><span class=o>=</span><span class=k>$(</span>curl --connect-timeout <span class=m>60</span> -s <span class=nv>$MEMOS_URL</span> <span class=p>|</span> jq -r <span class=s1>&#39;.[0].id&#39;</span><span class=k>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Mastodon 的 API</span>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[[</span> <span class=s2>&#34;</span><span class=nv>$MASTODON_INSTANCE</span><span class=s2>&#34;</span> !<span class=o>=</span> */ <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nv>MASTODON_INSTANCE</span><span class=o>=</span><span class=s2>&#34;</span><span class=nv>$MASTODON_INSTANCE</span><span class=s2>/&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl><span class=nv>CONTENT_URL</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>MASTODON_INSTANCE</span><span class=si>}</span><span class=s2>api/v1/accounts/</span><span class=si>${</span><span class=nv>MASTODON_ID</span><span class=si>}</span><span class=s2>/statuses?limit=1&amp;exclude_replies=</span><span class=si>${</span><span class=nv>SKIP_MASTODON_REPLY</span><span class=si>}</span><span class=s2>&amp;exclude_reblogs=</span><span class=si>${</span><span class=nv>SKIP_MASTODON_REBLOG</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Mastodon 最新 Status 的 ID</span>
+</span></span><span class=line><span class=cl><span class=nv>LATEST_MASTODON_ID</span><span class=o>=</span><span class=k>$(</span>curl --connect-timeout <span class=m>60</span> -s <span class=nv>$CONTENT_URL</span> <span class=p>|</span> jq -r <span class=s1>&#39;.[0].id&#39;</span><span class=k>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 定义 LOCAL_MEMOS_ID 变量</span>
+</span></span><span class=line><span class=cl><span class=nv>LOCAL_MEMOS_ID</span><span class=o>=</span><span class=k>$(</span>cat <span class=s2>&#34;</span><span class=nv>$FILE_PATH</span><span class=s2>&#34;</span> <span class=p>|</span> jq -r <span class=s1>&#39;.latest_memos_id&#39;</span><span class=k>)</span>
+</span></span><span class=line><span class=cl><span class=nv>LOCAL_MASTODON_ID</span><span class=o>=</span><span class=k>$(</span>cat <span class=s2>&#34;</span><span class=nv>$FILE_PATH</span><span class=s2>&#34;</span> <span class=p>|</span> jq -r <span class=s1>&#39;.latest_mastodon_id&#39;</span><span class=k>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Webhook 触发时，判断 Mastodon 最新 ID 是否为暂存 ID，防止重复同步</span>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[</span> <span class=s2>&#34;</span><span class=nv>$LATEST_MASTODON_ID</span><span class=s2>&#34;</span> <span class=o>==</span> <span class=s2>&#34;</span><span class=nv>$LOCAL_MASTODON_ID</span><span class=s2>&#34;</span> <span class=o>]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;Mastodon no updated, skipping...&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;Skipped: </span><span class=k>$(</span><span class=nv>TZ</span><span class=o>=</span>UTC-8 date +<span class=s2>&#34;%Y-%m-%d&#34;&#34; &#34;&#34;%T&#34;</span><span class=k>)</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;=============================&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>exit</span> <span class=m>0</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>CONTENT</span><span class=o>=</span><span class=k>$(</span>curl --connect-timeout <span class=m>60</span> -s <span class=nv>$CONTENT_URL</span> <span class=p>|</span> jq -r <span class=s1>&#39;.[0]&#39;</span><span class=k>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>MEDIA</span><span class=o>=</span><span class=k>$(</span><span class=nb>echo</span> <span class=nv>$CONTENT</span> <span class=p>|</span> jq -r <span class=s1>&#39;.media_attachments&#39;</span><span class=k>)</span>
+</span></span><span class=line><span class=cl><span class=c1># 判断 Media 的内容</span>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[</span> <span class=s2>&#34;</span><span class=nv>$MEDIA</span><span class=s2>&#34;</span> !<span class=o>=</span> <span class=s2>&#34;null&#34;</span> <span class=o>]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nv>MEDIAS</span><span class=o>=</span><span class=k>$(</span><span class=nb>echo</span> <span class=nv>$CONTENT</span> <span class=p>|</span> jq -r <span class=s1>&#39;.media_attachments[] | select(.type==&#34;image&#34;) | .url&#39;</span><span class=k>)</span>
+</span></span><span class=line><span class=cl>  <span class=c1># 拼接图片 </span>
+</span></span><span class=line><span class=cl>  <span class=nv>images</span><span class=o>=</span><span class=s2>&#34;&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=k>for</span> url in <span class=nv>$MEDIAS</span><span class=p>;</span> <span class=k>do</span> 
+</span></span><span class=line><span class=cl>    <span class=nv>images</span><span class=o>=</span><span class=s2>&#34;</span><span class=nv>$images</span><span class=s2>![image](</span><span class=nv>$url</span><span class=s2>)\n&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=k>done</span>
+</span></span><span class=line><span class=cl>  <span class=nv>TEXT</span><span class=o>=</span><span class=k>$(</span><span class=nb>echo</span> <span class=s2>&#34;</span><span class=nv>$CONTENT</span><span class=s2>&#34;</span> <span class=p>|</span> jq -r <span class=s1>&#39;.content&#39;</span> <span class=p>|</span> lynx -dump -stdin -nonumbers -nolist <span class=p>|</span> tr -d <span class=s1>&#39;\n&#39;</span> <span class=p>|</span> sed <span class=s1>&#39;/^$/N;s/\n\n/\n/g&#39;</span> <span class=p>|</span> sed <span class=s1>&#39;s/^[[:space:]]*//;s/[[:space:]]*$//&#39;</span> <span class=p>|</span> sed -E <span class=s1>&#39;s/ {2,}/ /g&#39;</span><span class=k>)</span>
+</span></span><span class=line><span class=cl>  <span class=nv>TEXT</span><span class=o>=</span><span class=s2>&#34;</span><span class=nv>$TEXT</span><span class=s2>\n</span><span class=nv>$images</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>else</span>
+</span></span><span class=line><span class=cl>  <span class=c1># 普通内容</span>
+</span></span><span class=line><span class=cl>  <span class=nv>TEXT</span><span class=o>=</span><span class=k>$(</span><span class=nb>echo</span> <span class=s2>&#34;</span><span class=nv>$CONTENT</span><span class=s2>&#34;</span> <span class=p>|</span> jq -r <span class=s1>&#39;.content&#39;</span> <span class=p>|</span> lynx -dump -stdin -nonumbers -nolist <span class=p>|</span> tr -d <span class=s1>&#39;\n&#39;</span> <span class=p>|</span> sed <span class=s1>&#39;/^$/N;s/\n\n/\n/g&#39;</span> <span class=p>|</span> sed <span class=s1>&#39;s/^[[:space:]]*//;s/[[:space:]]*$//&#39;</span> <span class=p>|</span> sed -E <span class=s1>&#39;s/ {2,}/ /g&#39;</span><span class=k>)</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 判断内容是否为空</span>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[</span> -z <span class=s2>&#34;</span><span class=nv>$TEXT</span><span class=s2>&#34;</span> <span class=o>]</span> <span class=o>||</span> <span class=o>[</span> <span class=s2>&#34;</span><span class=nv>$TEXT</span><span class=s2>&#34;</span> <span class=o>==</span> <span class=s2>&#34;\\n&#34;</span> <span class=o>]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;Content is empty, skipping...&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;Skipped: </span><span class=k>$(</span><span class=nv>TZ</span><span class=o>=</span>UTC-8 date +<span class=s2>&#34;%Y-%m-%d&#34;&#34; &#34;&#34;%T&#34;</span><span class=k>)</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;=============================&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>exit</span> <span class=m>0</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 双引号转义</span>
+</span></span><span class=line><span class=cl><span class=nv>TEXT</span><span class=o>=</span><span class=k>$(</span><span class=nb>echo</span> <span class=s2>&#34;</span><span class=nv>$TEXT</span><span class=s2>&#34;</span> <span class=p>|</span> sed <span class=s1>&#39;s/&#34;/\\&#34;/g&#39;</span><span class=k>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Webhook 触发时，判断 Memos 最新 ID 是否为暂存 ID</span>
+</span></span><span class=line><span class=cl><span class=c1># 当 Memos 单方面有更新后，验证 Mastodon 和 Memos 的 ID 绑定关系（Todo）</span>
+</span></span><span class=line><span class=cl><span class=c1>#if [ &#34;$LATEST_MEMOS_ID&#34; == &#34;$LOCAL_MEMOS_ID&#34; ]; then</span>
+</span></span><span class=line><span class=cl><span class=c1>#  echo &#34;Memos no updated, skipping...&#34;</span>
+</span></span><span class=line><span class=cl><span class=c1>#  echo &#34;Skipped: $(TZ=UTC-8 date +&#34;%Y-%m-%d&#34;&#34; &#34;&#34;%T&#34;)&#34;</span>
+</span></span><span class=line><span class=cl><span class=c1>#  echo &#34;=============================&#34;</span>
+</span></span><span class=line><span class=cl><span class=c1># exit 0</span>
+</span></span><span class=line><span class=cl><span class=c1>#fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 对比 Matodon 和 Memos 的 Content 内容的 MD5 值（不一定精确）</span>
+</span></span><span class=line><span class=cl><span class=c1># 后期尝试引入 GPT 对比内容</span>
+</span></span><span class=line><span class=cl><span class=nv>CONTENT_MEMOS</span><span class=o>=</span><span class=k>$(</span>curl --connect-timeout <span class=m>60</span> -s <span class=nv>$MEMOS_URL</span> <span class=p>|</span> jq <span class=s1>&#39;.[0].content&#39;</span><span class=k>)</span>
+</span></span><span class=line><span class=cl><span class=nv>CONTENT_MASTODON</span><span class=o>=</span><span class=nv>$TEXT</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 获取最新 Memos 的 MD5</span>
+</span></span><span class=line><span class=cl><span class=nv>LATEST_MEMOS_MD5</span><span class=o>=</span><span class=k>$(</span><span class=nb>echo</span> <span class=nv>$CONTENT_MEMOS</span> <span class=p>|</span> tr -d <span class=s1>&#39;&#34;&#39;</span> <span class=p>|</span> md5sum <span class=p>|</span> cut -d<span class=s1>&#39; &#39;</span> -f1<span class=k>)</span>
+</span></span><span class=line><span class=cl><span class=c1># 获取最新 Mastodon 的 MD5</span>
+</span></span><span class=line><span class=cl><span class=nv>LATEST_TEXT_MD5</span><span class=o>=</span><span class=k>$(</span><span class=nb>echo</span> <span class=nv>$TEXT</span> <span class=p>|</span> tr -d <span class=s1>&#39;&#34;&#39;</span> <span class=p>|</span> md5sum <span class=p>|</span> cut -d<span class=s1>&#39; &#39;</span> -f1<span class=k>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 通过 MD5 判断内容是否重复</span>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[</span> <span class=s2>&#34;</span><span class=nv>$LATEST_TEXT_MD5</span><span class=s2>&#34;</span> <span class=o>==</span> <span class=s2>&#34;</span><span class=nv>$LATEST_MEMOS_MD5</span><span class=s2>&#34;</span> <span class=o>]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;Content is duplicate, skipping...&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;Skipped: </span><span class=k>$(</span><span class=nv>TZ</span><span class=o>=</span>UTC-8 date +<span class=s2>&#34;%Y-%m-%d&#34;&#34; &#34;&#34;%T&#34;</span><span class=k>)</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;=============================&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>exit</span> <span class=m>0</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 替换 NeoDB 的评分 Emoji</span>
+</span></span><span class=line><span class=cl><span class=nv>TEXT</span><span class=o>=</span><span class=k>$(</span><span class=nb>echo</span> <span class=s2>&#34;</span><span class=nv>$TEXT</span><span class=s2>&#34;</span> <span class=p>|</span> sed <span class=s2>&#34;s/:star_empty:/🌑/g; s/:star_half:/🌗/g; s/:star_solid:/🌕/g&#34;</span><span class=k>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 去掉最末尾的空行</span>
+</span></span><span class=line><span class=cl><span class=nv>TEXT</span><span class=o>=</span><span class=k>$(</span><span class=nb>echo</span> <span class=s2>&#34;</span><span class=nv>$TEXT</span><span class=s2>&#34;</span> <span class=p>|</span> sed <span class=s1>&#39;s/\\n$//&#39;</span><span class=k>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 发布 Memos 并获取返回的 JSON 数据</span>
+</span></span><span class=line><span class=cl><span class=nv>RESPONSE</span><span class=o>=</span><span class=k>$(</span>curl -s -X POST <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  -H <span class=s2>&#34;Accept: application/json&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  -H <span class=s2>&#34;Authorization: </span><span class=nv>$AUTHORIZATION</span><span class=s2>&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  -d <span class=s2>&#34;{ \&#34;content\&#34;: \&#34;</span><span class=nv>$TEXT</span><span class=s2>\&#34;, \&#34;visibility\&#34;: \&#34;</span><span class=nv>$MEMOS_VISIBILITY</span><span class=s2>\&#34;}&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  <span class=nv>$MEMOS_API_HOST</span><span class=k>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 从返回的 JSON 数据中提取 Memos 的 id 值</span>
+</span></span><span class=line><span class=cl><span class=nv>NEW_MEMOS_ID</span><span class=o>=</span><span class=k>$(</span><span class=nb>echo</span> <span class=s2>&#34;</span><span class=nv>$RESPONSE</span><span class=s2>&#34;</span> <span class=p>|</span> jq -r <span class=s1>&#39;.id&#39;</span><span class=k>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 更新 JSON 文件中的 latest_memos_id 的值</span>
+</span></span><span class=line><span class=cl>jq <span class=s2>&#34;.latest_memos_id = \&#34;</span><span class=nv>$NEW_MEMOS_ID</span><span class=s2>\&#34;&#34;</span> <span class=s2>&#34;</span><span class=nv>$FILE_PATH</span><span class=s2>&#34;</span> &gt; <span class=s2>&#34;</span><span class=si>${</span><span class=nv>FILE_PATH</span><span class=si>}</span><span class=s2>.tmp&#34;</span> <span class=o>&amp;&amp;</span> mv <span class=s2>&#34;</span><span class=si>${</span><span class=nv>FILE_PATH</span><span class=si>}</span><span class=s2>.tmp&#34;</span> <span class=s2>&#34;</span><span class=nv>$FILE_PATH</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 更新 JSON 文件中的 latest_mastodon_id 的值</span>
+</span></span><span class=line><span class=cl>jq <span class=s2>&#34;.latest_mastodon_id = \&#34;</span><span class=nv>$LATEST_MASTODON_ID</span><span class=s2>\&#34;&#34;</span> <span class=s2>&#34;</span><span class=nv>$FILE_PATH</span><span class=s2>&#34;</span> &gt; <span class=s2>&#34;</span><span class=si>${</span><span class=nv>FILE_PATH</span><span class=si>}</span><span class=s2>.tmp&#34;</span> <span class=o>&amp;&amp;</span> mv <span class=s2>&#34;</span><span class=si>${</span><span class=nv>FILE_PATH</span><span class=si>}</span><span class=s2>.tmp&#34;</span> <span class=s2>&#34;</span><span class=nv>$FILE_PATH</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 更新 Mastodon 和 Memos 的 ID 的绑定关系，并确保 &#34;bind&#34; 中的数组保留唯一键，键也只有唯一值</span>
+</span></span><span class=line><span class=cl>jq <span class=s2>&#34;.bind += [{\&#34;</span><span class=nv>$LATEST_MASTODON_ID</span><span class=s2>\&#34;: \&#34;</span><span class=nv>$NEW_MEMOS_ID</span><span class=s2>\&#34;}] | .bind = (.bind | unique)&#34;</span> <span class=s2>&#34;</span><span class=nv>$FILE_PATH</span><span class=s2>&#34;</span> &gt; <span class=s2>&#34;</span><span class=si>${</span><span class=nv>FILE_PATH</span><span class=si>}</span><span class=s2>.tmp&#34;</span> <span class=o>&amp;&amp;</span> mv <span class=s2>&#34;</span><span class=si>${</span><span class=nv>FILE_PATH</span><span class=si>}</span><span class=s2>.tmp&#34;</span> <span class=s2>&#34;</span><span class=nv>$FILE_PATH</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;Sync Mastodon to Memos Successful!&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;Done: </span><span class=k>$(</span><span class=nv>TZ</span><span class=o>=</span>UTC-8 date +<span class=s2>&#34;%Y-%m-%d&#34;&#34; &#34;&#34;%T&#34;</span><span class=k>)</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;=============================&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><h4 id=宝塔面板 class=headerLink><a href=#%e5%ae%9d%e5%a1%94%e9%9d%a2%e6%9d%bf class=header-mark></a>宝塔面板</h4><p>宝塔面板如果用 Webhook 插件，可以直接把上面的脚本内容复制到 Webhook 插件的脚本中。不用另外在服务器中手动创建 <code>.sh</code> 文件。</p><p><figure><a class=lightgallery href=/assets/images/posts/2024/03/bt-webhook.png title=/assets/images/posts/2024/03/bt-webhook.png data-thumbnail=/assets/images/posts/2024/03/bt-webhook.png><img loading=lazy src=/assets/images/posts/2024/03/bt-webhook.png srcset="/assets/images/posts/2024/03/bt-webhook.png, /assets/images/posts/2024/03/bt-webhook.png 1.5x, /assets/images/posts/2024/03/bt-webhook.png 2x" alt=/assets/images/posts/2024/03/bt-webhook.png></a></figure></p><h3 id=json-数据文件内容 class=headerLink><a href=#json-%e6%95%b0%e6%8d%ae%e6%96%87%e4%bb%b6%e5%86%85%e5%ae%b9 class=header-mark></a>JSON 数据文件内容</h3><p>初次运行脚本，它会在当前用户的 Home 目录 <code>~</code> 新建一个文件 <code>~/.mastodon_memos_id.json</code> 并初始化，后续此文件会记录 Mastodon ID 和 Memos ID 的绑定关系。如果不想在 Home 目录创建，就需要修改 <code>HOME_DIR=</code> 和 <code>FILE_PATH=</code> 这两个参数。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-json data-lang=json><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;latest_memos_id&#34;</span><span class=p>:</span> <span class=s2>&#34;&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;latest_mastodon_id&#34;</span><span class=p>:</span> <span class=s2>&#34;&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;bind&#34;</span><span class=p>:</span> <span class=p>[]</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>生产环境产生数据后，示例：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-json data-lang=json><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;latest_memos_id&#34;</span><span class=p>:</span> <span class=s2>&#34;6231&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;latest_mastodon_id&#34;</span><span class=p>:</span> <span class=s2>&#34;112061852482921394&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;bind&#34;</span><span class=p>:</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=nt>&#34;112059053750743781&#34;</span><span class=p>:</span> <span class=s2>&#34;6230&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=p>},</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=nt>&#34;112061852482921394&#34;</span><span class=p>:</span> <span class=s2>&#34;6231&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2024-03-09</span></div><div class=post-info-license></div></div><div class="post-info-line print:!tw-hidden"><div class=post-info-md><span><a class=link-to-mardown href=/mastodon-sync-to-memos/index.md target=_blank rel="noopener noreferrer">阅读原始文档</a>
+</span><span>|&nbsp;<a class=link-to-report href="https://github.com/eallion/eallion.com/issues/new?title=[bug]%20Mastodon+%E5%90%8C%E6%AD%A5%E5%88%B0+Memos&body=|Field|Value|%0A|-|-|%0A|Title|Mastodon+%E5%90%8C%E6%AD%A5%E5%88%B0+Memos|%0A|Url|https://www.eallion.com/mastodon-sync-to-memos/|%0A|Filename|https://github.com/eallion/eallion.com/blob/main/posts/code/2024-03-09-mastodon-同步到-memos-脚本.md|" target=_blank rel="noopener noreferrer">报告问题</a></span></div><div class=post-info-share></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/mastodon/>Mastodon</a>,&nbsp;<a href=/tags/memos/>Memos</a>,&nbsp;<a href=/tags/webhook/>Webhook</a>,&nbsp;<a href=/tags/%E8%84%9A%E6%9C%AC/>脚本</a></section><section class=print:!tw-hidden><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class="post-nav print:tw-hidden"><a href=/hugo-redirect-landing-page/ class=prev rel=prev title="Hugo 外部链接跳转提示页面"><i class="fas fa-angle-left fa-fw"></i>Hugo 外部链接跳转提示页面</a>
+<a href=/what-does-he-eat/ class=next rel=next title=那，他吃什么？！>那，他吃什么？！<i class="fas fa-angle-right fa-fw"></i></a></div></div><div id=comments class=print:!tw-hidden><div id=giscus></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://giscus.app/>giscus</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>由 <a href=https://gohugo.io/ target=_blank rel="noopener noreferrer" title="Hugo 0.124.1">Hugo</a> 强力驱动&nbsp;|&nbsp;托管在 <a title="腾讯云边缘安全加速平台 EdgeOne" href=https://e5n.cc/s/teo target=_blank rel="noopener noreffer">EdgeOne</a> 上&nbsp;|&nbsp;主题 - <a href=https://github.com/HEIGE-PCloud/DoIt target=_blank rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a></div><div class=footer-line><i class="far fa-copyright fa-fw"></i>2006 - 2024&nbsp;|&nbsp;<span class=license><a title='eallion.com 版权信息' href=https://www.eallion.com/copyright/ target=_blank rel='noopener noreferrer'>eallion.com</a> All Rights Reserved.</span><span class=icp-splitter>&nbsp;|&nbsp;</span><br class=icp-br><span class=icp><a title="ICP 备案号" href=https://beian.miit.gov.cn/ target=_blank rel="noopener noreferrer">浙ICP备16031768号-2</a></span></div><div class=footer-line></div><div class=footer-line></div></div><script>"serviceWorker"in navigator&&(navigator.serviceWorker.register("/sw.min.js",{scope:"/"}).then(function(){}),navigator.serviceWorker.ready.then(function(){}))</script></footer></div><div id=fixed-buttons class=print:!tw-hidden><a href=#back-to-top id=back-to-top-button class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><div class=assets><link rel=stylesheet href=/lib/lightgallery/lightgallery.min.b38ee65d6456beb2d034bf554505f4ca47e421548b7cd26e8a7805fd2673b6c3.css integrity="sha256-s47mXWRWvrLQNL9VRQX0ykfkIVSLfNJuingF/SZztsM="><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:1e3},comment:{giscus:{darkTheme:"dark_dimmed",dataCategory:"Giscus",dataCategoryId:"DIC_kwDOD6gExM4CS9eF",dataEmitMetadata:"0",dataInputPosition:"bottom",dataLang:"zh-CN",dataLoading:"lazy",dataMapping:"pathname",dataReactionsEnabled:"1",dataRepo:"eallion/eallion.com",dataRepoId:"MDEwOlJlcG9zaXRvcnkyNjI2Njk1MDg=",dataStrict:"1",lightTheme:"light"}},lightGallery:{actualSize:!1,exThumbImage:"data-thumbnail",hideBarsDelay:2e3,selector:".lightgallery",speed:400,thumbContHeight:80,thumbWidth:80,thumbnail:!0},search:{algoliaAppID:"UIYUIFMJAW",algoliaIndex:"eallion",algoliaSearchKey:"6d69a1276d37f570210831b222bcb123",highlightTag:"em",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"algolia"},table:{sort:!0}}</script><script src=/lib/object-fit-images/ofi.min.8c2fded8e3119fcb15699d6752e3834a4b20ba353ca20f0842419c466f2dc97b.js integrity="sha256-jC/e2OMRn8sVaZ1nUuODSksgujU8og8IQkGcRm8tyXs="></script><script src=/lib/tablesort/tablesort.min.92de6dec051677787aed63503575b2f9be73f21f2745574e59647bc139a92d40.js integrity="sha256-kt5t7AUWd3h67WNQNXWy+b5z8h8nRVdOWWR7wTmpLUA="></script><script src=/lib/lightgallery/lightgallery.min.e1c797df44ba6ba4cbc5c52eabbf2300e8a4865abe4ed52f91830bf1fd2bb76e.js integrity="sha256-4ceX30S6a6TLxcUuq78jAOikhlq+TtUvkYML8f0rt24="></script><script src=/lib/lightgallery/lg-thumbnail.min.c7fedc31b278580c1ee0065d9186510ff245bb983987b9f05315cb2488045c4f.js integrity="sha256-x/7cMbJ4WAwe4AZdkYZRD/JFu5g5h7nwUxXLJIgEXE8="></script><script src=/lib/lightgallery/lg-zoom.min.0470e1215c4c9a64efce50c5969b898d6553eba697bd31a5e1663ad8ab48374c.js integrity="sha256-BHDhIVxMmmTvzlDFlpuJjWVT66aXvTGl4WY62KtIN0w="></script><script src=/lib/clipboard/clipboard.min.e17a1d816e13c0826e0ed7febfabc3277f45571234bde0bf9120829a7169edc9.js integrity="sha256-4XodgW4TwIJuDtf+v6vDJ39FVxI0veC/kSCCmnFp7ck="></script><script src=/js/theme.min.js defer></script><script src=/js/giscus.min.js defer></script></div></body></html>

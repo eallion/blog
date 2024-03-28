@@ -1,0 +1,317 @@
+<!doctype html><html lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=onion-location content="http://eallionskii7e32j3ncxnccyqq6uf7rbxwmst4x6mxeswx6fvrdtsmad.onion"><meta name=giscus:backlink content="https://www.eallion.com/hugo-redirect-landing-page/"><title>Hugo 外部链接跳转提示页面-大大的小蜗牛</title><meta name=Description content><meta property="og:title" content="Hugo 外部链接跳转提示页面">
+<meta property="og:description" content="文章介绍了作者为了合规和自我审查，在博客中迁移评论系统并清理链接，通过跳转页面实现外部链接的跳转。作者使用 Hugo 内置模板_render-link.html_进行 base64 编码，并提供了代码示例。同时，作者还介绍了如何创建一个中转页面模板_go.html_以及相关样式和脚本的设置。最后，文章指出这种方法只适用于渲染 Markdown 内容文档，并对自定义 HTML 链接做了说明。"><meta property="og:type" content="article"><meta property="og:url" content="https://www.eallion.com/hugo-redirect-landing-page/"><meta property="og:image" content="https://www.eallion.com/assets/images/og/hugo-redirect-landing-page.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2024-02-03T08:48:24+08:00"><meta property="article:modified_time" content="2024-02-03T08:48:24+08:00"><meta property="og:site_name" content="大大的小蜗牛"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://www.eallion.com/assets/images/og/hugo-redirect-landing-page.png"><meta name=twitter:title content="Hugo 外部链接跳转提示页面"><meta name=twitter:description content="文章介绍了作者为了合规和自我审查，在博客中迁移评论系统并清理链接，通过跳转页面实现外部链接的跳转。作者使用 Hugo 内置模板_render-link.html_进行 base64 编码，并提供了代码示例。同时，作者还介绍了如何创建一个中转页面模板_go.html_以及相关样式和脚本的设置。最后，文章指出这种方法只适用于渲染 Markdown 内容文档，并对自定义 HTML 链接做了说明。"><meta name=twitter:site content="@eallion"><meta name=application-name content="大大的小蜗牛"><meta name=apple-mobile-web-app-title content="大大的小蜗牛"><meta name=theme-color content="#f8f8f8"><meta name=msapplication-TileColor content="#da532c"><meta name=twitter:creator content="@eallion"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://www.eallion.com/hugo-redirect-landing-page/><link rel=prev href=https://www.eallion.com/fediverse/><link rel=next href=https://www.eallion.com/mastodon-sync-to-memos/><link rel=stylesheet href=/css/main.min.css><link rel=stylesheet href=/lib/normalize/normalize.min.055364f5be272caa092b0e6654c165828707f8ab971e2656383a6d6392bc345e.css integrity="sha256-BVNk9b4nLKoJKw5mVMFlgocH+KuXHiZWODptY5K8NF4="><link rel=stylesheet href=/css/color.b0a0f8c429ce52dfa2805b5f9e99ccdae1e8fbfd9adf4f3ddb409d8201fc0c5a.css integrity="sha256-sKD4xCnOUt+igFtfnpnM2uHo+/2a308920CdggH8DFo="><link rel=stylesheet href=/css/style.min.css><link rel=preload as=style onload='this.onload=null,this.rel="stylesheet"' href=/lib/fontawesome-free/all.min.43202d5486e011f9684a17bd6846b5c16a2619002bfc783f7e32e20dfb6bf857.css integrity="sha256-QyAtVIbgEfloShe9aEa1wWomGQAr/Hg/fjLiDftr+Fc="><noscript><link rel=stylesheet href=/lib/fontawesome-free/all.min.43202d5486e011f9684a17bd6846b5c16a2619002bfc783f7e32e20dfb6bf857.css integrity="sha256-QyAtVIbgEfloShe9aEa1wWomGQAr/Hg/fjLiDftr+Fc="></noscript><link rel=preload as=style onload='this.onload=null,this.rel="stylesheet"' href=/lib/animate/animate.min.5fbaeb9f8e25d7e0143bae61d4b1802c16ce7390b96ceb2d498b0d96ff4c853f.css integrity="sha256-X7rrn44l1+AUO65h1LGALBbOc5C5bOstSYsNlv9MhT8="><noscript><link rel=stylesheet href=/lib/animate/animate.min.5fbaeb9f8e25d7e0143bae61d4b1802c16ce7390b96ceb2d498b0d96ff4c853f.css integrity="sha256-X7rrn44l1+AUO65h1LGALBbOc5C5bOstSYsNlv9MhT8="></noscript><meta name=google-site-verification content="9Mvl_9FEM5JphVmp-u9ljtlChFohWuBBFjlSS89QKVU"><meta name=msvalidate.01 content="68A03C00DAFAD54E3739A8D372D9371B"><meta name=yandex-verification content="ff49a8cfbbaad423"><meta name=p:domain_verify content="b9e3534b99f9bd82f3b8688a1fa122a8"><meta name=baidu-site-verification content="ZWIiTFJWJkGQ11ZJ"><meta name=sogou_site_verification content="SZM7r2UEOz"><meta name=360-site-verification content="05afe845fd64ce6966deadce74479b5b"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Hugo 外部链接跳转提示页面","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eallion.com/hugo-redirect-landing-page/"},"image":["https://www.eallion.com/images/Apple-Devices-Preview.png"],"genre":"posts","keywords":["hugo","博客","跳转","折腾"],"wordcount":1863,"url":"https://www.eallion.com/hugo-redirect-landing-page/","datePublished":"2024-02-03T08:48:24+08:00","dateModified":"2024-02-03T08:48:24+08:00","license":"This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.","publisher":{"@type":"Organization","name":"Charles Chin","logo":"https://www.eallion.com/eallion.webp"},"author":[{"@type":"Person","name":"大大的小蜗牛","url":"https://eallion.com/"}],"description":""}</script><script src=/lib/instant.page/instantpage.min.js defer type=module></script><link href=https://e5n.cc/@eallion rel=me></head><body header-desktop=normal header-mobile=auto><script type=text/javascript>function setTheme(e){document.body.setAttribute("theme",e),document.documentElement.style.setProperty("color-scheme",e==="light"?"light":"dark"),e==="light"?document.documentElement.classList.remove("tw-dark"):document.documentElement.classList.add("tw-dark"),window.theme=e,window.isDark=window.theme!=="light"}function saveTheme(e){window.localStorage&&localStorage.setItem("theme",e)}function getMeta(e){const t=document.getElementsByTagName("meta");for(let n=0;n<t.length;n++)if(t[n].getAttribute("name")===e)return t[n];return""}if(window.localStorage&&localStorage.getItem("theme")){let e=localStorage.getItem("theme");e==="light"||e==="dark"||e==="black"?setTheme(e):setTheme(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}else"auto"==="light"||"auto"==="dark"||"auto"==="black"?(setTheme("auto"),saveTheme("auto")):(saveTheme("auto"),setTheme(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"));let metaColors={light:"#f8f8f8",dark:"#252627",black:"#000000"};getMeta("theme-color").content=metaColors[document.body.getAttribute("theme")],window.switchThemeEventSet=new Set</script><div id=back-to-top></div><div id=mask></div><div class=wrapper><header class="desktop print:!tw-hidden" id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title=大大的小蜗牛>大大的小蜗牛</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/ title=首页><i class='fas fa-home'></i> 首页 </a><a class=menu-item href=/posts/ title=所有文章><i class='fas fa-blog'></i> 博客 </a><a class=menu-item href=/mastodon/ title="Mastodon Toots 嘀咕"><i class='fab fa-mastodon'></i> 嘀咕 </a><a class=menu-item href=/media/ title="NeoDB 书影音记录"><i class='fas fa-film'></i> 书影音 </a><a class=menu-item href=/steam/ title="Steam 游戏清单"><i class='fab fa-steam'></i> 游戏库 </a><a class=menu-item href=/links/ title=友情链接><i class='fas fa-users'></i> 友情链接 </a><a class=menu-item href=/stats/ title=统计><i class='fas fa-chart-bar'></i> 统计 </a><a class=menu-item href=/about/ title=关于我关于本站><i class='fas fa-info'></i> 关于 </a><span class="menu-item delimiter"></span><a href=javascript:void(0); class="menu-item language" title=选择语言>简体中文<i class="fas fa-chevron-right fa-fw"></i>
+<select class=language-select title=选择语言 id=language-select-desktop onchange="location=this.value"><option value=/hugo-redirect-landing-page/ selected>简体中文</option></select>
+</a><span class="menu-item search" id=search-desktop><input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i>
+</a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i>
+</a><span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i>
+</span></span><a href=javascript:void(0); class="menu-item theme-select" title=切换主题><i class="fas fa-adjust fa-fw"></i>
+<select class=color-theme-select id=theme-select-desktop title=切换主题><option value=light>浅色</option><option value=dark>深色</option><option value=black>黑色</option><option value=auto>跟随系统</option></select></a></div></div></div></header><header class="mobile print:!tw-hidden" id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title=大大的小蜗牛>大大的小蜗牛</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i>
+</a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i>
+</a><span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/ title=首页><i class='fas fa-home'></i>首页</a><a class=menu-item href=/posts/ title=所有文章><i class='fas fa-blog'></i>博客</a><a class=menu-item href=/mastodon/ title="Mastodon Toots 嘀咕"><i class='fab fa-mastodon'></i>嘀咕</a><a class=menu-item href=/media/ title="NeoDB 书影音记录"><i class='fas fa-film'></i>书影音</a><a class=menu-item href=/steam/ title="Steam 游戏清单"><i class='fab fa-steam'></i>游戏库</a><a class=menu-item href=/links/ title=友情链接><i class='fas fa-users'></i>友情链接</a><a class=menu-item href=/stats/ title=统计><i class='fas fa-chart-bar'></i>统计</a><a class=menu-item href=/about/ title=关于我关于本站><i class='fas fa-info'></i>关于</a><a href=javascript:void(0); class="menu-item theme-select" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i>
+<select class=color-theme-select id=theme-select-mobile title=切换主题><option value=light>浅色</option><option value=dark>深色</option><option value=black>黑色</option><option value=auto>跟随系统</option></select>
+</a><a href=javascript:void(0); class=menu-item title=选择语言>简体中文<i class="fas fa-chevron-right fa-fw"></i>
+<select class=language-select title=选择语言 onchange="location=this.value"><option value=/hugo-redirect-landing-page/ selected>简体中文</option></select></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class="toc print:!tw-hidden" id=toc-auto><h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto><nav id=TableOfContents><ul><li><ul><li><a href=#前言>前言</a></li><li><a href=#定义>定义</a></li><li><a href=#3-个文件创建跳转页面>3 个文件创建跳转页面</a><ul><li><ul><li><a href=#1-新建或者修改-render-linkhtml>1. 新建或者修改 render-link.html</a></li><li><a href=#2-新建-layout-模板-gohtml>2. 新建 layout 模板 go.html</a></li><li><a href=#3-新建-gomd-调用模板>3. 新建 go.md 调用模板</a></li><li><a href=#4-背景图>4. 背景图</a></li></ul></li></ul></li><li><a href=#其他注意事项>其他注意事项</a></li></ul></li></ul></nav></div></div><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC","true")</script><article class="page single print:!tw-w-full print:!tw-max-w-none print:!tw-m-0 print:!tw-p-0"><h1 class="single-title animate__animated animate__flipInX">Hugo 外部链接跳转提示页面</h1><div class=post-meta><div class=post-meta-line><span class=post-author><span class=author><span class=screen-reader-text></span><a href=https://www.eallion.com/authors/eallion><img src=https://www.eallion.com/eallion.webp alt='大大的小蜗牛 avatar' class="tw-inline-block tw-max-h-4 tw-rounded-full tw-translate-y-[-2px] tw-mr-1">大大的小蜗牛</a></span></span>&nbsp;<span class=post-category>收录于 </span>&nbsp;<span class=post-category>类别 <a href=/categories/%E4%BB%A3%E7%A0%81/><i class="far fa-folder fa-fw"></i>代码</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2024-02-03>2024-02-03</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime=2024-02-03>2024-02-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1863 字&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div></div><div class="details toc print:!tw-block" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><ul><li><a href=#前言>前言</a></li><li><a href=#定义>定义</a></li><li><a href=#3-个文件创建跳转页面>3 个文件创建跳转页面</a><ul><li><ul><li><a href=#1-新建或者修改-render-linkhtml>1. 新建或者修改 render-link.html</a></li><li><a href=#2-新建-layout-模板-gohtml>2. 新建 layout 模板 go.html</a></li><li><a href=#3-新建-gomd-调用模板>3. 新建 go.md 调用模板</a></li><li><a href=#4-背景图>4. 背景图</a></li></ul></li></ul></li><li><a href=#其他注意事项>其他注意事项</a></li></ul></li></ul></nav></div></div><div class=post-ai><div class=ai-header><div class=ai-title><svg role="img" width="1em" height="1em" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="ai-title-icon"><title>OpenAI ChatGPT3.5</title><path d="M22.2819 9.8211a5.9847 5.9847.0 00-.5157-4.9108 6.0462 6.0462.0 00-6.5098-2.9A6.0651 6.0651.0 004.9807 4.1818a5.9847 5.9847.0 00-3.9977 2.9 6.0462 6.0462.0 00.7427 7.0966 5.98 5.98.0 00.511 4.9107 6.051 6.051.0 006.5146 2.9001A5.9847 5.9847.0 0013.2599 24a6.0557 6.0557.0 005.7718-4.2058 5.9894 5.9894.0 003.9977-2.9001 6.0557 6.0557.0 00-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755.0 01-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948.0 00.3927-.6813v-6.7369l2.02 1.1686a.071.071.0 01.038.052v5.5826a4.504 4.504.0 01-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708.0 01-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712.0 00.7806.0l5.8428-3.3685v2.3324a.0804.0804.0 01-.0332.0615L9.74 19.9502a4.4992 4.4992.0 01-6.1408-1.6464zM2.3408 7.8956a4.485 4.485.0 012.3655-1.9728V11.6a.7664.7664.0 00.3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757.0 01-.071.0l-4.8303-2.7865A4.504 4.504.0 012.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757.0 01.071.0l4.8303 2.7913a4.4944 4.4944.0 01-.6765 8.1042v-5.6772a.79.79.0 00-.407-.667zm2.0107-3.0231-.142-.0852-4.7735-2.7818a.7759.7759.0 00-.7854.0L9.409 9.2297V6.8974a.0662.0662.0 01.0284-.0615l4.8303-2.7866a4.4992 4.4992.0 016.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804.0 01-.038-.0567V6.0742a4.4992 4.4992.0 017.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948.0 00-.3927.6813zm1.0976-2.3654 2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997z"/></svg><div class=ai-title-text><a href=https://www.eallion.com/ai-summary/ target=_blank rel="noopener noreferrer" alt="AI 智能摘要" title="AI 智能摘要">AI 摘要</a></div></div><div class=ai-title-tooltip><i class="far fa-question-circle"></i>
+<span class=ai-title-tooltip-text>Pre-generated by ChatGPT 3.5</span></div></div><div id=ai-explanation class=ai-explanation>文章介绍了作者为了合规和自我审查，在博客中迁移评论系统并清理链接，通过跳转页面实现外部链接的跳转。作者使用 Hugo 内置模板_render-link.html_进行 base64 编码，并提供了代码示例。同时，作者还介绍了如何创建一个中转页面模板_go.html_以及相关样式和脚本的设置。最后，文章指出这种方法只适用于渲染 Markdown 内容文档，并对自定义 HTML 链接做了说明。</div></div><div class=content id=content><h3 id=前言 class=headerLink><a href=#%e5%89%8d%e8%a8%80 class=header-mark></a>前言</h3><p>这两天看到「秦大叔」的博客文章《<a href=https://qfsyj.com/20240101-start.html target=_blank rel="noopener noreferrer">网站重启</a>》提到，因为博客评论中别人留下的域名过期被黄网注册链接到了黄网，从而导致因涉黄问题而喝茶。可见在大陆目前的网络环境下，这种可大可小的口袋罪收得越来越紧。</p><p>为了合规和自我审查，我对博客做了 2 件事，一是把评论系统迁移到了 <a href=https://giscus.app/ target=_blank rel="noopener noreferrer">Giscus</a>，这提高了一定的评论门槛，让评论处于半关闭状态；二是清理了一些博客中的链接，让剩下的链接通过跳转页面跳转。刚好看到「空白」大佬更新了博客《<a href=https://koobai.com/zhongjiantiaozhuan/ target=_blank rel="noopener noreferrer">HUGO 外链跳转到中间页</a>》，直接把样式抄过来，算是完成了一件 Todo list。</p><p>PS：我觉得正经的个人网站可以备案。但如果你想做不正经的，那你要做的是完全的身份隔离，而不是仅仅不备案却暴露很多关联的交叉实名信息。没有爹味，爱听不听。</p><h3 id=定义 class=headerLink><a href=#%e5%ae%9a%e4%b9%89 class=header-mark></a>定义</h3><p>外链：全称为外部链接，又称导入链接。就是指从互联网上别的网站导入到自己网站的链接。以下简称「外链」。</p><h3 id=3-个文件创建跳转页面 class=headerLink><a href=#3-%e4%b8%aa%e6%96%87%e4%bb%b6%e5%88%9b%e5%bb%ba%e8%b7%b3%e8%bd%ac%e9%a1%b5%e9%9d%a2 class=header-mark></a>3 个文件创建跳转页面</h3><p>我的设计思路与「空白」的第一版 JS 的方式不太一样，我利用 Hugo 内置模板 <code>_markup</code> 的 <a href=https://gohugo.io/templates/render-hooks/#link-with-title-markdown-example target=_blank rel="noopener noreferrer">render-link.html</a> ，在 Hugo 构建时就把外链用 Hugo 内置的 <a href=https://gohugo.io/functions/encoding/base64encode/ target=_blank rel="noopener noreferrer"><code>base64Encode</code></a> 命令进行 base64 编码，充分利用了 SSG 的特性。</p><h5 id=1-新建或者修改-render-linkhtml class=headerLink><a href=#1-%e6%96%b0%e5%bb%ba%e6%88%96%e8%80%85%e4%bf%ae%e6%94%b9-render-linkhtml class=header-mark></a>1. 新建或者修改 render-link.html</h5><p><code>_markup/render-link.html</code> 是 Hugo 渲染链接的内置模板。<br>如果博客选用的主题没有自定义 render-link.html，那需要自己新建一个此文件，如果主题已经自定义过链接渲染的，那就可以直接修改此文件。<br>文件位于 Hugo 项目根目录的 <code>layouts</code> 目录 ：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>layouts/
+</span></span><span class=line><span class=cl>└── _default/
+</span></span><span class=line><span class=cl>    └── _markup/
+</span></span><span class=line><span class=cl>        ├── render-codeblock-bash.html
+</span></span><span class=line><span class=cl>        ├── render-codeblock.html
+</span></span><span class=line><span class=cl>        ├── render-heading.html
+</span></span><span class=line><span class=cl>        ├── render-image.html
+</span></span><span class=line><span class=cl>        ├── render-image.rss.xml
+</span></span><span class=line><span class=cl>        └── render-link.html    <span class=c1># &lt; --- 此文件</span>
+</span></span></code></pre></td></tr></table></div></div><p>我用的文件内容：</p><p><code>$domainList</code> 相当于一个白名单。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-html data-lang=html><span class=line><span class=cl>{{- $domainList := slice &#34;www.eallion.com&#34; &#34;github.com&#34; &#34;twitter.com&#34; -}}
+</span></span><span class=line><span class=cl>{{- $parsedDestination := urls.Parse .Destination -}}
+</span></span><span class=line><span class=cl>{{- $host := $parsedDestination.Host -}}
+</span></span><span class=line><span class=cl>{{- $matched := false -}}
+</span></span><span class=line><span class=cl>{{- range $domainList -}}
+</span></span><span class=line><span class=cl>    {{- if strings.HasSuffix $host . -}}
+</span></span><span class=line><span class=cl>        {{- $matched = true -}}
+</span></span><span class=line><span class=cl>        {{- break -}}
+</span></span><span class=line><span class=cl>    {{- end -}}
+</span></span><span class=line><span class=cl>{{- end -}}
+</span></span><span class=line><span class=cl>{{- if $matched -}}
+</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>a</span> <span class=na>href</span><span class=o>=</span><span class=s>&#34;/go/?target={{ .Destination }}&#34;</span> <span class=na>target</span><span class=o>=</span><span class=s>&#34;_blank&#34;</span> <span class=na>rel</span><span class=o>=</span><span class=s>&#34;noopener noreferrer&#34;</span><span class=p>&gt;</span>{{ .Text | safeHTML}}<span class=p>&lt;/</span><span class=nt>a</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>{{- else -}}
+</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>a</span> <span class=na>href</span><span class=o>=</span><span class=s>&#34;/go/?target={{ .Destination | base64Encode }}&#34;</span> <span class=na>target</span><span class=o>=</span><span class=s>&#34;_blank&#34;</span> <span class=na>rel</span><span class=o>=</span><span class=s>&#34;noopener noreferrer&#34;</span><span class=p>&gt;</span>{{ .Text | safeHTML}}<span class=p>&lt;/</span><span class=nt>a</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>{{- end -}}
+</span></span></code></pre></td></tr></table></div></div><blockquote><p>PS：DoIt 主题只需要修改 <i class="fab fa-github"></i><a href=https://github.com/HEIGE-PCloud/DoIt/blob/main/layouts/partials/plugin/link.html target=_blank rel="noopener noreferrer">layouts/partials/plugin/link.html</a> 文件。</p></blockquote><blockquote><p>Tips：利用 <code>render-link.html</code> 可以让博客实现新窗口打开，即 <code>taget="_blank"</code> 。很多亚洲用户都在搜索这个技巧呢。</p></blockquote><h5 id=2-新建-layout-模板-gohtml class=headerLink><a href=#2-%e6%96%b0%e5%bb%ba-layout-%e6%a8%a1%e6%9d%bf-gohtml class=header-mark></a>2. 新建 layout 模板 go.html</h5><p>新建一个页面模板，如：<code>go.html</code>，位于Hugo 项目根目录的 <code>layouts/_default/go.html</code>。<br>一个最简单的办法是复制 <code>single.html</code> 并重命名为 <code>go.html</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>layouts/
+</span></span><span class=line><span class=cl>└── _default/
+</span></span><span class=line><span class=cl>    └── go.html    <span class=c1># &lt; --- 此文件</span>
+</span></span></code></pre></td></tr></table></div></div><p>下面是我的内容，把 HTML CSS 和 JS 放置到了同一个页面中，方便维护。除了需要注意 <code>&lt;div class="redirect-all"></code> 元素位于自己的模板的位置，基本上是开箱即用。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-html data-lang=html><span class=line><span class=cl>{{- define &#34;title&#34; }}{{ .Title }} - {{ .Site.Title }}{{ end -}}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>{{- define &#34;content&#34; -}}
+</span></span><span class=line><span class=cl>    {{- $params := .Scratch.Get &#34;params&#34; -}}
+</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>style</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>.</span><span class=nc>redirect-all</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>position</span><span class=p>:</span> <span class=kc>relative</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>box-shadow</span><span class=p>:</span> <span class=nb>rgba</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mf>0.25</span><span class=p>)</span> <span class=mi>0</span><span class=kt>px</span> <span class=mi>25</span><span class=kt>px</span> <span class=mi>50</span><span class=kt>px</span> <span class=mi>-12</span><span class=kt>px</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>border-radius</span><span class=p>:</span> <span class=mi>10</span><span class=kt>px</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>color</span><span class=p>:</span> <span class=mh>#666</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>word-break</span><span class=p>:</span> <span class=n>break-all</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>max-width</span><span class=p>:</span> <span class=mi>800</span><span class=kt>px</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>height</span><span class=p>:</span> <span class=mi>400</span><span class=kt>px</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>text-align</span><span class=p>:</span> <span class=kc>center</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>font-size</span><span class=p>:</span> <span class=mf>0.85</span><span class=kt>rem</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>overflow</span><span class=p>:</span> <span class=kc>hidden</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>margin</span><span class=p>:</span> <span class=mi>100</span><span class=kt>px</span> <span class=kc>auto</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>background</span><span class=p>:</span> <span class=mh>#fff</span> <span class=nb>url</span><span class=p>(</span><span class=sx>/assets/images/redirect/redirect-light.webp</span><span class=p>)</span> <span class=kc>no-repeat</span> <span class=kc>center</span> <span class=kc>center</span> <span class=o>/</span> <span class=kc>cover</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=err>@include</span> <span class=err>breakpoint(&#39;small&#39;)</span> <span class=err>{</span>
+</span></span><span class=line><span class=cl>                <span class=n>aspect-ratio</span><span class=p>:</span> <span class=mi>2</span> <span class=o>/</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>                <span class=k>height</span><span class=p>:</span> <span class=kc>auto</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=err>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=p>.</span><span class=nc>redirect-nrong</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>position</span><span class=p>:</span> <span class=kc>absolute</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>bottom</span><span class=p>:</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>left</span><span class=p>:</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>right</span><span class=p>:</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>padding</span><span class=p>:</span> <span class=mf>1.5</span><span class=kt>rem</span> <span class=mi>1</span><span class=kt>rem</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=p>.</span><span class=nc>redirect-title</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>font-size</span><span class=p>:</span> <span class=mf>1.25</span><span class=kt>rem</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>font-weight</span><span class=p>:</span> <span class=kc>bold</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>color</span><span class=p>:</span> <span class=mh>#222</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>margin-bottom</span><span class=p>:</span> <span class=mf>0.5</span><span class=kt>rem</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=p>.</span><span class=nc>redirect-info</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>margin-top</span><span class=p>:</span> <span class=mi>6</span><span class=kt>px</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=p>.</span><span class=nc>redirect-tis</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>display</span><span class=p>:</span> <span class=kc>flex</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>align-items</span><span class=p>:</span> <span class=kc>center</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>justify-content</span><span class=p>:</span> <span class=kc>center</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>gap</span><span class=p>:</span> <span class=mi>20</span><span class=kt>px</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>margin-top</span><span class=p>:</span> <span class=mi>1</span><span class=kt>rem</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>margin-bottom</span><span class=p>:</span> <span class=mi>2</span><span class=kt>px</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>flex-wrap</span><span class=p>:</span> <span class=kc>wrap</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=p>.</span><span class=nc>redirect-button</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>display</span><span class=p>:</span> <span class=kc>flex</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>align-items</span><span class=p>:</span> <span class=kc>center</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>border-radius</span><span class=p>:</span> <span class=mi>3</span><span class=kt>px</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>border</span><span class=p>:</span> <span class=kc>none</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>background</span><span class=p>:</span> <span class=mh>#006bee</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>height</span><span class=p>:</span> <span class=mi>32</span><span class=kt>px</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>padding</span><span class=p>:</span> <span class=mi>0</span> <span class=mi>14</span><span class=kt>px</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>cursor</span><span class=p>:</span> <span class=kc>pointer</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>outline</span><span class=p>:</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=p>.</span><span class=nc>redirect-button</span> <span class=nt>a</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>color</span><span class=p>:</span> <span class=mh>#fff</span> <span class=cp>!important</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=o>[</span><span class=nt>theme</span><span class=o>=</span><span class=nt>dark</span><span class=o>]</span> <span class=p>.</span><span class=nc>redirect-all</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=k>background</span><span class=p>:</span> <span class=mh>#fff</span> <span class=nb>url</span><span class=p>(</span><span class=sx>/assets/images/redirect/redirect-dark.webp</span><span class=p>)</span> <span class=kc>no-repeat</span> <span class=kc>center</span> <span class=kc>center</span> <span class=o>/</span> <span class=kc>cover</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>                <span class=k>color</span><span class=p>:</span> <span class=mh>#999</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=o>[</span><span class=nt>theme</span><span class=o>=</span><span class=nt>dark</span><span class=o>]</span> <span class=p>.</span><span class=nc>redirect-title</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=k>color</span><span class=p>:</span> <span class=mh>#ddd</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;/</span><span class=nt>style</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>div</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;page single special&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        {{- /* Content */ -}}
+</span></span><span class=line><span class=cl>        <span class=p>&lt;</span><span class=nt>div</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;content&#34;</span> <span class=na>id</span><span class=o>=</span><span class=s>&#34;content&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>            <span class=p>&lt;</span><span class=nt>div</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;redirect-all&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                <span class=p>&lt;</span><span class=nt>div</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;redirect-nrong&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                    <span class=p>&lt;</span><span class=nt>div</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;redirect-title&#34;</span><span class=p>&gt;</span>即将离开{{ .Site.Title }}，跳转到以下外部链接<span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                    <span class=p>&lt;</span><span class=nt>a</span> <span class=na>href</span><span class=o>=</span><span class=s>&#34;&#34;</span> <span class=na>target</span><span class=o>=</span><span class=s>&#34;_self&#34;</span> <span class=na>rel</span><span class=o>=</span><span class=s>&#34;noopener noreferrer&#34;</span> <span class=na>id</span><span class=o>=</span><span class=s>&#34;redirect-link&#34;</span><span class=p>&gt;&lt;</span><span class=nt>span</span> <span class=na>id</span><span class=o>=</span><span class=s>&#34;redirect-link&#34;</span><span class=p>&gt;</span>未指定重定向目标。<span class=p>&lt;/</span><span class=nt>span</span><span class=p>&gt;&lt;/</span><span class=nt>a</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                    <span class=p>&lt;</span><span class=nt>div</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;redirect-info&#34;</span><span class=p>&gt;</span>请自行识别该链接是否安全，请注意您的帐号和财产安全。<span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                    <span class=p>&lt;</span><span class=nt>div</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;redirect-tis&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                        <span class=p>&lt;</span><span class=nt>div</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;redirect-button&#34;</span><span class=p>&gt;&lt;</span><span class=nt>a</span> <span class=na>href</span><span class=o>=</span><span class=s>&#39;&#39;</span> <span class=na>target</span><span class=o>=</span><span class=s>&#34;_self&#34;</span> <span class=na>id</span><span class=o>=</span><span class=s>&#39;direct-link&#39;</span> <span class=na>rel</span><span class=o>=</span><span class=s>&#34;noopener noreferrer&#34;</span><span class=p>&gt;</span>立即前往<span class=p>&lt;/</span><span class=nt>a</span><span class=p>&gt;&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                    <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>            <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>script</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=kr>const</span> <span class=nx>params</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>URLSearchParams</span><span class=p>(</span><span class=nb>window</span><span class=p>.</span><span class=nx>location</span><span class=p>.</span><span class=nx>search</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=kr>const</span> <span class=nx>encodedTarget</span> <span class=o>=</span> <span class=nx>params</span><span class=p>.</span><span class=nx>get</span><span class=p>(</span><span class=s1>&#39;target&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=kr>const</span> <span class=nx>target</span> <span class=o>=</span> <span class=nx>atob</span><span class=p>(</span><span class=nx>encodedTarget</span><span class=p>);</span> <span class=c1>// 使用 atob 进行 Base64 解码
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=nx>target</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=kr>const</span> <span class=nx>decodedTarget</span> <span class=o>=</span> <span class=nb>decodeURIComponent</span><span class=p>(</span><span class=nx>target</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=nb>document</span><span class=p>.</span><span class=nx>getElementById</span><span class=p>(</span><span class=s1>&#39;direct-link&#39;</span><span class=p>).</span><span class=nx>href</span> <span class=o>=</span> <span class=nx>decodedTarget</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=nb>document</span><span class=p>.</span><span class=nx>getElementById</span><span class=p>(</span><span class=s1>&#39;redirect-link&#39;</span><span class=p>).</span><span class=nx>textContent</span> <span class=o>=</span> <span class=s1>&#39;&#39;</span> <span class=o>+</span> <span class=nx>decodedTarget</span><span class=p>;</span> <span class=c1>// 在新增的元素中显示原地址
+</span></span></span><span class=line><span class=cl><span class=c1></span>            <span class=nb>document</span><span class=p>.</span><span class=nx>getElementById</span><span class=p>(</span><span class=s1>&#39;redirect-link&#39;</span><span class=p>).</span><span class=nx>href</span> <span class=o>=</span> <span class=nx>decodedTarget</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=kr>const</span> <span class=nx>redirectMessageElement</span> <span class=o>=</span> <span class=nb>document</span><span class=p>.</span><span class=nx>getElementById</span><span class=p>(</span><span class=s1>&#39;redirect-link&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=nx>redirectMessageElement</span><span class=p>.</span><span class=nx>textContent</span> <span class=o>=</span> <span class=s1>&#39;未指定重定向目标。&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=p>&lt;/</span><span class=nt>script</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>{{- end -}}
+</span></span></code></pre></td></tr></table></div></div><h5 id=3-新建-gomd-调用模板 class=headerLink><a href=#3-%e6%96%b0%e5%bb%ba-gomd-%e8%b0%83%e7%94%a8%e6%a8%a1%e6%9d%bf class=header-mark></a>3. 新建 go.md 调用模板</h5><p>在 Hugo 项目的 <code>content</code> 目录新建一个文件，名为 <code>go.md</code>，<code>go</code> 就会是中转页面的链接 path。<br><code>go.md</code> 文件的 Front matter 要选择刚才新建的对应模板，如果模板名称是<code>go.html</code> 那 layout 或者 type 都要选择 <code>go</code>。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-markdown data-lang=markdown><span class=line><span class=cl>---
+</span></span><span class=line><span class=cl>title: &#34;Redirect&#34;
+</span></span><span class=line><span class=cl>layout: &#34;go&#34;
+</span></span><span class=line><span class=cl>type: &#34;go&#34;
+</span></span><span class=line><span class=cl>... ...
+</span></span><span class=line><span class=cl>---
+</span></span></code></pre></td></tr></table></div></div><h5 id=4-背景图 class=headerLink><a href=#4-%e8%83%8c%e6%99%af%e5%9b%be class=header-mark></a>4. 背景图</h5><p>背景图放在 static 的目录下：<br>或者自己能正确引用的位置，如 CDN，并修改 <code>&lt;style></code> 中的 <code>background</code> url。<br>另外需要适配自己主题的 Dark mode。</p><ul><li><code>static/assets/images/redirect/redirect-light.webp</code></li><li><code>static/assets/images/redirect/redirect-dark.webp</code></li></ul><h3 id=其他注意事项 class=headerLink><a href=#%e5%85%b6%e4%bb%96%e6%b3%a8%e6%84%8f%e4%ba%8b%e9%a1%b9 class=header-mark></a>其他注意事项</h3><p>这个方法，只能渲染本博客所有 Markdown 内容文档，即 <code>content</code> 目录下在的 <code>.md</code> 文件。<br>如果习惯用 <code>{{ Shortcodes }}</code> 发文，或者页面有自定义的 html 链接，需要自己做链接 path 的 base64 兼容，这个模板能解析 <code>href="/go/?target={{ base64Encode }}"</code> 博客内这一类链接，白名单除外。</p></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2024-02-03</span></div><div class=post-info-license></div></div><div class="post-info-line print:!tw-hidden"><div class=post-info-md><span><a class=link-to-mardown href=/hugo-redirect-landing-page/index.md target=_blank rel="noopener noreferrer">阅读原始文档</a>
+</span><span>|&nbsp;<a class=link-to-report href="https://github.com/eallion/eallion.com/issues/new?title=[bug]%20Hugo+%E5%A4%96%E9%83%A8%E9%93%BE%E6%8E%A5%E8%B7%B3%E8%BD%AC%E6%8F%90%E7%A4%BA%E9%A1%B5%E9%9D%A2&body=|Field|Value|%0A|-|-|%0A|Title|Hugo+%E5%A4%96%E9%83%A8%E9%93%BE%E6%8E%A5%E8%B7%B3%E8%BD%AC%E6%8F%90%E7%A4%BA%E9%A1%B5%E9%9D%A2|%0A|Url|https://www.eallion.com/hugo-redirect-landing-page/|%0A|Filename|https://github.com/eallion/eallion.com/blob/main/posts/code/2024-02-03-hugo-外部链接跳转提示页面.md|" target=_blank rel="noopener noreferrer">报告问题</a></span></div><div class=post-info-share></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/hugo/>Hugo</a>,&nbsp;<a href=/tags/%E5%8D%9A%E5%AE%A2/>博客</a>,&nbsp;<a href=/tags/%E8%B7%B3%E8%BD%AC/>跳转</a>,&nbsp;<a href=/tags/%E6%8A%98%E8%85%BE/>折腾</a></section><section class=print:!tw-hidden><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class="post-nav print:tw-hidden"><a href=/fediverse/ class=prev rel=prev title="联邦宇宙及 Mastodon 简介"><i class="fas fa-angle-left fa-fw"></i>联邦宇宙及 Mastodon 简介</a>
+<a href=/mastodon-sync-to-memos/ class=next rel=next title="Mastodon 同步到 Memos">Mastodon 同步到 Memos<i class="fas fa-angle-right fa-fw"></i></a></div></div><div id=comments class=print:!tw-hidden><div id=giscus></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://giscus.app/>giscus</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>由 <a href=https://gohugo.io/ target=_blank rel="noopener noreferrer" title="Hugo 0.124.1">Hugo</a> 强力驱动&nbsp;|&nbsp;托管在 <a title="腾讯云边缘安全加速平台 EdgeOne" href=https://e5n.cc/s/teo target=_blank rel="noopener noreffer">EdgeOne</a> 上&nbsp;|&nbsp;主题 - <a href=https://github.com/HEIGE-PCloud/DoIt target=_blank rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a></div><div class=footer-line><i class="far fa-copyright fa-fw"></i>2006 - 2024&nbsp;|&nbsp;<span class=license><a title='eallion.com 版权信息' href=https://www.eallion.com/copyright/ target=_blank rel='noopener noreferrer'>eallion.com</a> All Rights Reserved.</span><span class=icp-splitter>&nbsp;|&nbsp;</span><br class=icp-br><span class=icp><a title="ICP 备案号" href=https://beian.miit.gov.cn/ target=_blank rel="noopener noreferrer">浙ICP备16031768号-2</a></span></div><div class=footer-line></div><div class=footer-line></div></div><script>"serviceWorker"in navigator&&(navigator.serviceWorker.register("/sw.min.js",{scope:"/"}).then(function(){}),navigator.serviceWorker.ready.then(function(){}))</script></footer></div><div id=fixed-buttons class=print:!tw-hidden><a href=#back-to-top id=back-to-top-button class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><div class=assets><link rel=stylesheet href=/lib/lightgallery/lightgallery.min.b38ee65d6456beb2d034bf554505f4ca47e421548b7cd26e8a7805fd2673b6c3.css integrity="sha256-s47mXWRWvrLQNL9VRQX0ykfkIVSLfNJuingF/SZztsM="><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:1e3},comment:{giscus:{darkTheme:"dark_dimmed",dataCategory:"Giscus",dataCategoryId:"DIC_kwDOD6gExM4CS9eF",dataEmitMetadata:"0",dataInputPosition:"bottom",dataLang:"zh-CN",dataLoading:"lazy",dataMapping:"pathname",dataReactionsEnabled:"1",dataRepo:"eallion/eallion.com",dataRepoId:"MDEwOlJlcG9zaXRvcnkyNjI2Njk1MDg=",dataStrict:"1",lightTheme:"light"}},lightGallery:{actualSize:!1,exThumbImage:"data-thumbnail",hideBarsDelay:2e3,selector:".lightgallery",speed:400,thumbContHeight:80,thumbWidth:80,thumbnail:!0},search:{algoliaAppID:"UIYUIFMJAW",algoliaIndex:"eallion",algoliaSearchKey:"6d69a1276d37f570210831b222bcb123",highlightTag:"em",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"algolia"},table:{sort:!0}}</script><script src=/lib/object-fit-images/ofi.min.8c2fded8e3119fcb15699d6752e3834a4b20ba353ca20f0842419c466f2dc97b.js integrity="sha256-jC/e2OMRn8sVaZ1nUuODSksgujU8og8IQkGcRm8tyXs="></script><script src=/lib/tablesort/tablesort.min.92de6dec051677787aed63503575b2f9be73f21f2745574e59647bc139a92d40.js integrity="sha256-kt5t7AUWd3h67WNQNXWy+b5z8h8nRVdOWWR7wTmpLUA="></script><script src=/lib/lightgallery/lightgallery.min.e1c797df44ba6ba4cbc5c52eabbf2300e8a4865abe4ed52f91830bf1fd2bb76e.js integrity="sha256-4ceX30S6a6TLxcUuq78jAOikhlq+TtUvkYML8f0rt24="></script><script src=/lib/lightgallery/lg-thumbnail.min.c7fedc31b278580c1ee0065d9186510ff245bb983987b9f05315cb2488045c4f.js integrity="sha256-x/7cMbJ4WAwe4AZdkYZRD/JFu5g5h7nwUxXLJIgEXE8="></script><script src=/lib/lightgallery/lg-zoom.min.0470e1215c4c9a64efce50c5969b898d6553eba697bd31a5e1663ad8ab48374c.js integrity="sha256-BHDhIVxMmmTvzlDFlpuJjWVT66aXvTGl4WY62KtIN0w="></script><script src=/lib/clipboard/clipboard.min.e17a1d816e13c0826e0ed7febfabc3277f45571234bde0bf9120829a7169edc9.js integrity="sha256-4XodgW4TwIJuDtf+v6vDJ39FVxI0veC/kSCCmnFp7ck="></script><script src=/js/theme.min.js defer></script><script src=/js/giscus.min.js defer></script></div></body></html>
