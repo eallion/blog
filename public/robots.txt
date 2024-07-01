@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://www.eallion.com/sitemap.xml
